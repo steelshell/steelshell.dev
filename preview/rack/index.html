@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steelshell: all your servers in one rack</title>
+<meta name="description" content="Steelshell is an SSH client for Windows, Android and the Linux terminal. Hosts, keys, passwords and snippets sync between your devices, encrypted on the device, and AI agents only reach the servers you allow.">
+<meta name="theme-color" content="#cfd3cd">
+<link rel="icon" type="image/png" href="/assets/img/icon-64.png">
+<link rel="preload" href="/assets/fonts/IBMPlexSans-400-500-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Rubik-500-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/rack.css">
+<script src="/assets/lang.js"></script>
+<script src="/assets/rack.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#vault"><span class="en">Skip to content</span><span class="ru">К содержанию</span></a>
+<div class="rack">
+  <div class="rail" data-rail aria-hidden="true"></div>
+  <div class="bay">
+
+    <header class="unit u1 silver top">
+      <a class="brand" href="/"><img src="/assets/img/icon-64.png" width="30" height="30" alt=""><span class="tape black " data-tape>Steelshell</span></a>
+      <nav class="silk-nav" aria-label="Sections">
+        <a href="#screens"><span class="en">Screens</span><span class="ru">Экраны</span></a>
+        <a href="#crypto"><span class="en">Encryption</span><span class="ru">Шифрование</span></a>
+        <a href="#agents"><span class="en">AI agents</span><span class="ru">ИИ-агенты</span></a>
+        <a href="#download"><span class="en">Download</span><span class="ru">Скачать</span></a>
+      </nav>
+      <button class="toggle" type="button" data-lang-toggle aria-label="Русский / English">
+        <span class="silk">EN</span><span class="lever" aria-hidden="true"></span><span class="silk">RU</span>
+      </button>
+    </header>
+
+    <section class="unit u6 black vault" id="vault" aria-labelledby="h-vault">
+      <div class="vent tall" aria-hidden="true"></div>
+      <div class="vault-main">
+        <div class="screen eink">
+          <h1 id="h-vault"><span class="en">All your servers in one rack</span><span class="ru">Все ваши серверы в одной стойке</span></h1>
+          <p><span class="en">Steelshell is an SSH client for Windows, Android and the Linux terminal. Hosts, keys, passwords and snippets sync between your devices and are encrypted on them first, so the server only ever sees ciphertext.</span><span class="ru">Steelshell — SSH-клиент для Windows, Android и терминала Linux. Хосты, ключи, пароли и сниппеты синхронизируются между вашими устройствами и шифруются ещё на них, поэтому сервер видит только шифротекст.</span></p>
+        </div>
+        <div class="keys">
+          <a class="key primary for-windows" data-download="setup" href="https://github.com/steelshell/releases/releases/latest"><span class="led on"></span><span class="en">Download for Windows</span><span class="ru">Скачать для Windows</span></a>
+          <a class="key primary for-android" data-download="apk" href="https://github.com/steelshell/releases/releases/latest"><span class="led on"></span><span class="en">Download for Android</span><span class="ru">Скачать для Android</span></a>
+          <a class="key primary for-linux" href="#download"><span class="led on"></span><span class="en">Install on Linux</span><span class="ru">Установить в Linux</span></a>
+          <a class="key" href="#download"><span class="led"></span><span class="en">All versions</span><span class="ru">Все версии</span></a>
+        </div>
+      </div>
+      <div class="vault-side">
+        <span class="tape red plate" data-tape>Steelshell</span>
+        <p class="silk model">SS-1 &nbsp; SSH VAULT &nbsp; <span data-app-version>0.4.3</span></p>
+        <div class="lcd" aria-hidden="true"><ol class="log" data-log></ol></div>
+        <div class="leds" aria-hidden="true">
+          <span class="led-row"><span class="led green" data-activity></span><span class="silk">WIN</span></span>
+          <span class="led-row"><span class="led green" data-activity></span><span class="silk">AND</span></span>
+          <span class="led-row"><span class="led green" data-activity></span><span class="silk">LNX</span></span>
+          <span class="led-row"><span class="led blue" data-activity></span><span class="silk">MCP</span></span>
+        </div>
+        <div class="power" aria-hidden="true"><span class="power-ring"></span><span class="silk">PWR</span></div>
+      </div>
+      <div class="vent tall" aria-hidden="true"></div>
+    </section>
+
+    <div class="unit u1 blank" aria-hidden="true"><span class="vent wide"></span></div>
+
+    <section class="unit u5 black kvm" id="screens" aria-labelledby="h-screens">
+      <div class="monitor">
+        <div class="bezel"><img class="shot shot-windows" data-shot="windows" src="/assets/img/app-hosts-1280.webp" srcset="/assets/img/app-hosts-1280.webp 1280w, /assets/img/app-hosts-2560.webp 2560w" sizes="(min-width: 1100px) 720px, 100vw" width="1280" height="800" alt="Steelshell on Windows">
+<img class="shot shot-android" data-shot="android" src="/assets/img/phone-hosts-412.webp" srcset="/assets/img/phone-hosts-412.webp 412w, /assets/img/phone-hosts-824.webp 824w" sizes="(min-width: 1100px) 720px, 100vw" width="412" height="892" alt="Steelshell on Android" hidden loading="lazy">
+<img class="shot shot-terminal" data-shot="terminal" src="/assets/img/tui-hosts-1188.webp" srcset="/assets/img/tui-hosts-1188.webp 1188w, /assets/img/tui-hosts-2376.webp 2376w" sizes="(min-width: 1100px) 720px, 100vw" width="1188" height="722" alt="Steelshell on Linux" hidden loading="lazy"></div>
+        <p class="silk monitor-label">KVM CONSOLE &nbsp; 17&Prime;</p>
+      </div>
+      <div class="kvm-side">
+        <h2 id="h-screens"><span class="en">The same servers on every screen</span><span class="ru">Одни и те же серверы на любом экране</span></h2>
+        <div class="port-keys" role="group" aria-label="Screens"><button class="key port-key" type="button" data-screen="windows" aria-pressed="true">
+            <span class="led"></span><span class="num">1</span><span>Windows</span>
+          </button>
+<button class="key port-key" type="button" data-screen="android" aria-pressed="false">
+            <span class="led"></span><span class="num">2</span><span>Android</span>
+          </button>
+<button class="key port-key" type="button" data-screen="terminal" aria-pressed="false">
+            <span class="led"></span><span class="num">3</span><span>Linux</span>
+          </button></div>
+        <div class="captions" aria-live="polite"><p class="caption" data-caption="windows"><span class="en">Windows: groups with colours, favorites, live ping, tabs and split panes.</span><span class="ru">Windows: группы с цветами, избранное, живой пинг, вкладки и разделение экрана.</span></p>
+<p class="caption" data-caption="android" hidden><span class="en">Android: the same hosts and keys in your pocket, with a key bar for Ctrl, Esc and arrows.</span><span class="ru">Android: те же хосты и ключи в кармане и панель клавиш с Ctrl, Esc и стрелками.</span></p>
+<p class="caption" data-caption="terminal" hidden><span class="en">Linux terminal: run steelshell without arguments for the full-screen view.</span><span class="ru">Терминал Linux: steelshell без аргументов открывает полноэкранный режим.</span></p></div>
+      </div>
+    </section>
+
+    <section class="unit u4 silver hsm" id="crypto" aria-labelledby="h-crypto">
+      <div class="hsm-lock" aria-hidden="true">
+        <span class="lock"><span class="lock-slot"></span></span>
+        <span class="silk dark">KEY</span>
+        <span class="seal"><span class="en">SEAL<br>vault key stays on your devices</span><span class="ru">ПЛОМБА<br>ключ хранилища не покидает ваши устройства</span></span>
+      </div>
+      <div class="hsm-text">
+        <h2 id="h-crypto"><span class="en">Only you hold the key</span><span class="ru">Ключ от хранилища есть только у вас</span></h2>
+        <p><span class="en">Your password never leaves the device: Argon2id turns it into the key that opens your vault. Every host, key and snippet is sealed with AES-256-GCM before it syncs, and a new device gets the vault key encrypted for it alone.</span><span class="ru">Пароль не покидает устройство: Argon2id делает из него ключ, которым открывается хранилище. Каждый хост, ключ и сниппет запечатывается AES-256-GCM ещё до синхронизации, а новое устройство получает ключ хранилища, зашифрованный только для него.</span></p>
+        <p><span class="en">Whoever takes over the sync server gets numbered sealed envelopes and nothing to open them with.</span><span class="ru">Кто бы ни захватил сервер синхронизации, он получит пронумерованные запечатанные конверты и ничего, чем их открыть.</span></p>
+      </div>
+      <div class="lcd tall" aria-label="Encryption settings">
+        <p><span>AES-256-GCM</span><b>OK</b></p>
+        <p><span>ARGON2ID 64 MiB</span><b>2 PASS</b></p>
+        <p><span>X25519 LINK</span><b>OK</b></p>
+        <p><span><span class="en">SERVER SEES</span><span class="ru">СЕРВЕР ВИДИТ</span></span><b><span class="en">CIPHERTEXT</span><span class="ru">ШИФРОТЕКСТ</span></b></p>
+        <p><span><span class="en">WEAK SETTINGS</span><span class="ru">СЛАБЫЕ ПАРАМЕТРЫ</span></span><b><span class="en">REFUSED</span><span class="ru">ОТКАЗ</span></b></p>
+      </div>
+    </section>
+
+    <div class="unit u1 blank" aria-hidden="true"><span class="vent wide"></span></div>
+
+    <section class="unit u4 black patch" id="agents" aria-labelledby="h-agents">
+      <div class="patch-row">
+        <div class="agent-port">
+          <span class="tape blue tiny" data-tape>Agent</span>
+          <span class="jack" data-agent aria-hidden="true"><span class="led on blue-led"></span></span>
+        </div>
+        <div class="ports" role="group" aria-label="Servers"><button class="port" type="button" data-port="prod-api" data-state="full" aria-label="prod-api">
+          <span class="tape white tiny" data-tape>prod-api</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="prod-db" data-state="read" aria-label="prod-db">
+          <span class="tape white tiny" data-tape>prod-db</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="staging" data-state="full" aria-label="staging">
+          <span class="tape white tiny" data-tape>staging</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="router" data-state="" aria-label="router">
+          <span class="tape white tiny" data-tape>router</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="homelab-nas" data-state="" aria-label="homelab-nas">
+          <span class="tape white tiny" data-tape>homelab-nas</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="ci-runner" data-state="" aria-label="ci-runner">
+          <span class="tape white tiny" data-tape>ci-runner</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="vpn-gw" data-state="" aria-label="vpn-gw">
+          <span class="tape white tiny" data-tape>vpn-gw</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button>
+<button class="port" type="button" data-port="backup" data-state="" aria-label="backup">
+          <span class="tape white tiny" data-tape>backup</span>
+          <span class="jack" aria-hidden="true"><span class="led"></span></span>
+        </button></div>
+        <svg class="cables" aria-hidden="true" data-cables></svg>
+      </div>
+      <div class="patch-text">
+        <div>
+          <h2 id="h-agents"><span class="en">AI agents reach only what you patch in</span><span class="ru">ИИ-агент ходит только туда, куда вы протянули кабель</span></h2>
+          <p><span class="en">Claude Code, Codex and other agents work through steelshell mcp: they keep a shell open, run commands and edit files, while Steelshell signs in for them and logs every step. Click a port to connect it, make it read-only or unplug it.</span><span class="ru">Claude Code, Codex и другие агенты работают через steelshell mcp: держат сессию, запускают команды и правят файлы, а Steelshell сам входит на сервер и пишет каждый шаг в журнал. Нажмите на порт, чтобы подключить его, оставить только чтение или отключить.</span></p>
+        </div>
+        <div class="lcd cmd-lcd"><code data-command aria-live="polite">steelshell agent allow prod-api</code></div>
+        <p class="legend silk"><span class="swatch full"></span><span class="en">full access</span><span class="ru">полный доступ</span><span class="swatch read"></span><span class="en">read only</span><span class="ru">только чтение</span></p>
+      </div>
+    </section>
+
+    <section class="unit u5 graphite storage" id="download" aria-labelledby="h-download">
+      <div class="storage-head">
+        <h2 id="h-download"><span class="en">Download Steelshell</span><span class="ru">Скачать Steelshell</span></h2>
+        <p><span class="en">Windows 10 and 11 on x64, Android 7.0 and later, Debian 11 and Ubuntu 20.04 or newer on amd64 and arm64.</span><span class="ru">Windows 10 и 11 на x64, Android 7.0 и новее, Debian 11 и Ubuntu 20.04 или новее на amd64 и arm64.</span></p>
+      </div>
+      <div class="caddies"><a class="caddy" data-download="setup" href="https://github.com/steelshell/releases/releases">
+          <span class="caddy-vent" aria-hidden="true"></span>
+          <span class="tape red small" data-tape>Windows</span>
+          <span class="caddy-kind">setup.exe</span>
+          <span class="caddy-meta"><span data-app-version>0.4.3</span> · <span data-size="setup">15</span> <span class="en">MB</span><span class="ru">МБ</span></span>
+          <span class="caddy-lever" aria-hidden="true"><span class="led on"></span><span class="en">Download</span><span class="ru">Скачать</span></span>
+        </a>
+<a class="caddy" data-download="zip" href="https://github.com/steelshell/releases/releases">
+          <span class="caddy-vent" aria-hidden="true"></span>
+          <span class="tape white small" data-tape>Windows</span>
+          <span class="caddy-kind">portable .zip</span>
+          <span class="caddy-meta"><span data-app-version>0.4.3</span> · <span data-size="zip">19</span> <span class="en">MB</span><span class="ru">МБ</span></span>
+          <span class="caddy-lever" aria-hidden="true"><span class="led on"></span><span class="en">Download</span><span class="ru">Скачать</span></span>
+        </a>
+<a class="caddy" data-download="apk" href="https://github.com/steelshell/releases/releases">
+          <span class="caddy-vent" aria-hidden="true"></span>
+          <span class="tape white small" data-tape>Android</span>
+          <span class="caddy-kind">.apk</span>
+          <span class="caddy-meta"><span data-app-version>0.4.3</span> · <span data-size="apk">81</span> <span class="en">MB</span><span class="ru">МБ</span></span>
+          <span class="caddy-lever" aria-hidden="true"><span class="led on"></span><span class="en">Download</span><span class="ru">Скачать</span></span>
+        </a>
+<a class="caddy" data-download="deb-amd64" href="https://github.com/steelshell/releases/releases">
+          <span class="caddy-vent" aria-hidden="true"></span>
+          <span class="tape white small" data-tape>Linux</span>
+          <span class="caddy-kind">amd64 .deb</span>
+          <span class="caddy-meta"><span data-cli-version>0.3.1</span> · <span data-size="deb-amd64">3</span> <span class="en">MB</span><span class="ru">МБ</span></span>
+          <span class="caddy-lever" aria-hidden="true"><span class="led on"></span><span class="en">Download</span><span class="ru">Скачать</span></span>
+        </a>
+<a class="caddy" data-download="deb-arm64" href="https://github.com/steelshell/releases/releases">
+          <span class="caddy-vent" aria-hidden="true"></span>
+          <span class="tape white small" data-tape>Linux</span>
+          <span class="caddy-kind">arm64 .deb</span>
+          <span class="caddy-meta"><span data-cli-version>0.3.1</span> · <span data-size="deb-arm64">3</span> <span class="en">MB</span><span class="ru">МБ</span></span>
+          <span class="caddy-lever" aria-hidden="true"><span class="led on"></span><span class="en">Download</span><span class="ru">Скачать</span></span>
+        </a></div>
+      <div class="install">
+        <div class="lcd cmd-lcd"><code id="install-cmd">curl -fsSL https://steelshell.dev/install.sh | sh</code></div>
+        <button class="key copy" type="button" data-copy="install-cmd"><span class="led"></span><span class="en">Copy</span><span class="ru">Копировать</span></button>
+        <p><span class="en">Linux packages and their apt repository are signed with release key <span class='fpr'>448A C089 1977 75A4 4285 241B 1A87 EAF1 3A0D 35A8</span>.</span><span class="ru">Пакеты для Linux и их apt-репозиторий подписаны ключом релизов <span class='fpr'>448A C089 1977 75A4 4285 241B 1A87 EAF1 3A0D 35A8</span>.</span></p>
+      </div>
+    </section>
+
+    <footer class="unit u1 black pdu">
+      <span class="outlets" aria-hidden="true"><span class="outlet"></span><span class="outlet"></span><span class="outlet"></span><span class="outlet"></span></span>
+      <span class="silk">© 2026 STEELSHELL</span>
+      <a href="https://github.com/steelshell/releases/releases"><span class="en">All releases</span><span class="ru">Все релизы</span></a>
+      <a href="https://github.com/steelshell/claude-plugin"><span class="en">Claude Code plugin</span><span class="ru">Плагин для Claude Code</span></a>
+      <a href="/link/"><span class="en">Sign in a device</span><span class="ru">Вход устройства</span></a>
+      <span class="breaker" aria-hidden="true"></span>
+    </footer>
+
+  </div>
+  <div class="rail" data-rail aria-hidden="true"></div>
+</div>
+</body>
+</html>
