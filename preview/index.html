@@ -1,24 +1,405 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Steelshell · варианты сайта</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steelshell: an SSH client in a steel shell</title>
+<meta name="description" content="Steelshell is an SSH client for Windows, Android and the Linux terminal. Hosts, keys, passwords and snippets sync between your devices, encrypted on the device, and AI agents can work on your servers without seeing a password.">
+<meta name="theme-color" content="#c9cfc7">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://steelshell.dev/">
+<meta property="og:title" content="Steelshell">
+<meta property="og:description" content="An SSH client for Windows, Android and the Linux terminal with an end-to-end encrypted vault.">
+<meta property="og:image" content="https://steelshell.dev/assets/img/og.png">
 <link rel="icon" type="image/png" href="/assets/img/icon-64.png">
-<link rel="stylesheet" href="choose.css">
+<link rel="apple-touch-icon" href="/assets/img/icon-180.png">
+<link rel="preload" href="/assets/fonts/OpenGOSTtypeB-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/assets/sheet.css">
+<script src="/assets/lang.js"></script>
+<script src="/assets/sheet.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#sheet-1"><span class="en">Skip to content</span><span class="ru">К содержанию</span></a>
+
+<header class="desk">
+  <a class="brand" href="/"><img src="/assets/img/icon-64.png" width="28" height="28" alt=""><span>Steelshell</span></a>
+  <nav class="index" aria-label="Sheets">
+    <a href="#sheet-1"><span class="n">1</span><span class="en">General view</span><span class="ru">Общий вид</span></a>
+    <a href="#sheet-2"><span class="n">2</span><span class="en">Section A–A</span><span class="ru">Разрез А–А</span></a>
+    <a href="#sheet-3"><span class="n">3</span><span class="en">Wiring</span><span class="ru">Схема</span></a>
+    <a href="#sheet-4"><span class="n">4</span><span class="en">Downloads</span><span class="ru">Комплект</span></a>
+  </nav>
+  <button class="lang" type="button" data-lang-toggle><span class="en" lang="ru">Русский</span><span class="ru" lang="en">English</span></button>
+</header>
+
 <main>
-  <h1>Четыре варианта сайта</h1>
-  <p class="lead">Откройте каждый, на компьютере и на телефоне. Напишите номер того, что нравится, или что взять из разных.</p>
-  <ol class="variants">
-    <li><a href="/preview/1/"><img src="thumbs/1.webp" width="960" height="600" alt=""><b>1. Терминал</b><span>Сайт как сессия Steelshell: моноширинный шрифт, пиксельный логотип, разделы переключаются клавишами 1–5, загрузки выбираются стрелками.</span></a></li>
-    <li><a href="/preview/2/"><img src="thumbs/2.webp" width="960" height="600" alt=""><b>2. Продукт</b><span>Чёрный фон и большие скриншоты, окно приложения выпрямляется при прокрутке. Спокойно и дорого, в духе страниц Apple.</span></a></li>
-    <li><a href="/preview/3/"><img src="thumbs/3.webp" width="960" height="600" alt=""><b>3. Сигнал</b><span>Фирменный зелёный на весь экран, широкий жирный шрифт, скриншоты как предметы с чёрной обводкой и тенью, кнопки «нажимаются».</span></a></li>
-    <li><a href="/preview/4/"><img src="thumbs/4.webp" width="960" height="600" alt=""><b>4. Схема</b><span>Белый лист с видимой сеткой, живой чертёж синхронизации с бегущими пакетами, шаги 1–2–3 и честная таблица возможностей по платформам.</span></a></li>
-  </ol>
+  <section class="sheet" id="sheet-1" aria-labelledby="h-1">
+    <div class="frame">
+      <div class="corner" aria-hidden="true"><span>STLS.425110.001<span class="ru"> СБ</span></span></div>
+      <div class="field general">
+        <div class="intro">
+          <h1 id="h-1"><span class="en">An SSH client in a steel shell</span><span class="ru">SSH-клиент в стальном корпусе</span></h1>
+          <p class="lead"><span class="en">Hosts, keys, passwords and snippets live in one vault and follow you to every device you sign in on: Windows, Android and the Linux terminal. Everything is encrypted on the device, so the sync server only ever receives ciphertext.</span><span class="ru">Хосты, ключи, пароли и сниппеты лежат в одном хранилище и есть на каждом устройстве, где вы вошли: в Windows, на Android и в терминале Linux. Всё шифруется ещё на устройстве, поэтому сервер синхронизации получает только шифротекст.</span></p>
+          <div class="actions">
+            <a class="btn primary for-windows" data-download="setup" href="https://github.com/steelshell/releases/releases/latest"><span class="en">Download for Windows</span><span class="ru">Скачать для Windows</span></a>
+            <a class="btn primary for-android" data-download="apk" href="https://github.com/steelshell/releases/releases/latest"><span class="en">Download for Android</span><span class="ru">Скачать для Android</span></a>
+            <a class="btn primary for-linux" href="#sheet-4"><span class="en">Install on Linux</span><span class="ru">Установить в Linux</span></a>
+            <a class="more" href="#sheet-4"><span class="en">All downloads</span><span class="ru">Все версии</span></a>
+          </div>
+          <p class="versions"><span class="en">Version <span data-app-version>0.4.3</span> for Windows and Android, <span data-cli-version>0.3.1</span> for Linux.</span><span class="ru">Версия <span data-app-version>0.4.3</span> для Windows и Android, <span data-cli-version>0.3.1</span> для Linux.</span></p>
+          <figure class="view phone">
+            <figcaption><span class="en">View B, Android</span><span class="ru">Вид Б, Android</span></figcaption>
+            <img src="/assets/img/phone-hosts-412.webp" srcset="/assets/img/phone-hosts-412.webp 412w, /assets/img/phone-hosts-824.webp 824w" sizes="190px" width="412" height="892" alt="Steelshell on an Android phone: the host list" loading="lazy">
+          </figure>
+        </div>
+        <figure class="view desktop">
+          <figcaption><span class="en">View A, Windows</span><span class="ru">Вид А, Windows</span></figcaption>
+          <div class="callouts">
+            <img src="/assets/img/app-hosts-1280.webp" srcset="/assets/img/app-hosts-1280.webp 1280w, /assets/img/app-hosts-2560.webp 2560w" sizes="(min-width: 1100px) 760px, 100vw" width="1280" height="800" alt="Steelshell on Windows: hosts in groups, recent servers, search, ping and favorites">
+            <svg viewBox="0 0 1400 920" aria-hidden="true">
+              <rect class="contour" x="60" y="60" width="1280" height="800"/>
+              <g class="callout k1">
+          <line class="halo" x1="88" y1="356" x2="56.0" y2="356.0" pathLength="1"/>
+          <line class="leader" x1="88" y1="356" x2="56.0" y2="356.0" pathLength="1"/>
+          <circle class="dot-halo" cx="88" cy="356" r="8"/><circle class="dot" cx="88" cy="356" r="5"/>
+          <circle class="balloon" cx="30" cy="356" r="26"/>
+          <text class="num" x="30" y="367" text-anchor="middle">1</text>
+        </g>
+<g class="callout k2">
+          <line class="halo" x1="87" y1="239" x2="56.0" y2="239.0" pathLength="1"/>
+          <line class="leader" x1="87" y1="239" x2="56.0" y2="239.0" pathLength="1"/>
+          <circle class="dot-halo" cx="87" cy="239" r="8"/><circle class="dot" cx="87" cy="239" r="5"/>
+          <circle class="balloon" cx="30" cy="239" r="26"/>
+          <text class="num" x="30" y="250" text-anchor="middle">2</text>
+        </g>
+<g class="callout k3">
+          <line class="halo" x1="88" y1="163" x2="56.0" y2="163.0" pathLength="1"/>
+          <line class="leader" x1="88" y1="163" x2="56.0" y2="163.0" pathLength="1"/>
+          <circle class="dot-halo" cx="88" cy="163" r="8"/><circle class="dot" cx="88" cy="163" r="5"/>
+          <circle class="balloon" cx="30" cy="163" r="26"/>
+          <text class="num" x="30" y="174" text-anchor="middle">3</text>
+        </g>
+<g class="callout k4">
+          <line class="halo" x1="420" y1="276" x2="420.0" y2="56.0" pathLength="1"/>
+          <line class="leader" x1="420" y1="276" x2="420.0" y2="56.0" pathLength="1"/>
+          <circle class="dot-halo" cx="420" cy="276" r="8"/><circle class="dot" cx="420" cy="276" r="5"/>
+          <circle class="balloon" cx="420" cy="30" r="26"/>
+          <text class="num" x="420" y="41" text-anchor="middle">4</text>
+        </g>
+<g class="callout k5">
+          <line class="halo" x1="1100" y1="136" x2="1100.0" y2="56.0" pathLength="1"/>
+          <line class="leader" x1="1100" y1="136" x2="1100.0" y2="56.0" pathLength="1"/>
+          <circle class="dot-halo" cx="1100" cy="136" r="8"/><circle class="dot" cx="1100" cy="136" r="5"/>
+          <circle class="balloon" cx="1100" cy="30" r="26"/>
+          <text class="num" x="1100" y="41" text-anchor="middle">5</text>
+        </g>
+<g class="callout k6">
+          <line class="halo" x1="1134" y1="615" x2="1344.7" y2="565.9" pathLength="1"/>
+          <line class="leader" x1="1134" y1="615" x2="1344.7" y2="565.9" pathLength="1"/>
+          <circle class="dot-halo" cx="1134" cy="615" r="8"/><circle class="dot" cx="1134" cy="615" r="5"/>
+          <circle class="balloon" cx="1370" cy="560" r="26"/>
+          <text class="num" x="1370" y="571" text-anchor="middle">6</text>
+        </g>
+<g class="callout k7">
+          <line class="halo" x1="1243" y1="669" x2="1348.9" y2="744.9" pathLength="1"/>
+          <line class="leader" x1="1243" y1="669" x2="1348.9" y2="744.9" pathLength="1"/>
+          <circle class="dot-halo" cx="1243" cy="669" r="8"/><circle class="dot" cx="1243" cy="669" r="5"/>
+          <circle class="balloon" cx="1370" cy="760" r="26"/>
+          <text class="num" x="1370" y="771" text-anchor="middle">7</text>
+        </g>
+            </svg>
+          </div>
+        </figure>
+        <table class="gost spec">
+        <caption><span class="en">Parts list</span><span class="ru">Спецификация</span></caption>
+        <thead><tr><th class="pos"><span class="en">Item</span><span class="ru">Поз.</span></th><th class="nm"><span class="en">Name</span><span class="ru">Наименование</span></th><th class="note"><span class="en">Note</span><span class="ru">Примечание</span></th></tr></thead>
+        <tbody><tr><td class="pos">1</td><td class="nm"><span class="en">Groups</span><span class="ru">Группы</span></td><td class="note"><span class="en">Hosts sit in groups with their own colour, and groups nest.</span><span class="ru">Хосты разложены по группам со своим цветом, группы можно вкладывать друг в друга.</span></td></tr>
+<tr><td class="pos">2</td><td class="nm"><span class="en">Snippets</span><span class="ru">Сниппеты</span></td><td class="note"><span class="en">Commands you run often. Ctrl+Shift+K in a terminal finds one and runs it.</span><span class="ru">Частые команды. Ctrl+Shift+K в терминале находит нужную и запускает.</span></td></tr>
+<tr><td class="pos">3</td><td class="nm"><span class="en">Keychain</span><span class="ru">Связка ключей</span></td><td class="note"><span class="en">SSH keys, passwords and proxies. Generate a key or import yours.</span><span class="ru">SSH-ключи, пароли и прокси. Ключ можно сгенерировать или импортировать.</span></td></tr>
+<tr><td class="pos">4</td><td class="nm"><span class="en">Recent</span><span class="ru">Недавние</span></td><td class="note"><span class="en">The servers you opened last stay on top.</span><span class="ru">Серверы, к которым вы подключались последними, всегда сверху.</span></td></tr>
+<tr><td class="pos">5</td><td class="nm"><span class="en">Search</span><span class="ru">Поиск</span></td><td class="note"><span class="en">Ctrl+F finds a host by name, address or group.</span><span class="ru">Ctrl+F ищет хост по имени, адресу и группе.</span></td></tr>
+<tr><td class="pos">6</td><td class="nm"><span class="en">Ping</span><span class="ru">Пинг</span></td><td class="note"><span class="en">Live latency to every server, right in the list.</span><span class="ru">Живая задержка до каждого сервера прямо в списке.</span></td></tr>
+<tr><td class="pos">7</td><td class="nm"><span class="en">Favorites</span><span class="ru">Избранное</span></td><td class="note"><span class="en">A star keeps a host in its own filter.</span><span class="ru">Звёздочка выносит хост в отдельный фильтр.</span></td></tr></tbody>
+      </table>
+      </div>
+      
+    <div class="tb" role="group" aria-label="Title block">
+      <div class="c s r1 c1"></div><div class="c s r1 c2">1</div><div class="c s r1 c3" data-app-version>0.4.3</div><div class="c s r1 c4"></div><div class="c s r1 c5" data-app-date>23.10</div>
+      <div class="c s l r2 c1"><span class="en">Rev</span><span class="ru">Изм.</span></div><div class="c s l r2 c2"><span class="en">Sh.</span><span class="ru">Лист</span></div><div class="c s l r2 c3"><span class="en">Doc. no.</span><span class="ru">№ докум.</span></div><div class="c s l r2 c4"><span class="en">Sign</span><span class="ru">Подп.</span></div><div class="c s l r2 c5"><span class="en">Date</span><span class="ru">Дата</span></div>
+      <div class="c s l r3 c12"><span class="en">Drawn</span><span class="ru">Разраб.</span></div><div class="c s r3 c3">makcnmovdev</div><div class="c s r3 c4"></div><div class="c s r3 c5" data-app-date>23.10</div>
+      <div class="c s l r4 c12"><span class="en">Checked</span><span class="ru">Пров.</span></div><div class="c s r4 c3"></div><div class="c s r4 c4"></div><div class="c s r4 c5"></div>
+      <div class="c s l r5 c12"><span class="en">Tech. check</span><span class="ru">Т.контр.</span></div><div class="c s r5 c3"></div><div class="c s r5 c4"></div><div class="c s r5 c5"></div>
+      <div class="c s l r6 c12"><span class="en">Std. check</span><span class="ru">Н.контр.</span></div><div class="c s r6 c3"></div><div class="c s r6 c4"></div><div class="c s r6 c5"></div>
+      <div class="c s l r7 c12"><span class="en">Approved</span><span class="ru">Утв.</span></div><div class="c s r7 c3"></div><div class="c s r7 c4"></div><div class="c s r7 c5"></div>
+      <div class="c code">STLS.425110.001<span class="ru"> СБ</span></div>
+      <div class="c name"><b>Steelshell</b><span class="en">General view</span><span class="ru">Общий вид</span></div>
+      <div class="c l lit-h"><span class="en">Stage</span><span class="ru">Лит.</span></div><div class="c l mass-h"><span class="en">Weight</span><span class="ru">Масса</span></div><div class="c l scale-h"><span class="en">Scale</span><span class="ru">Масштаб</span></div>
+      <div class="c lit"><span class="en">A</span><span class="ru">А</span></div><div class="c mass">—</div><div class="c scale">1:1</div>
+      <div class="c sheetno"><span class="en">Sheet 1</span><span class="ru">Лист 1</span></div><div class="c sheets"><span class="en">of 4</span><span class="ru">Листов 4</span></div>
+      <div class="c org">steelshell.dev</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-2" aria-labelledby="h-2">
+    <div class="frame">
+      <div class="corner" aria-hidden="true"><span>STLS.425110.001<span class="ru"> </span></span></div>
+      <div class="field cut">
+        <figure class="cut-figure"><svg class="drawing section-drawing" viewBox="0 0 800 520" role="img" aria-labelledby="sec-title">
+  <title id="sec-title">Section A–A through the Steelshell vault</title>
+  <defs>
+    <pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="11" class="hatch-line"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 12 8" refX="11" refY="4" markerWidth="12" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L12,4 L0,8 Z" class="arrowhead"/>
+    </marker>
+  </defs>
+  <text class="g label" x="40" y="44">А–А</text>
+  <path class="wall" fill-rule="evenodd" d="M220,70 H380 A180,180 0 0 1 380,430 H220 A180,180 0 0 1 220,70 Z M220,106 H380 A144,144 0 0 1 380,394 H220 A144,144 0 0 1 220,106 Z"/>
+  <path class="thick" d="M220,70 H380 A180,180 0 0 1 380,430 H220 A180,180 0 0 1 220,70 Z"/>
+  <path class="thick" d="M220,106 H380 A144,144 0 0 1 380,394 H220 A144,144 0 0 1 220,106 Z"/>
+  <line class="axis" x1="20" y1="250" x2="580" y2="250"/>
+  <line class="axis" x1="300" y1="44" x2="300" y2="456"/>
+  <g class="plain">
+    <text class="g k" x="128" y="160">prod-api-1</text><text class="g v" x="262" y="160">root@10.0.4.12</text>
+    <text class="g k" x="118" y="194">prod-db</text><text class="g v" x="262" y="194">postgres@10.0.4.20</text>
+    <text class="g k" x="112" y="228">router</text><text class="g v" x="262" y="228">admin@192.168.1.2</text>
+    <text class="en g k" x="112" y="284">key</text><text class="ru g k" x="112" y="284">ключ</text><text class="g v" x="262" y="284">deploy-ed25519</text>
+    <text class="en g k" x="118" y="318">password</text><text class="ru g k" x="118" y="318">пароль</text><text class="g v" x="262" y="318">S0ft-Lilac-82</text>
+    <text class="en g k" x="128" y="352">snippet</text><text class="ru g k" x="128" y="352">сниппет</text><text class="g v" x="262" y="352">docker compose up -d</text>
+  </g>
+  <polyline class="thin" points="380,82 560,30 780,30"/>
+  <circle class="dotfill" cx="380" cy="82" r="3.5"/>
+  <text class="en g note" x="566" y="22">Wall: AES-256-GCM</text><text class="ru g note" x="566" y="22">Стенка: AES-256-GCM</text>
+  <polyline class="thin" points="452,194 560,112 780,112"/>
+  <circle class="dotfill" cx="452" cy="194" r="3.5"/>
+  <text class="en g note" x="566" y="104">Readable on your devices only</text><text class="ru g note" x="566" y="104">Открыто только на ваших устройствах</text>
+  <path class="thin" d="M562,300 H614" marker-end="url(#arrow)"/>
+  <rect class="dashed" x="620" y="232" width="160" height="214"/>
+  <text class="en g small" x="620" y="200">S1 sync server</text><text class="ru g small" x="620" y="200">S1 сервер синхронизации</text>
+  <text class="en g small" x="620" y="222">sees ciphertext only</text><text class="ru g small" x="620" y="222">видит только шифротекст</text>
+  <g class="envelope"><rect x="634" y="250" width="132" height="54"/><text class="g tiny" x="642" y="268">host  rev 116</text><text class="mono tiny" x="642" y="290">syqAKhelGFZ+B8j0HN4J…</text></g>
+  <g class="envelope"><rect x="634" y="316" width="132" height="54"/><text class="g tiny" x="642" y="334">key  rev 102</text><text class="mono tiny" x="642" y="356">Q/p4p4mNY70tvJ2mIwBq…</text></g>
+  <g class="envelope"><rect x="634" y="382" width="132" height="54"/><text class="g tiny" x="642" y="400">snippet  rev 87</text><text class="mono tiny" x="642" y="422">H8LxptgGVfD8F2veBuCx…</text></g>
+</svg></figure>
+        <div class="cut-text">
+          <h2 id="h-2"><span class="en">Only you hold the key</span><span class="ru">Ключ от корпуса есть только у вас</span></h2>
+          <p><span class="en">The sync server keeps your records like sealed, numbered envelopes. It can tell how many there are, of what kind and when they arrived, but it can't open them: the vault key exists only on your devices.</span><span class="ru">Сервер синхронизации хранит записи как запечатанные конверты с номерами. Он видит, сколько их, какого они типа и когда пришли, но открыть не может: ключ хранилища есть только на ваших устройствах.</span></p>
+          <p><span class="en">Even someone who takes over that server gets a stack of envelopes and nothing to open them with.</span><span class="ru">Даже тот, кто захватит этот сервер, получит стопку конвертов и ничего, чем их открыть.</span></p>
+        </div>
+        <div class="requirements">
+        <h3><span class="en">Technical requirements</span><span class="ru">Технические требования</span></h3>
+        <ol><li><span class="en">Your password never leaves the device. Argon2id with 64 MiB and two passes turns it into a sign-in key and the key that seals your vault key.</span><span class="ru">Пароль не покидает устройство. Argon2id с 64 МиБ и двумя проходами делает из него ключ входа и ключ, которым запечатан ключ хранилища.</span></li>
+<li><span class="en">Every record is encrypted with AES-256-GCM and bound to its kind and id, so one record can't be passed off as another.</span><span class="ru">Каждая запись зашифрована AES-256-GCM и привязана к своему типу и номеру, поэтому одну запись нельзя выдать за другую.</span></li>
+<li><span class="en">A new device gets the vault key sealed with X25519 for that device alone. Its sign-in code is derived from the device's own key.</span><span class="ru">Новое устройство получает ключ хранилища, запечатанный X25519 только для него. Код входа выводится из ключа самого устройства.</span></li>
+<li><span class="en">Clients refuse weaker encryption settings even when the server asks for them.</span><span class="ru">Клиенты не принимают ослабленные параметры шифрования, даже если их просит сервер.</span></li>
+<li><span class="en">An AI agent works through Steelshell and never sees a password or a key.</span><span class="ru">ИИ-агент работает через Steelshell и не видит ни паролей, ни ключей.</span></li></ol>
+      </div>
+      </div>
+      
+    <div class="tb" role="group" aria-label="Title block">
+      <div class="c s r1 c1"></div><div class="c s r1 c2">2</div><div class="c s r1 c3" data-app-version>0.4.3</div><div class="c s r1 c4"></div><div class="c s r1 c5" data-app-date>23.10</div>
+      <div class="c s l r2 c1"><span class="en">Rev</span><span class="ru">Изм.</span></div><div class="c s l r2 c2"><span class="en">Sh.</span><span class="ru">Лист</span></div><div class="c s l r2 c3"><span class="en">Doc. no.</span><span class="ru">№ докум.</span></div><div class="c s l r2 c4"><span class="en">Sign</span><span class="ru">Подп.</span></div><div class="c s l r2 c5"><span class="en">Date</span><span class="ru">Дата</span></div>
+      <div class="c s l r3 c12"><span class="en">Drawn</span><span class="ru">Разраб.</span></div><div class="c s r3 c3">makcnmovdev</div><div class="c s r3 c4"></div><div class="c s r3 c5" data-app-date>23.10</div>
+      <div class="c s l r4 c12"><span class="en">Checked</span><span class="ru">Пров.</span></div><div class="c s r4 c3"></div><div class="c s r4 c4"></div><div class="c s r4 c5"></div>
+      <div class="c s l r5 c12"><span class="en">Tech. check</span><span class="ru">Т.контр.</span></div><div class="c s r5 c3"></div><div class="c s r5 c4"></div><div class="c s r5 c5"></div>
+      <div class="c s l r6 c12"><span class="en">Std. check</span><span class="ru">Н.контр.</span></div><div class="c s r6 c3"></div><div class="c s r6 c4"></div><div class="c s r6 c5"></div>
+      <div class="c s l r7 c12"><span class="en">Approved</span><span class="ru">Утв.</span></div><div class="c s r7 c3"></div><div class="c s r7 c4"></div><div class="c s r7 c5"></div>
+      <div class="c code">STLS.425110.001<span class="ru"> </span></div>
+      <div class="c name"><b>Steelshell</b><span class="en">Section A–A</span><span class="ru">Разрез А–А</span></div>
+      <div class="c l lit-h"><span class="en">Stage</span><span class="ru">Лит.</span></div><div class="c l mass-h"><span class="en">Weight</span><span class="ru">Масса</span></div><div class="c l scale-h"><span class="en">Scale</span><span class="ru">Масштаб</span></div>
+      <div class="c lit"><span class="en">A</span><span class="ru">А</span></div><div class="c mass">—</div><div class="c scale">1:1</div>
+      <div class="c sheetno"><span class="en">Sheet 2</span><span class="ru">Лист 2</span></div><div class="c sheets"><span class="en">of 4</span><span class="ru">Листов 4</span></div>
+      <div class="c org">steelshell.dev</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-3" aria-labelledby="h-3">
+    <div class="frame">
+      <div class="corner" aria-hidden="true"><span>STLS.425110.001<span class="ru"> Э5</span></span></div>
+      <div class="field wiring">
+        <div class="wiring-text">
+          <h2 id="h-3"><span class="en">The Linux terminal and AI agents</span><span class="ru">Терминал Linux и ИИ-агенты</span></h2>
+          <p><span class="en">steelshell installs on Debian and Ubuntu with one command. Once you sign in, your servers, keys and snippets are there: steelshell ssh, exec, cp and a full-screen view.</span><span class="ru">steelshell ставится на Debian и Ubuntu одной командой. После входа в нём ваши серверы, ключи и сниппеты: steelshell ssh, exec, cp и полноэкранный режим.</span></p>
+          <p><span class="en">Its MCP server lets Claude Code and other agents work only on the servers you open to them. The agent keeps a shell open, runs commands and edits files, Steelshell signs in for it, and every step goes into a log.</span><span class="ru">Встроенный MCP-сервер даёт Claude Code и другим агентам работать только на серверах, которые вы им открыли. Агент держит сессию, запускает команды и правит файлы, Steelshell входит на сервер за него и пишет каждый шаг в журнал.</span></p>
+          <div class="commands"><div class="cmd">
+          <code id="cmd-1">curl -fsSL https://steelshell.dev/install.sh | sh</code>
+          <button class="copy" type="button" data-copy="cmd-1"><span class="en">Copy</span><span class="ru">Копировать</span></button>
+          <p><span class="en">Install. Updates come through apt after that.</span><span class="ru">Установить. Обновления потом приходят через apt.</span></p>
+        </div>
+<div class="cmd">
+          <code id="cmd-2">steelshell login</code>
+          <button class="copy" type="button" data-copy="cmd-2"><span class="en">Copy</span><span class="ru">Копировать</span></button>
+          <p><span class="en">Sign in with a link, or type the code in the app.</span><span class="ru">Войти по ссылке или по коду в приложении.</span></p>
+        </div>
+<div class="cmd">
+          <code id="cmd-3">steelshell agent allow prod-api</code>
+          <button class="copy" type="button" data-copy="cmd-3"><span class="en">Copy</span><span class="ru">Копировать</span></button>
+          <p><span class="en">Let agents work on one server.</span><span class="ru">Открыть агентам один сервер.</span></p>
+        </div>
+<div class="cmd">
+          <code id="cmd-4">steelshell agent setup</code>
+          <button class="copy" type="button" data-copy="cmd-4"><span class="en">Copy</span><span class="ru">Копировать</span></button>
+          <p><span class="en">Connect Claude Code.</span><span class="ru">Подключить Claude Code.</span></p>
+        </div></div>
+        </div>
+        <figure class="scheme-figure"><svg class="drawing scheme-drawing" viewBox="0 0 760 450" role="img" aria-labelledby="sch-title">
+  <title id="sch-title">How the Steelshell apps, the sync server, your servers and AI agents connect</title>
+  <polyline class="link" points="240,58 480,58 560,58"/>
+  <polyline class="link" points="240,138 480,138"/>
+  <polyline class="link" points="240,218 480,218"/>
+  <polyline class="link" points="480,58 480,278 560,278"/>
+  <polyline class="link" points="480,168 560,168"/>
+  <circle class="dotfill" cx="480" cy="58" r="4"/><circle class="dotfill" cx="480" cy="138" r="4"/><circle class="dotfill" cx="480" cy="168" r="4"/><circle class="dotfill" cx="480" cy="218" r="4"/>
+  <text class="g small" x="360" y="50" text-anchor="middle">SSH</text>
+  <polyline class="sync" points="60,58 30,58 30,390 300,390"/>
+  <polyline class="sync" points="60,138 30,138"/>
+  <polyline class="sync" points="60,218 30,218"/>
+  <circle class="dotfill" cx="30" cy="138" r="4"/><circle class="dotfill" cx="30" cy="218" r="4"/>
+  <text class="en g small" x="160" y="382" text-anchor="middle">ciphertext</text><text class="ru g small" x="160" y="382" text-anchor="middle">шифротекст</text>
+  <line class="link" x1="150" y1="300" x2="150" y2="246"/>
+  <text class="g small" x="160" y="280">MCP</text>
+  <g class="part"><rect x="60" y="30" width="180" height="56"/><text class="g des" x="60" y="22">A1</text><text class="g box" x="150" y="66" text-anchor="middle">Windows</text></g>
+  <g class="part"><rect x="60" y="110" width="180" height="56"/><text class="g des" x="60" y="102">A2</text><text class="g box" x="150" y="146" text-anchor="middle">Android</text></g>
+  <g class="part"><rect x="60" y="190" width="180" height="56"/><text class="g des" x="60" y="182">A3</text><text class="g box" x="150" y="226" text-anchor="middle">steelshell CLI</text></g>
+  <g class="part"><rect x="60" y="300" width="180" height="56"/><text class="g des" x="60" y="292">A4</text><text class="en g box" x="150" y="336" text-anchor="middle">AI agent</text><text class="ru g box" x="150" y="336" text-anchor="middle">ИИ-агент</text></g>
+  <text class="en g small" x="252" y="334">no passwords, no keys</text><text class="ru g small" x="252" y="334">без паролей и ключей</text>
+  <g class="part"><rect x="300" y="362" width="200" height="56"/><text class="g des" x="300" y="354">S1</text><text class="g box" x="400" y="398" text-anchor="middle">api.steelshell.dev</text></g>
+  <g class="part"><rect x="560" y="30" width="170" height="56"/><text class="g des" x="560" y="22">X1</text><text class="g box" x="645" y="66" text-anchor="middle">prod-api</text></g>
+  <g class="part"><rect x="560" y="140" width="170" height="56"/><text class="g des" x="560" y="132">X2</text><text class="g box" x="645" y="176" text-anchor="middle">prod-db</text></g>
+  <g class="part"><rect x="560" y="250" width="170" height="56"/><text class="g des" x="560" y="242">X3</text><text class="g box" x="645" y="286" text-anchor="middle">router</text></g>
+</svg></figure>
+        <table class="gost elements">
+        <caption><span class="en">List of elements</span><span class="ru">Перечень элементов</span></caption>
+        <thead><tr><th class="pos"><span class="en">Ref.</span><span class="ru">Поз. обозн.</span></th><th class="nm"><span class="en">Name</span><span class="ru">Наименование</span></th><th class="note"><span class="en">Note</span><span class="ru">Примечание</span></th></tr></thead>
+        <tbody><tr><td class="pos">A1</td><td class="nm"><span class="en">Steelshell for Windows</span><span class="ru">Steelshell для Windows</span></td><td class="note"><span class="en">installer or portable</span><span class="ru">установщик или портативная версия</span></td></tr>
+<tr><td class="pos">A2</td><td class="nm"><span class="en">Steelshell for Android</span><span class="ru">Steelshell для Android</span></td><td class="note"><span class="en">APK, Android 7.0 and later</span><span class="ru">APK, Android 7.0 и новее</span></td></tr>
+<tr><td class="pos">A3</td><td class="nm"><span class="en">steelshell for Linux</span><span class="ru">steelshell для Linux</span></td><td class="note"><span class="en">Debian, Ubuntu; amd64, arm64</span><span class="ru">Debian, Ubuntu; amd64, arm64</span></td></tr>
+<tr><td class="pos">A4</td><td class="nm"><span class="en">AI agent</span><span class="ru">ИИ-агент</span></td><td class="note"><span class="en">Claude Code, Codex, Cursor over MCP</span><span class="ru">Claude Code, Codex, Cursor через MCP</span></td></tr>
+<tr><td class="pos">S1</td><td class="nm"><span class="en">Sync server</span><span class="ru">Сервер синхронизации</span></td><td class="note"><span class="en">keeps ciphertext only</span><span class="ru">хранит только шифротекст</span></td></tr>
+<tr><td class="pos">X1–X3</td><td class="nm"><span class="en">Your servers</span><span class="ru">Ваши серверы</span></td><td class="note"><span class="en">anything you reach over SSH</span><span class="ru">всё, куда вы ходите по SSH</span></td></tr></tbody>
+      </table>
+      </div>
+      
+    <div class="tb" role="group" aria-label="Title block">
+      <div class="c s r1 c1"></div><div class="c s r1 c2">3</div><div class="c s r1 c3" data-app-version>0.4.3</div><div class="c s r1 c4"></div><div class="c s r1 c5" data-app-date>23.10</div>
+      <div class="c s l r2 c1"><span class="en">Rev</span><span class="ru">Изм.</span></div><div class="c s l r2 c2"><span class="en">Sh.</span><span class="ru">Лист</span></div><div class="c s l r2 c3"><span class="en">Doc. no.</span><span class="ru">№ докум.</span></div><div class="c s l r2 c4"><span class="en">Sign</span><span class="ru">Подп.</span></div><div class="c s l r2 c5"><span class="en">Date</span><span class="ru">Дата</span></div>
+      <div class="c s l r3 c12"><span class="en">Drawn</span><span class="ru">Разраб.</span></div><div class="c s r3 c3">makcnmovdev</div><div class="c s r3 c4"></div><div class="c s r3 c5" data-app-date>23.10</div>
+      <div class="c s l r4 c12"><span class="en">Checked</span><span class="ru">Пров.</span></div><div class="c s r4 c3"></div><div class="c s r4 c4"></div><div class="c s r4 c5"></div>
+      <div class="c s l r5 c12"><span class="en">Tech. check</span><span class="ru">Т.контр.</span></div><div class="c s r5 c3"></div><div class="c s r5 c4"></div><div class="c s r5 c5"></div>
+      <div class="c s l r6 c12"><span class="en">Std. check</span><span class="ru">Н.контр.</span></div><div class="c s r6 c3"></div><div class="c s r6 c4"></div><div class="c s r6 c5"></div>
+      <div class="c s l r7 c12"><span class="en">Approved</span><span class="ru">Утв.</span></div><div class="c s r7 c3"></div><div class="c s r7 c4"></div><div class="c s r7 c5"></div>
+      <div class="c code">STLS.425110.001<span class="ru"> Э5</span></div>
+      <div class="c name"><b>Steelshell</b><span class="en">Wiring diagram</span><span class="ru">Схема соединений</span></div>
+      <div class="c l lit-h"><span class="en">Stage</span><span class="ru">Лит.</span></div><div class="c l mass-h"><span class="en">Weight</span><span class="ru">Масса</span></div><div class="c l scale-h"><span class="en">Scale</span><span class="ru">Масштаб</span></div>
+      <div class="c lit"><span class="en">A</span><span class="ru">А</span></div><div class="c mass">—</div><div class="c scale">1:1</div>
+      <div class="c sheetno"><span class="en">Sheet 3</span><span class="ru">Лист 3</span></div><div class="c sheets"><span class="en">of 4</span><span class="ru">Листов 4</span></div>
+      <div class="c org">steelshell.dev</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-4" aria-labelledby="h-4">
+    <div class="frame">
+      <div class="corner" aria-hidden="true"><span>STLS.425110.001<span class="ru"> ВД</span></span></div>
+      <div class="field kit-field">
+        <div class="kit-head">
+          <h2 id="h-4"><span class="en">Download Steelshell</span><span class="ru">Скачать Steelshell</span></h2>
+          <p><span class="en">Windows 10 and 11 on x64, Android 7.0 and later, Debian 11 and Ubuntu 20.04 or newer on amd64 and arm64. Your hosts and keys move with your account, so start on any of them.</span><span class="ru">Windows 10 и 11 на x64, Android 7.0 и новее, Debian 11 и Ubuntu 20.04 или новее на amd64 и arm64. Хосты и ключи переезжают вместе с аккаунтом, начинать можно с любого.</span></p>
+        </div>
+        <table class="gost kit">
+        <caption><span class="en">Delivery set</span><span class="ru">Комплект поставки</span></caption>
+        <thead><tr><th class="pos"><span class="en">Item</span><span class="ru">Поз.</span></th><th class="nm"><span class="en">Name</span><span class="ru">Наименование</span></th><th class="file"><span class="en">File</span><span class="ru">Файл</span></th><th class="size"><span class="en">Size</span><span class="ru">Размер</span></th><th class="get"><span class="visually-hidden"><span class="en">Link</span><span class="ru">Ссылка</span></span></th></tr></thead>
+        <tbody><tr>
+          <td class="pos">1</td>
+          <td class="nm"><span class="en">Steelshell for Windows, installer</span><span class="ru">Steelshell для Windows, установщик</span></td>
+          <td class="file"><span data-file="setup">Steelshell-0.4.3-setup.exe</span></td>
+          <td class="size"><span data-size="setup">15</span> <span class="en">MB</span><span class="ru">МБ</span></td>
+          <td class="get"><a class="btn small" data-download="setup" href="https://github.com/steelshell/releases/releases"><span class="en">Download</span><span class="ru">Скачать</span></a></td>
+        </tr>
+<tr>
+          <td class="pos">2</td>
+          <td class="nm"><span class="en">Steelshell for Windows, portable</span><span class="ru">Steelshell для Windows, портативная</span></td>
+          <td class="file"><span data-file="zip">Steelshell-0.4.3-windows-x64.zip</span></td>
+          <td class="size"><span data-size="zip">19</span> <span class="en">MB</span><span class="ru">МБ</span></td>
+          <td class="get"><a class="btn small" data-download="zip" href="https://github.com/steelshell/releases/releases"><span class="en">Download</span><span class="ru">Скачать</span></a></td>
+        </tr>
+<tr>
+          <td class="pos">3</td>
+          <td class="nm"><span class="en">Steelshell for Android</span><span class="ru">Steelshell для Android</span></td>
+          <td class="file"><span data-file="apk">Steelshell-0.4.3-android.apk</span></td>
+          <td class="size"><span data-size="apk">81</span> <span class="en">MB</span><span class="ru">МБ</span></td>
+          <td class="get"><a class="btn small" data-download="apk" href="https://github.com/steelshell/releases/releases"><span class="en">Download</span><span class="ru">Скачать</span></a></td>
+        </tr>
+<tr>
+          <td class="pos">4</td>
+          <td class="nm"><span class="en">steelshell for Linux, amd64</span><span class="ru">steelshell для Linux, amd64</span></td>
+          <td class="file"><span data-file="deb-amd64">steelshell_0.3.1_amd64.deb</span></td>
+          <td class="size"><span data-size="deb-amd64">3</span> <span class="en">MB</span><span class="ru">МБ</span></td>
+          <td class="get"><a class="btn small" data-download="deb-amd64" href="https://github.com/steelshell/releases/releases"><span class="en">Download</span><span class="ru">Скачать</span></a></td>
+        </tr>
+<tr>
+          <td class="pos">5</td>
+          <td class="nm"><span class="en">steelshell for Linux, arm64</span><span class="ru">steelshell для Linux, arm64</span></td>
+          <td class="file"><span data-file="deb-arm64">steelshell_0.3.1_arm64.deb</span></td>
+          <td class="size"><span data-size="deb-arm64">3</span> <span class="en">MB</span><span class="ru">МБ</span></td>
+          <td class="get"><a class="btn small" data-download="deb-arm64" href="https://github.com/steelshell/releases/releases"><span class="en">Download</span><span class="ru">Скачать</span></a></td>
+        </tr></tbody>
+      </table>
+        <div class="kit-linux">
+          <div class="cmd">
+            <code id="cmd-install">curl -fsSL https://steelshell.dev/install.sh | sh</code>
+            <button class="copy" type="button" data-copy="cmd-install"><span class="en">Copy</span><span class="ru">Копировать</span></button>
+          </div>
+          <p><span class="en">Linux packages and their apt repository are signed with release key <span class='fpr'>448A C089 1977 75A4 4285 241B 1A87 EAF1 3A0D 35A8</span>. The installer checks the signature before it installs anything.</span><span class="ru">Пакеты для Linux и их apt-репозиторий подписаны ключом релизов <span class='fpr'>448A C089 1977 75A4 4285 241B 1A87 EAF1 3A0D 35A8</span>. Установщик проверяет подпись, прежде чем что-то ставить.</span></p>
+          <svg class="stamp" viewBox="0 0 200 200" role="img" aria-labelledby="stamp-title">
+  <title id="stamp-title">Linux packages are signed with release key 448A C089 1977 75A4 4285 241B 1A87 EAF1 3A0D 35A8</title>
+  <defs>
+    <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6"/>
+    </filter>
+    <path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+  </defs>
+  <g filter="url(#ink)">
+    <circle class="ring" cx="100" cy="100" r="94"/>
+    <circle class="ring thin-ring" cx="100" cy="100" r="62"/>
+    <text class="ring-text en"><textPath href="#ring" startOffset="0">STEELSHELL • RELEASE KEY • SIGNATURE CHECKED •</textPath></text>
+    <text class="ring-text ru"><textPath href="#ring" startOffset="0">STEELSHELL • КЛЮЧ РЕЛИЗОВ • ПОДПИСЬ ПРОВЕРЕНА •</textPath></text>
+    <text class="core" x="100" y="94" text-anchor="middle">448A C089</text>
+    <text class="core" x="100" y="122" text-anchor="middle">1977 75A4</text>
+  </g>
+</svg>
+        </div>
+      </div>
+      
+    <div class="tb" role="group" aria-label="Title block">
+      <div class="c s r1 c1"></div><div class="c s r1 c2">4</div><div class="c s r1 c3" data-app-version>0.4.3</div><div class="c s r1 c4"></div><div class="c s r1 c5" data-app-date>23.10</div>
+      <div class="c s l r2 c1"><span class="en">Rev</span><span class="ru">Изм.</span></div><div class="c s l r2 c2"><span class="en">Sh.</span><span class="ru">Лист</span></div><div class="c s l r2 c3"><span class="en">Doc. no.</span><span class="ru">№ докум.</span></div><div class="c s l r2 c4"><span class="en">Sign</span><span class="ru">Подп.</span></div><div class="c s l r2 c5"><span class="en">Date</span><span class="ru">Дата</span></div>
+      <div class="c s l r3 c12"><span class="en">Drawn</span><span class="ru">Разраб.</span></div><div class="c s r3 c3">makcnmovdev</div><div class="c s r3 c4"></div><div class="c s r3 c5" data-app-date>23.10</div>
+      <div class="c s l r4 c12"><span class="en">Checked</span><span class="ru">Пров.</span></div><div class="c s r4 c3"></div><div class="c s r4 c4"></div><div class="c s r4 c5"></div>
+      <div class="c s l r5 c12"><span class="en">Tech. check</span><span class="ru">Т.контр.</span></div><div class="c s r5 c3"></div><div class="c s r5 c4"></div><div class="c s r5 c5"></div>
+      <div class="c s l r6 c12"><span class="en">Std. check</span><span class="ru">Н.контр.</span></div><div class="c s r6 c3"></div><div class="c s r6 c4"></div><div class="c s r6 c5"></div>
+      <div class="c s l r7 c12"><span class="en">Approved</span><span class="ru">Утв.</span></div><div class="c s r7 c3"></div><div class="c s r7 c4"></div><div class="c s r7 c5"></div>
+      <div class="c code">STLS.425110.001<span class="ru"> ВД</span></div>
+      <div class="c name"><b>Steelshell</b><span class="en">Delivery set</span><span class="ru">Комплект поставки</span></div>
+      <div class="c l lit-h"><span class="en">Stage</span><span class="ru">Лит.</span></div><div class="c l mass-h"><span class="en">Weight</span><span class="ru">Масса</span></div><div class="c l scale-h"><span class="en">Scale</span><span class="ru">Масштаб</span></div>
+      <div class="c lit"><span class="en">A</span><span class="ru">А</span></div><div class="c mass"><span data-size="setup">15</span> <span class="en">MB</span><span class="ru">МБ</span></div><div class="c scale">1:1</div>
+      <div class="c sheetno"><span class="en">Sheet 4</span><span class="ru">Лист 4</span></div><div class="c sheets"><span class="en">of 4</span><span class="ru">Листов 4</span></div>
+      <div class="c org">steelshell.dev</div>
+    </div>
+    </div>
+  </section>
 </main>
+
+<footer class="desk-foot">
+  <span>© 2026 Steelshell</span>
+  <a href="https://github.com/steelshell/releases/releases"><span class="en">All releases</span><span class="ru">Все релизы</span></a>
+  <a href="https://github.com/steelshell/claude-plugin"><span class="en">Claude Code plugin</span><span class="ru">Плагин для Claude Code</span></a>
+  <a href="/link/"><span class="en">Sign in a device</span><span class="ru">Вход устройства</span></a>
+</footer>
 </body>
 </html>
