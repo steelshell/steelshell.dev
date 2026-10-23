@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Steelshell · вариант 2</title>
+<link rel="icon" type="image/png" href="/assets/img/icon-64.png">
+<link rel="preload" href="/assets/fonts/Onest-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#"><img src="/assets/img/icon-64.png" width="28" height="28" alt="">Steelshell</a>
+  <nav>
+    <a href="#chapters">Возможности</a>
+    <a href="#security">Безопасность</a>
+    <a class="pill" href="#download">Скачать</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>SSH, который<br>везде с вами</h1>
+    <p class="sub">Хосты, ключи, пароли и сниппеты синхронизируются между Windows, Android и терминалом Linux. Зашифрованы ещё на устройстве.</p>
+    <div class="cta">
+      <a class="button light" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe">Скачать для Windows</a>
+      <a class="button" href="#download">Android и Linux</a>
+    </div>
+    <div class="stage" data-stage>
+      <img class="window" data-window src="/assets/img/app-terminal-1280.webp" srcset="/assets/img/app-terminal-1280.webp 1280w, /assets/img/app-terminal-2560.webp 2560w" sizes="(max-width: 1240px) 94vw, 1180px" width="1280" height="800" alt="Steelshell для Windows: терминал на prod-api-1 и карточка сервера">
+    </div>
+  </section>
+
+  <section class="chapter" id="chapters">
+    <div class="chapter-text">
+      <h2>Одна команда — на два сервера</h2>
+      <p>Ctrl+Shift+D открывает второй терминал рядом. Включите ввод в оба, и каждая клавиша уйдёт на оба сервера сразу. Янтарная полоса напомнит, что режим включён.</p>
+    </div>
+    <img class="picture" src="/assets/img/app-split-1280.webp" srcset="/assets/img/app-split-1280.webp 1280w, /assets/img/app-split-2560.webp 2560w" sizes="(max-width: 900px) 94vw, 760px" width="1280" height="800" loading="lazy" alt="Два терминала рядом">
+  </section>
+
+  <section class="chapter flip">
+    <div class="chapter-text">
+      <h2>Команды, которые вы набираете каждый день</h2>
+      <p>Сохраните их сниппетами. Ctrl+Shift+K находит нужный, Enter запускает, Shift+Enter вставляет для проверки. Сниппеты тоже синхронизируются.</p>
+    </div>
+    <img class="picture" src="/assets/img/app-snippets-zoom-1280.webp" srcset="/assets/img/app-snippets-zoom-640.webp 640w, /assets/img/app-snippets-zoom-1280.webp 1280w" sizes="(max-width: 900px) 94vw, 760px" width="1280" height="800" loading="lazy" alt="Палитра сниппетов">
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-text">
+      <h2>Тот же список в кармане</h2>
+      <p>На Android — те же группы и серверы, а над клавиатурой панель с Esc, Tab, Ctrl, стрелками и джойстиком.</p>
+    </div>
+    <div class="phones">
+      <img src="/assets/img/phone-hosts-412.webp" srcset="/assets/img/phone-hosts-412.webp 412w, /assets/img/phone-hosts-824.webp 824w" sizes="260px" width="412" height="892" loading="lazy" alt="Список серверов на Android">
+      <img src="/assets/img/phone-terminal-412.webp" srcset="/assets/img/phone-terminal-412.webp 412w, /assets/img/phone-terminal-824.webp 824w" sizes="260px" width="412" height="892" loading="lazy" alt="Терминал на Android">
+    </div>
+  </section>
+
+  <section class="chapter flip">
+    <div class="chapter-text">
+      <h2>И прямо на сервере</h2>
+      <p>Поставьте Steelshell на Debian или Ubuntu одной командой и войдите по QR-коду с телефона. Пароль на сервер не попадает.</p>
+      <p class="mono">curl -fsSL https://steelshell.dev/install.sh | sh</p>
+    </div>
+    <img class="picture" src="/assets/img/tui-run-1188.webp" srcset="/assets/img/tui-run-1188.webp 1188w, /assets/img/tui-run-2376.webp 2376w" sizes="(max-width: 900px) 94vw, 760px" width="1188" height="722" loading="lazy" alt="Терминальная версия Steelshell показывает вывод команды">
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-text">
+      <h2>Агент чинит, пароль остаётся у вас</h2>
+      <p>Claude Code, Codex и Cursor работают на серверах, которые вы открыли, через MCP. Адресов, паролей и ключей они не видят, каждое действие записывается в журнал.</p>
+      <p class="mono">/plugin marketplace add steelshell/claude-plugin</p>
+    </div>
+    <img class="picture" src="/assets/img/tui-agents-1188.webp" srcset="/assets/img/tui-agents-1188.webp 1188w, /assets/img/tui-agents-2376.webp 2376w" sizes="(max-width: 900px) 94vw, 760px" width="1188" height="722" loading="lazy" alt="Выбор серверов для агентов и журнал их действий">
+  </section>
+
+  <section class="security" id="security">
+    <h2>Сервер синхронизации видит только шифротекст</h2>
+    <div class="algos">
+      <p><b>Argon2id</b><span>пароль превращается в ключ на вашем устройстве и туда же остаётся</span></p>
+      <p><b>AES-256-GCM</b><span>каждый хост, ключ и пароль шифруется отдельно</span></p>
+      <p><b>X25519</b><span>новое устройство получает ключ хранилища только с вашего разрешения</span></p>
+    </div>
+  </section>
+
+  <section class="download" id="download">
+    <h2>Скачать</h2>
+    <div class="targets">
+      <a href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe"><b>Windows</b><span>Установщик 0.4.2 · Windows 10 и 11</span></a>
+      <a href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-android.apk"><b>Android</b><span>APK 0.4.2 · Android 7 и новее</span></a>
+      <a href="#linux-command" data-copy="linux-command"><b>Linux</b><span id="linux-command">curl -fsSL https://steelshell.dev/install.sh | sh</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>© 2026 Steelshell</span>
+  <a href="https://github.com/steelshell/releases/releases">GitHub</a>
+  <a href="https://github.com/steelshell/claude-plugin">Плагин для Claude Code</a>
+</footer>
+</body>
+</html>

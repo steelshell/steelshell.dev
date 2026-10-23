@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steelshell: SSH client with an end-to-end encrypted vault</title>
+<meta name="description" content="Steelshell is an SSH client for Windows, Android and the Linux terminal. Hosts, keys, passwords and snippets sync end to end encrypted, and AI agents can work on your servers without seeing a password.">
+<meta name="theme-color" content="#e2e5e8">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://steelshell.dev/">
+<meta property="og:title" content="Steelshell">
+<meta property="og:description" content="Every server you SSH into, on every device you own. SSH for Windows, Android and the Linux terminal with an end-to-end encrypted vault.">
+<meta property="og:image" content="https://steelshell.dev/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/assets/img/icon-64.png">
+<link rel="apple-touch-icon" href="/assets/img/icon-180.png">
+<link rel="preload" href="/assets/fonts/FiraSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/FiraSansCondensed-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/lang.js"></script>
+<script src="/assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main"><span class="en">Skip to content</span><span class="ru">К содержанию</span></a>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/">
+      <img src="/assets/img/icon-64.png" width="30" height="30" alt="">
+      <span>Steelshell</span>
+    </a>
+    <nav class="top-links" aria-label="Site">
+      <a href="#download"><span class="en">Download</span><span class="ru">Скачать</span></a>
+      <a href="https://github.com/steelshell/releases/releases">GitHub</a>
+      <button class="lang" type="button" data-lang-toggle><span class="en" lang="ru">Русский</span><span class="ru" lang="en">English</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <h1>
+        <span class="en">Every server you SSH into, on every device you own</span>
+        <span class="ru">Все ваши серверы на каждом вашем устройстве</span>
+      </h1>
+      <div class="hero-text">
+        <p class="lead">
+          <span class="en">Steelshell keeps hosts, keys, passwords and snippets in one vault, encrypted on your device. Sign in on Windows, Android or in a Linux terminal and they are already there.</span>
+          <span class="ru">Steelshell хранит хосты, ключи, пароли и сниппеты в одном хранилище, которое шифруется прямо на устройстве. Войдите на Windows, Android или в терминале Linux, и всё уже на месте.</span>
+        </p>
+        <div class="actions">
+          <a class="button primary for-windows" data-download="setup" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe">
+            <span class="en">Download for Windows</span><span class="ru">Скачать для Windows</span>
+          </a>
+          <a class="button primary for-android" data-download="apk" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-android.apk">
+            <span class="en">Download for Android</span><span class="ru">Скачать для Android</span>
+          </a>
+          <a class="button primary for-linux" href="#terminal">
+            <span class="en">Install on Linux</span><span class="ru">Установить на Linux</span>
+          </a>
+          <a class="button not-linux" href="#terminal">
+            <span class="en">Install on Linux</span><span class="ru">Установить на Linux</span>
+          </a>
+          <a class="button for-linux" href="#download">
+            <span class="en">Windows and Android</span><span class="ru">Windows и Android</span>
+          </a>
+        </div>
+        <p class="needs">
+          <span class="en">Free. Windows 10 and 11, Android 7 and newer, Debian 11 and Ubuntu 20.04 or newer.</span>
+          <span class="ru">Бесплатно. Windows 10 и 11, Android 7 и новее, Debian 11 и Ubuntu 20.04 и новее.</span>
+        </p>
+      </div>
+
+      <div class="hero-demo">
+        <div class="screen live" data-live>
+          <div class="screen-bar">
+            <span class="led" aria-hidden="true"></span>
+            <span>steelshell</span>
+            <span class="screen-bar-right">max@steelshell.dev</span>
+          </div>
+          <div class="live-body" data-live-body tabindex="0" aria-label="A working demo of the Steelshell terminal app. Use the arrow keys to pick a server and Enter to connect.">
+            <div class="live-list" data-live-list role="listbox" aria-label="Hosts">
+              <div class="live-group"><i class="g-red"></i>Production</div>
+              <div class="live-host is-selected" role="option" aria-selected="true" data-host="0"><b>prod-api-1</b><span>deploy@10.0.4.12</span><em>AI</em></div>
+              <div class="live-host" role="option" aria-selected="false" data-host="1"><b>prod-api-2</b><span>deploy@10.0.4.13</span></div>
+              <div class="live-host" role="option" aria-selected="false" data-host="2"><b>prod-db</b><span>postgres@10.0.4.20</span></div>
+              <div class="live-group"><i class="g-amber"></i>Staging</div>
+              <div class="live-host" role="option" aria-selected="false" data-host="3"><b>staging-web</b><span>deploy@staging.example.dev</span><em class="read">AI</em></div>
+              <div class="live-group"><i class="g-blue"></i>Homelab</div>
+              <div class="live-host" role="option" aria-selected="false" data-host="4"><b>homelab-nas</b><span>admin@192.168.1.40</span></div>
+              <div class="live-host" role="option" aria-selected="false" data-host="5"><b>router</b><span>admin@192.168.1.2</span></div>
+            </div>
+            <div class="live-card" data-live-card aria-live="polite"></div>
+            <div class="live-session" data-live-session hidden></div>
+          </div>
+          <div class="live-keys" data-live-keys>
+            <button type="button" data-live-action="connect"><kbd>⏎</kbd> terminal</button>
+            <button type="button" data-live-action="up" aria-label="Previous host"><kbd>↑</kbd></button>
+            <button type="button" data-live-action="down" aria-label="Next host"><kbd>↓</kbd></button>
+            <span class="live-toast" data-live-toast aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="demo-note">
+          <span class="en">This is the terminal app, working in your browser. Pick a server and press Enter, then try <code>uptime</code>, <code>df -h</code> or <code>exit</code>.</span>
+          <span class="ru">Это терминальная версия Steelshell, она работает прямо в браузере. Выберите сервер, нажмите Enter и попробуйте <code>uptime</code>, <code>df -h</code> или <code>exit</code>.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="devices">
+    <div class="wrap">
+      <div class="block-head">
+        <h2><span class="en">The same hosts on Windows, Android and Linux</span><span class="ru">Одни и те же хосты на Windows, Android и Linux</span></h2>
+        <p><span class="en">Add a server on one device and it shows up on the others within seconds, with its group, color and saved key.</span><span class="ru">Добавьте сервер на одном устройстве, и через пару секунд он появится на остальных вместе с группой, цветом и сохранённым ключом.</span></p>
+      </div>
+      <div class="devices">
+        <figure class="device desk">
+          <img class="framed" src="/assets/img/app-hosts-1280.webp" srcset="/assets/img/app-hosts-1280.webp 1280w, /assets/img/app-hosts-2560.webp 2560w" sizes="(max-width: 900px) 92vw, 760px" width="1280" height="800" loading="lazy" decoding="async" alt="Steelshell on Windows listing the Homelab, Production and Staging groups">
+          <figcaption><span class="en">On Windows: tabs, split panes that type into both servers, SFTP, and snippets on Ctrl+Shift+K.</span><span class="ru">На Windows: вкладки, два терминала рядом с вводом в оба, SFTP и сниппеты по Ctrl+Shift+K.</span></figcaption>
+        </figure>
+        <figure class="device pocket">
+          <img class="handset" src="/assets/img/phone-hosts-412.webp" srcset="/assets/img/phone-hosts-412.webp 412w, /assets/img/phone-hosts-824.webp 824w" sizes="240px" width="412" height="892" loading="lazy" decoding="async" alt="Steelshell on Android with the same groups">
+          <figcaption><span class="en">On Android: the same list, and a keys bar with Esc, Tab, Ctrl and arrows.</span><span class="ru">На Android: тот же список и панель с Esc, Tab, Ctrl и стрелками.</span></figcaption>
+        </figure>
+        <figure class="device console">
+          <img class="framed dark" src="/assets/img/tui-hosts-1188.webp" srcset="/assets/img/tui-hosts-1188.webp 1188w, /assets/img/tui-hosts-2376.webp 2376w" sizes="(max-width: 900px) 92vw, 760px" width="1188" height="722" loading="lazy" decoding="async" alt="The terminal app with the same groups and a card for prod-api-1">
+          <figcaption><span class="en">In a Linux terminal: <code>steelshell</code> opens the same vault, over SSH too.</span><span class="ru">В терминале Linux: <code>steelshell</code> открывает то же хранилище, в том числе по SSH.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="security">
+    <div class="wrap">
+      <div class="block-head">
+        <h2><span class="en">The sync server stores only ciphertext</span><span class="ru">Сервер синхронизации хранит только шифротекст</span></h2>
+        <p><span class="en">Every host, key and password is encrypted on your device before it is sent. Here is one host as you see it, and as the server keeps it.</span><span class="ru">Каждый хост, ключ и пароль шифруется на устройстве до отправки. Вот один хост: каким его видите вы и каким его хранит сервер.</span></p>
+      </div>
+      <div class="record">
+        <div class="record-side">
+          <p class="record-label"><span class="en">On your phone</span><span class="ru">У вас на телефоне</span></p>
+          <div class="record-host">
+            <p class="record-name"><i class="g-red"></i>prod-api-1</p>
+            <dl>
+              <div><dt><span class="en">Address</span><span class="ru">Адрес</span></dt><dd>deploy@10.0.4.12</dd></div>
+              <div><dt><span class="en">Signs in with</span><span class="ru">Вход</span></dt><dd><span class="en">key deploy-ed25519</span><span class="ru">ключ deploy-ed25519</span></dd></div>
+              <div><dt><span class="en">Group</span><span class="ru">Группа</span></dt><dd>Production</dd></div>
+              <div><dt><span class="en">Password</span><span class="ru">Пароль</span></dt><dd>••••••••••</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-side">
+          <p class="record-label"><span class="en">On api.steelshell.dev</span><span class="ru">На api.steelshell.dev</span></p>
+          <pre class="screen record-cipher"><code>{
+  "id": "3f2a9c1e-5d17-4b8e-9a30-6c1f0e7b2d44",
+  "kind": "host",
+  "revision": 214,
+  "deleted": false,
+  "ciphertext": "<span class="cipher">hV3pQ9mZr8Lw0tYc2B7xKfN4sE1uJgA6dRvT5iWoP+qXy3bM8nHk0lCz7eFaUj2GQrS9V4tD1wI6oKbY5mEhN0xP3sLfT8gRc2jZ7vA1nU4yQ9iB6kWdM5HeX0oG3pJtF8r</span>"
+}</code></pre>
+        </div>
+      </div>
+      <dl class="facts">
+        <div>
+          <dt><span class="en">Your password stays on your device</span><span class="ru">Пароль не покидает устройство</span></dt>
+          <dd><span class="en">It goes through Argon2id with 64 MiB of memory. The server receives a key derived from it, never the password itself.</span><span class="ru">Он проходит через Argon2id с 64 МиБ памяти. Сервер получает только выведенный из него ключ, а не сам пароль.</span></dd>
+        </div>
+        <div>
+          <dt><span class="en">Each item is sealed on its own</span><span class="ru">Каждая запись шифруется отдельно</span></dt>
+          <dd><span class="en">AES-256-GCM with your vault key, bound to the item's id, so records can't be swapped for one another.</span><span class="ru">AES-256-GCM ключом хранилища с привязкой к id записи, поэтому записи нельзя подменить друг другом.</span></dd>
+        </div>
+        <div>
+          <dt><span class="en">New devices sign in with your approval</span><span class="ru">Новые устройства входят с вашего разрешения</span></dt>
+          <dd><span class="en">A server can sign in from a link: your browser encrypts the vault key for that device's one-time X25519 key, and the server only passes it on.</span><span class="ru">Сервер может войти по ссылке: браузер шифрует ключ хранилища для одноразового X25519-ключа этого устройства, а сервер только передаёт его.</span></dd>
+        </div>
+        <div>
+          <dt><span class="en">Only you can recover it</span><span class="ru">Восстановить можете только вы</span></dt>
+          <dd><span class="en">Steelshell can't reset your vault. The recovery key you write down when you sign up is the way back in.</span><span class="ru">Steelshell не может сбросить хранилище. Вернуться можно по ключу восстановления, который вы записываете при регистрации.</span></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block" id="agents">
+    <div class="wrap pair">
+      <div class="pair-text">
+        <h2><span class="en">Let an AI agent fix a server without handing it the password</span><span class="ru">Агент чинит сервер, а пароль остаётся у вас</span></h2>
+        <p><span class="en">Steelshell runs an MCP server for Claude Code, Codex and Cursor. The agent reads logs, runs commands and edits files on the servers you share, and never sees an address, a password or a key.</span><span class="ru">Steelshell запускает MCP-сервер для Claude Code, Codex и Cursor. Агент читает логи, выполняет команды и правит файлы на серверах, которые вы открыли, и не видит ни адресов, ни паролей, ни ключей.</span></p>
+        <p><span class="en">You decide per server: read only, or commands and file edits too. Passwords and tokens in the output are hidden from the agent, and every call goes into a log that <code>steelshell agent log</code> shows.</span><span class="ru">Для каждого сервера вы решаете сами: только чтение или ещё команды и правка файлов. Пароли и токены в выводе скрываются от агента, а каждый вызов попадает в журнал, его показывает <code>steelshell agent log</code>.</span></p>
+        <div class="command">
+          <div class="command-head"><span><span class="en">In Claude Code</span><span class="ru">В Claude Code</span></span><button type="button" class="copy" data-copy="plugin-command"><span class="en" data-copy-label>Copy</span><span class="ru" data-copy-label>Копировать</span></button></div>
+          <pre id="plugin-command">/plugin marketplace add steelshell/claude-plugin
+/plugin install steelshell@steelshell</pre>
+        </div>
+        <p class="aside"><span class="en">Using Codex or Cursor? <code>steelshell agent setup</code> prints the configuration for them.</span><span class="ru">Пользуетесь Codex или Cursor? <code>steelshell agent setup</code> покажет настройку для них.</span></p>
+      </div>
+      <figure class="pair-visual">
+        <div class="screen transcript">
+          <div class="screen-bar"><span class="led" aria-hidden="true"></span><span>claude</span></div>
+          <div class="transcript-body">
+            <p class="you"><span class="en">prod-api-1 answers 502 since the last deploy, fix it</span><span class="ru">prod-api-1 отдаёт 502 после деплоя, почини</span></p>
+            <p class="tool"><b>list_hosts</b> prod-api-1, full access</p>
+            <p class="tool"><b>run_command</b> journalctl -u api -n 50 --no-pager</p>
+            <p class="result bad">Error: Cannot find module '/srv/api/src/router.js'</p>
+            <p class="tool"><b>run_command</b> ls src src/routes</p>
+            <p class="tool"><b>read_file</b> /srv/api/src/server.js</p>
+            <p class="tool"><b>run_command</b> cp -p src/server.js src/server.js.bak-20261023</p>
+            <p class="tool"><b>write_file</b> /srv/api/src/server.js <span class="good">+1</span> <span class="bad">−1</span></p>
+            <p class="tool"><b>run_command</b> node --check src/server.js &amp;&amp; sudo -n systemctl restart api</p>
+            <p class="tool"><b>run_command</b> curl -fsS localhost:8080/health</p>
+            <p class="result good">ok</p>
+            <p class="reply"><span class="en">The router moved to src/routes/index.js in the last deploy, but server.js still imported ./router.js. I fixed the import, checked the syntax and restarted the service, and /health answers again. To roll back, restore server.js.bak-20261023.</span><span class="ru">В последнем деплое роутер переехал в src/routes/index.js, а server.js всё ещё импортировал ./router.js. Исправил импорт, проверил синтаксис и перезапустил сервис, /health снова отвечает. Откатить можно из server.js.bak-20261023.</span></p>
+          </div>
+        </div>
+        <figcaption><span class="en">An example session in Claude Code.</span><span class="ru">Пример сессии в Claude Code.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="terminal">
+    <div class="wrap pair">
+      <div class="pair-text">
+        <h2><span class="en">Steelshell in a terminal</span><span class="ru">Steelshell в терминале</span></h2>
+        <p><span class="en">Install it on any Debian or Ubuntu machine, a server included. Sign in by scanning a code with your phone, so your password never touches that machine.</span><span class="ru">Ставится на любую машину с Debian или Ubuntu, в том числе на сервер. Вход по коду с телефона, так что пароль на эту машину не попадает.</span></p>
+        <div class="command">
+          <div class="command-head"><span><span class="en">In a terminal</span><span class="ru">В терминале</span></span><button type="button" class="copy" data-copy="install-command"><span class="en" data-copy-label>Copy</span><span class="ru" data-copy-label>Копировать</span></button></div>
+          <pre id="install-command">curl -fsSL https://steelshell.dev/install.sh | sh</pre>
+        </div>
+        <dl class="cli">
+          <div><dt>steelshell</dt><dd><span class="en">the full-screen app</span><span class="ru">полноэкранное приложение</span></dd></div>
+          <div><dt>steelshell ssh prod-api-1</dt><dd><span class="en">a shell, signed in with the saved key or password</span><span class="ru">терминал, вход по сохранённому ключу или паролю</span></dd></div>
+          <div><dt>steelshell exec web -- uptime</dt><dd><span class="en">one command with its exit code, for scripts</span><span class="ru">одна команда с кодом выхода, для скриптов</span></dd></div>
+          <div><dt>steelshell cp ./dist web:/srv/app</dt><dd><span class="en">copy files over SFTP</span><span class="ru">копирование файлов по SFTP</span></dd></div>
+          <div><dt>steelshell agent setup</dt><dd><span class="en">connect Claude Code</span><span class="ru">подключить Claude Code</span></dd></div>
+        </dl>
+      </div>
+      <figure class="pair-visual">
+        <img class="framed dark" src="/assets/img/tui-welcome-1188.webp" srcset="/assets/img/tui-welcome-1188.webp 1188w, /assets/img/tui-welcome-2376.webp 2376w" sizes="(max-width: 900px) 92vw, 640px" width="1188" height="760" loading="lazy" decoding="async" alt="The terminal app showing a QR code to sign in from a phone">
+        <figcaption><span class="en">Signing in on a server: scan the code, then approve in the browser.</span><span class="ru">Вход на сервере: отсканируйте код и подтвердите в браузере.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="download">
+    <div class="wrap">
+      <div class="block-head">
+        <h2><span class="en">Download</span><span class="ru">Скачать</span></h2>
+        <p><span class="en">App <span data-app-version>0.4.2</span>, command-line app <span data-cli-version>0.2.2</span>. Older versions and checksums are on <a href="https://github.com/steelshell/releases/releases">GitHub</a>.</span><span class="ru">Приложение <span data-app-version>0.4.2</span>, консольная версия <span data-cli-version>0.2.2</span>. Старые версии и контрольные суммы на <a href="https://github.com/steelshell/releases/releases">GitHub</a>.</span></p>
+      </div>
+      <table class="files">
+        <thead>
+          <tr><th scope="col"><span class="en">For</span><span class="ru">Для</span></th><th scope="col"><span class="en">File</span><span class="ru">Файл</span></th><th scope="col" class="num"><span class="en">Size</span><span class="ru">Размер</span></th><th scope="col"><span class="visually-hidden"><span class="en">Link</span><span class="ru">Ссылка</span></span></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Windows 10, 11</td><td><span class="en">Installer, updates itself</span><span class="ru">Установщик, обновляется сам</span></td><td class="num" data-size="setup">16 MB</td><td><a class="get" data-download="setup" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe"><span class="en">Download</span><span class="ru">Скачать</span></a></td></tr>
+          <tr><td>Windows 10, 11</td><td><span class="en">Portable zip</span><span class="ru">Портативный zip</span></td><td class="num" data-size="zip">20 MB</td><td><a class="get" data-download="zip" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-windows-x64.zip"><span class="en">Download</span><span class="ru">Скачать</span></a></td></tr>
+          <tr><td><span class="en">Android 7 and newer</span><span class="ru">Android 7 и новее</span></td><td>APK</td><td class="num" data-size="apk">81 MB</td><td><a class="get" data-download="apk" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-android.apk"><span class="en">Download</span><span class="ru">Скачать</span></a></td></tr>
+          <tr><td>Debian, Ubuntu (amd64)</td><td><span class="en">.deb package</span><span class="ru">Пакет .deb</span></td><td class="num" data-size="deb-amd64">3 MB</td><td><a class="get" data-download="deb-amd64" href="https://github.com/steelshell/releases/releases/download/cli-v0.2.2/steelshell_0.2.2_amd64.deb"><span class="en">Download</span><span class="ru">Скачать</span></a></td></tr>
+          <tr><td>Debian, Ubuntu (arm64)</td><td><span class="en">.deb package</span><span class="ru">Пакет .deb</span></td><td class="num" data-size="deb-arm64">3 MB</td><td><a class="get" data-download="deb-arm64" href="https://github.com/steelshell/releases/releases/download/cli-v0.2.2/steelshell_0.2.2_arm64.deb"><span class="en">Download</span><span class="ru">Скачать</span></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <p class="brand small"><img src="/assets/img/icon-64.png" width="22" height="22" alt=""> Steelshell</p>
+    <a href="https://github.com/steelshell/releases/releases"><span class="en">Releases</span><span class="ru">Версии</span></a>
+    <a href="https://github.com/steelshell/claude-plugin"><span class="en">Claude Code plugin</span><span class="ru">Плагин для Claude Code</span></a>
+    <a href="/install.sh"><span class="en">Install script</span><span class="ru">Скрипт установки</span></a>
+    <p class="copyright">© 2026 Steelshell</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Steelshell · вариант 1</title>
+<link rel="icon" type="image/png" href="/assets/img/icon-64.png">
+<link rel="preload" href="/assets/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="status">
+  <span class="status-left"><span class="led"></span> steelshell <span class="dim">— ssh-клиент</span></span>
+  <nav class="status-tabs" aria-label="Разделы">
+    <a href="#sync" data-tab="1"><b>1</b> синхронизация</a>
+    <a href="#terminal" data-tab="2"><b>2</b> терминал</a>
+    <a href="#agents" data-tab="3"><b>3</b> агенты</a>
+    <a href="#linux" data-tab="4"><b>4</b> linux</a>
+    <a href="#download" data-tab="5"><b>5</b> скачать</a>
+  </nav>
+  <span class="status-right" data-clock>--:--</span>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <div class="hero-mark">
+      <img class="pixel-logo" src="/assets/img/logo-pixel.svg" width="240" height="260" alt="">
+      <img class="wordmark" src="/assets/img/wordmark-pixel.svg" width="590" height="70" alt="Steelshell">
+    </div>
+    <p class="prompt"><span class="ps">~ $</span> <span data-type>steelshell --help</span><span class="cursor" aria-hidden="true"></span></p>
+    <div class="help">
+      <p><b>Steelshell</b> — SSH-клиент для Windows, Android и терминала Linux.</p>
+      <p class="dim">Хосты, ключи, пароли и сниппеты живут в одном хранилище. Оно шифруется на вашем устройстве, поэтому сервер синхронизации видит только шифротекст.</p>
+    </div>
+    <div class="keys">
+      <a class="key primary" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe"><kbd>⏎</kbd> скачать для Windows</a>
+      <a class="key" href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-android.apk"><kbd>A</kbd> Android</a>
+      <a class="key" href="#linux"><kbd>L</kbd> установить на Linux</a>
+    </div>
+  </section>
+
+  <section class="pane" id="sync">
+    <h2 class="pane-title"><span>1</span> синхронизация</h2>
+    <div class="pane-grid">
+      <div class="pane-text">
+        <p class="lead">Добавили сервер на ноутбуке — через пару секунд он уже в телефоне и в терминале на сервере.</p>
+        <dl class="card">
+          <div><dt>хосты</dt><dd class="ok">✓ синхронизируются</dd></div>
+          <div><dt>ssh-ключи</dt><dd class="ok">✓ синхронизируются</dd></div>
+          <div><dt>пароли</dt><dd class="ok">✓ синхронизируются</dd></div>
+          <div><dt>сниппеты</dt><dd class="ok">✓ синхронизируются</dd></div>
+          <div><dt>прокси</dt><dd class="ok">✓ синхронизируются</dd></div>
+          <div><dt>сервер видит</dt><dd class="warn">только шифротекст</dd></div>
+        </dl>
+      </div>
+      <figure class="shots">
+        <img class="shot" src="/assets/img/app-hosts-1280.webp" srcset="/assets/img/app-hosts-1280.webp 1280w, /assets/img/app-hosts-2560.webp 2560w" sizes="(max-width: 900px) 92vw, 680px" width="1280" height="800" loading="lazy" alt="Список хостов в Steelshell для Windows">
+        <img class="shot phone" src="/assets/img/phone-hosts-412.webp" srcset="/assets/img/phone-hosts-412.webp 412w, /assets/img/phone-hosts-824.webp 824w" sizes="180px" width="412" height="892" loading="lazy" alt="Тот же список на Android">
+      </figure>
+    </div>
+  </section>
+
+  <section class="pane" id="terminal">
+    <h2 class="pane-title"><span>2</span> терминал</h2>
+    <div class="pane-grid">
+      <div class="pane-text">
+        <p class="lead">Терминал, который не мешает работать.</p>
+        <ul class="list">
+          <li><kbd>Ctrl Shift D</kbd> второй терминал рядом</li>
+          <li><kbd>ввод в оба</kbd> одна команда сразу на два сервера</li>
+          <li><kbd>Ctrl Shift K</kbd> палитра сниппетов</li>
+          <li><kbd>SFTP</kbd> файлы рядом с консолью</li>
+          <li><kbd>Esc Tab Ctrl ←→</kbd> панель клавиш на телефоне</li>
+        </ul>
+      </div>
+      <figure class="shots">
+        <img class="shot" src="/assets/img/app-split-1280.webp" srcset="/assets/img/app-split-1280.webp 1280w, /assets/img/app-split-2560.webp 2560w" sizes="(max-width: 900px) 92vw, 680px" width="1280" height="800" loading="lazy" alt="Два терминала рядом с вводом в оба">
+      </figure>
+    </div>
+  </section>
+
+  <section class="pane" id="agents">
+    <h2 class="pane-title"><span>3</span> агенты</h2>
+    <div class="pane-grid">
+      <div class="pane-text">
+        <p class="lead">Дайте Claude Code сервер, а не пароль.</p>
+        <p class="dim">Агент читает логи, выполняет команды и правит файлы только на тех серверах, которые вы открыли. Адресов, паролей и ключей он не видит, а каждый вызов записывается в журнал.</p>
+        <pre class="code"><span class="dim">в Claude Code</span>
+/plugin marketplace add steelshell/claude-plugin
+/plugin install steelshell@steelshell</pre>
+      </div>
+      <div class="log" aria-label="Пример сессии агента">
+        <p class="you">› prod-api-1 отдаёт 502 после деплоя, почини</p>
+        <p><span class="t">list_hosts</span> prod-api-1 · полный доступ</p>
+        <p><span class="t">run_command</span> journalctl -u api -n 50</p>
+        <p class="bad">  Error: Cannot find module './router.js'</p>
+        <p><span class="t">read_file</span> src/server.js</p>
+        <p><span class="t">write_file</span> src/server.js <span class="ok">+1</span> <span class="bad">−1</span></p>
+        <p><span class="t">run_command</span> systemctl restart api &amp;&amp; curl -fsS :8080/health</p>
+        <p class="ok">  ok</p>
+        <p class="answer">Роутер переехал в src/routes/index.js, импорт исправлен, сервис отвечает. Резервная копия: server.js.bak.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pane" id="linux">
+    <h2 class="pane-title"><span>4</span> linux</h2>
+    <div class="pane-grid">
+      <div class="pane-text">
+        <p class="lead">Тот же Steelshell на сервере — полноэкранный, как этот сайт.</p>
+        <pre class="code copyable"><span class="ps">$</span> <span id="install">curl -fsSL https://steelshell.dev/install.sh | sh</span><button type="button" class="copy" data-copy="install">копировать</button></pre>
+        <dl class="card">
+          <div><dt>steelshell</dt><dd>интерфейс со списком серверов</dd></div>
+          <div><dt>steelshell login</dt><dd>вход по QR-коду с телефона</dd></div>
+          <div><dt>steelshell ssh web</dt><dd>терминал на сервере</dd></div>
+          <div><dt>steelshell exec web -- uptime</dt><dd>команда для скриптов</dd></div>
+        </dl>
+      </div>
+      <figure class="shots">
+        <img class="shot" src="/assets/img/tui-hosts-1188.webp" srcset="/assets/img/tui-hosts-1188.webp 1188w, /assets/img/tui-hosts-2376.webp 2376w" sizes="(max-width: 900px) 92vw, 680px" width="1188" height="722" loading="lazy" alt="Терминальная версия Steelshell">
+      </figure>
+    </div>
+  </section>
+
+  <section class="pane" id="download">
+    <h2 class="pane-title"><span>5</span> скачать</h2>
+    <p class="dim pick-hint">↑↓ выбрать · ⏎ скачать</p>
+    <ul class="pick" role="listbox" aria-label="Загрузки" data-pick>
+      <li role="option" aria-selected="true" class="is-selected"><a href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-setup.exe"><b>windows</b><span>установщик · 0.4.2</span><em>16 MB</em></a></li>
+      <li role="option" aria-selected="false"><a href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-windows-x64.zip"><b>windows</b><span>портативный zip · 0.4.2</span><em>20 MB</em></a></li>
+      <li role="option" aria-selected="false"><a href="https://github.com/steelshell/releases/releases/download/v0.4.2/Steelshell-0.4.2-android.apk"><b>android</b><span>apk · 0.4.2</span><em>81 MB</em></a></li>
+      <li role="option" aria-selected="false"><a href="https://github.com/steelshell/releases/releases/download/cli-v0.2.2/steelshell_0.2.2_amd64.deb"><b>linux</b><span>.deb amd64 · 0.2.2</span><em>3 MB</em></a></li>
+      <li role="option" aria-selected="false"><a href="https://github.com/steelshell/releases/releases/download/cli-v0.2.2/steelshell_0.2.2_arm64.deb"><b>linux</b><span>.deb arm64 · 0.2.2</span><em>3 MB</em></a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="keybar">
+  <span><kbd>1-5</kbd> разделы</span>
+  <span><kbd>⏎</kbd> скачать</span>
+  <a href="https://github.com/steelshell/releases/releases"><kbd>g</kbd> github</a>
+  <span class="right dim">© 2026 steelshell</span>
+</footer>
+</body>
+</html>
