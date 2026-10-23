@@ -2,6 +2,7 @@
 set -eu
 
 repo="steelshell/releases"
+keyring_b64='mDMEatufBRYJKwYBBAHaRw8BAQdAqvmvEpEsCg0Qq1wK38mwxlSjdTShkJAsHU26dmZc47a0GlN0ZWVsc2hlbGwgcmVsZWFzZSBzaWduaW5niJAEExYKADgWIQREisCJGXd1pEKFJBsah+rxOg01qAUCatufBQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRAah+rxOg01qFYTAP9PPva0sb7nZmP0A5X2KJaH+LT13PbHXbo20ukKavfs+wEAsLq+lm7AXW1wd1wAD3q/WwarXxl6YHg/9YwI9BjUIQQ='
 tmp=""
 pid=""
 
@@ -221,6 +222,24 @@ base="https://github.com/$repo/releases/download/$tag"
 
 download "$base/$package" "$tmp/$package" || fail "Could not download $base/$package"
 save "$base/SHA256SUMS" "$tmp/SHA256SUMS" </dev/null || fail "Could not download the checksums."
+save "$base/SHA256SUMS.asc" "$tmp/SHA256SUMS.asc" </dev/null || fail "Could not download the signature of the checksums."
+printf '%s' "$keyring_b64" | base64 -d > "$tmp/keyring.gpg" 2>/dev/null || true
+[ -s "$tmp/keyring.gpg" ] || fail "This installer has no signing key built in."
+if command -v gpgv >/dev/null 2>&1; then
+  verify() { gpgv --keyring "$tmp/keyring.gpg" "$1" "$2"; }
+elif command -v sqv >/dev/null 2>&1; then
+  verify() { sqv --keyring "$tmp/keyring.gpg" "$1" "$2"; }
+elif command -v gpg >/dev/null 2>&1; then
+  verify() {
+    mkdir -p "$tmp/gnupg" && chmod 700 "$tmp/gnupg"
+    gpg --batch --homedir "$tmp/gnupg" --no-default-keyring --keyring "$tmp/keyring.gpg" --verify "$1" "$2"
+  }
+else
+  fail "Checking the signature needs gpgv or sqv: apt-get install gpgv"
+fi
+verify "$tmp/SHA256SUMS.asc" "$tmp/SHA256SUMS" >"$tmp/log" 2>&1 ||
+  fail "The checksums are not signed by Steelshell, so nothing was installed." "$tmp/log"
+ok "Signed by Steelshell"
 (cd "$tmp" && grep " $package\$" SHA256SUMS | sha256sum -c --status) ||
   fail "The download does not match its checksum, so nothing was installed."
 ok "Checksum matches"
