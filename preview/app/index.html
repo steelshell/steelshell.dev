@@ -1,0 +1,274 @@
+<!doctype html><meta charset="utf-8">
+<title>Steelshell app redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root { --page: #f3f3f1; --ink: #1b1c1e; --muted: #5f6166; --line: rgba(27,28,30,.12); --pick: #1f8a5e; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #121314; --ink: #e9e9ea; --muted: #9a9ca1; --line: rgba(233,233,234,.12); --pick: #3dd598; color-scheme: dark; } }
+:root[data-theme="dark"] { --page: #121314; --ink: #e9e9ea; --muted: #9a9ca1; --line: rgba(233,233,234,.12); --pick: #3dd598; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 400 15px/1.55 "IBM Plex Sans", system-ui, sans-serif; }
+.page { max-width: 1264px; margin: 0 auto; padding-block: 40px 64px; padding-inline: 16px; }
+.intro h1 { font-size: 30px; font-weight: 500; margin: 0 0 8px; text-wrap: balance; }
+.intro p { margin: 0; color: var(--muted); max-width: 62ch; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 24px; }
+.tabs button { font: inherit; font-weight: 500; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+.tabs button[aria-selected="true"] { border-color: var(--pick); box-shadow: inset 0 0 0 1px var(--pick); }
+.variant[hidden] { display: none; }
+.dir { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 24px; margin-bottom: 24px; }
+.dir div { min-width: 0; }
+.dir b { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
+.dir span { font-size: 14.5px; }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+.stage > div:last-child { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 24px; }
+.stage > div:last-child .cap { max-width: 36ch; }
+table { color: inherit; font: inherit; }
+.scroll { overflow-x: auto; border-radius: 14px; }
+.cap { font-size: 13px; color: var(--muted); margin: 8px 2px 0; }
+</style>
+<style>
+.v1 { --bg:#141415; --deep:#0f0f10; --card:#19191b; --raised:#232325; --hl:rgba(237,237,237,.08); --t1:#ededed; --t2:#a1a1a6; --t3:#85858b; --acc:#3dd598; font-family:"IBM Plex Sans",sans-serif; }
+.v1 .win { width:1200px; height:760px; background:var(--bg); color:var(--t1); display:grid; grid-template-columns:240px 1fr 320px; border-radius:14px; overflow:hidden; border:1px solid #000; }
+.v1 .mono { font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; }
+.v1 .side { background:var(--deep); padding:16px 12px; display:flex; flex-direction:column; gap:2px; }
+.v1 .brand { display:flex; align-items:center; gap:8px; font-weight:500; font-size:16px; padding:4px 8px 20px; }
+.v1 .mark { width:20px; height:20px; border-radius:5px; background:var(--acc); color:#04150e; display:grid; place-items:center; font:600 12px "IBM Plex Mono"; }
+.v1 .nav { display:flex; align-items:center; gap:10px; height:34px; padding:0 8px; border-radius:8px; color:var(--t2); font-size:14px; }
+.v1 .nav.on { background:var(--raised); color:var(--t1); box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
+.v1 .nav .n { margin-left:auto; font-size:12px; color:var(--t3); }
+.v1 .ico { width:16px; height:16px; flex:none; stroke:currentColor; fill:none; stroke-width:1.5; }
+.v1 .lab { font-size:12px; color:var(--t3); padding:24px 8px 8px; }
+.v1 .dot { width:8px; height:8px; border-radius:50%; flex:none; }
+.v1 .main { padding:24px 28px; display:flex; flex-direction:column; gap:20px; min-width:0; }
+.v1 .head { display:flex; align-items:center; gap:12px; }
+.v1 .head h2 { margin:0 auto 0 0; font-size:24px; font-weight:500; }
+.v1 .search { width:260px; height:36px; border-radius:8px; background:var(--card); box-shadow:inset 0 0 0 1px var(--hl); display:flex; align-items:center; gap:8px; padding:0 10px; color:var(--t3); font-size:14px; }
+.v1 .kc { margin-left:auto; font:500 11px "IBM Plex Mono"; color:var(--t2); border:1px solid var(--hl); border-bottom-width:2px; border-radius:4px; padding:1px 5px; }
+.v1 .btn { height:36px; padding:0 14px; border-radius:8px; background:#ededed; color:#141415; font-weight:500; font-size:14px; display:flex; align-items:center; gap:6px; }
+.v1 .recent { display:flex; gap:24px; font-size:13px; color:var(--t2); border-bottom:1px solid var(--hl); padding-bottom:14px; }
+.v1 .recent b { font-weight:500; color:var(--t1); margin-right:6px; }
+.v1 table { width:100%; border-collapse:collapse; font-size:14px; }
+.v1 th { text-align:left; font-weight:400; font-size:12px; color:var(--t3); padding:0 12px 8px 0; }
+.v1 td { height:40px; padding:0 12px 0 0; border-top:1px solid var(--hl); white-space:nowrap; }
+.v1 tr.sel td { background:var(--card); }
+.v1 tr.sel td:first-child { box-shadow:inset 2px 0 0 var(--acc); }
+.v1 td:first-child { padding-left:12px; }
+.v1 .nm { display:flex; align-items:center; gap:10px; font-weight:500; }
+.v1 .ms { text-align:right; color:var(--t2); }
+.v1 .addr, .v1 .os { color:var(--t2); }
+.v1 .addr { max-width:200px; overflow:hidden; text-overflow:ellipsis; }
+.v1 .grp { display:flex; align-items:center; gap:8px; color:var(--t2); }
+.v1 .insp { border-left:1px solid var(--hl); padding:24px 20px; display:flex; flex-direction:column; gap:18px; }
+.v1 .insp h3 { margin:0; font-size:18px; font-weight:500; }
+.v1 .insp .sub { color:var(--t2); font-size:13px; margin-top:2px; }
+.v1 .chart { background:var(--card); border-radius:12px; padding:14px; box-shadow:inset 0 0 0 1px var(--hl); }
+.v1 .big { font-size:30px; font-weight:500; line-height:1; }
+.v1 .big small { font-size:13px; color:var(--t2); margin-left:4px; font-family:"IBM Plex Sans"; }
+.v1 .cap2 { font-size:12px; color:var(--t3); margin-top:6px; }
+.v1 dl { margin:0; display:grid; grid-template-columns:96px 1fr; gap:8px 12px; font-size:13px; }
+.v1 dt { color:var(--t3); } .v1 dd { margin:0; }
+.v1 .go { margin-top:auto; height:40px; border-radius:8px; background:#ededed; color:#141415; font-weight:500; display:flex; align-items:center; justify-content:center; gap:8px; }
+.v1 .ph { width:360px; height:760px; background:var(--bg); color:var(--t1); border-radius:28px; border:8px solid #050505; overflow:hidden; display:flex; flex-direction:column; }
+.v1 .ph .top { padding:20px 16px 12px; display:flex; align-items:center; }
+.v1 .ph .top h2 { margin:0 auto 0 0; font-size:24px; font-weight:500; }
+.v1 .ph .btn { height:32px; padding:0 12px; font-size:13px; }
+.v1 .ph .search { width:auto; margin:0 16px 12px; height:40px; }
+.v1 .ph .sec { font-size:12px; color:var(--t3); padding:16px 16px 6px; display:flex; justify-content:space-between; }
+.v1 .row { display:flex; align-items:center; gap:12px; height:56px; padding:0 16px; border-top:1px solid var(--hl); }
+.v1 .row .t { min-width:0; flex:1; } .v1 .row .t b { display:block; font-weight:500; font-size:15px; }
+.v1 .row .t span { display:block; font-size:12.5px; color:var(--t2); overflow:hidden; text-overflow:ellipsis; }
+.v1 .tabbar { margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--hl); padding:8px 0 14px; font-size:12px; color:var(--t3); text-align:center; }
+.v1 .tabbar .on { color:var(--t1); }
+</style>
+<style>
+.v2 { --bg:#f7f4ee; --card:#fdfbf7; --raised:#efe9df; --hl:rgba(31,27,22,.09); --t1:#1f1b16; --t2:#5e554a; --t3:#7b7266; --acc:#1f7a54; font-family:"Instrument Sans",sans-serif; }
+.v2 .mono { font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; }
+.v2 .win { width:1200px; height:760px; background:var(--bg); color:var(--t1); display:grid; grid-template-columns:220px 1fr 400px; border-radius:14px; overflow:hidden; border:1px solid var(--hl); }
+.v2 .ico { width:16px; height:16px; flex:none; stroke:currentColor; fill:none; stroke-width:1.5; }
+.v2 .side { padding:18px 12px; display:flex; flex-direction:column; gap:2px; border-right:1px solid var(--hl); }
+.v2 .brand { display:flex; align-items:center; gap:8px; font-weight:600; font-size:16px; padding:2px 8px 22px; }
+.v2 .mark { width:20px; height:20px; border-radius:5px; background:var(--t1); color:var(--bg); display:grid; place-items:center; font:600 12px "IBM Plex Mono"; }
+.v2 .nav { display:flex; align-items:center; gap:10px; height:34px; padding:0 8px; border-radius:8px; color:var(--t2); font-size:14px; }
+.v2 .nav.on { background:var(--raised); color:var(--t1); }
+.v2 .main { padding:24px 28px; min-width:0; display:flex; flex-direction:column; gap:16px; overflow:hidden; }
+.v2 .head { display:flex; align-items:center; gap:12px; }
+.v2 .head h2 { margin:0 auto 0 0; font-size:26px; font-weight:500; }
+.v2 .search { width:240px; height:36px; border-radius:8px; background:var(--card); box-shadow:inset 0 0 0 1px var(--hl); display:flex; align-items:center; gap:8px; padding:0 10px; color:var(--t3); font-size:14px; }
+.v2 .kc { display:inline-grid; place-items:center; min-width:20px; height:20px; font:500 11px "IBM Plex Mono"; color:var(--t2); background:var(--card); border:1px solid var(--hl); border-bottom-width:2px; border-radius:4px; padding:0 5px; }
+.v2 .btn { height:36px; padding:0 14px; border-radius:8px; background:var(--t1); color:var(--bg); font-weight:500; font-size:14px; display:flex; align-items:center; gap:6px; }
+.v2 .grp { margin-top:8px; }
+.v2 .gh { display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--t3); padding:0 0 6px; }
+.v2 .gh b { font-weight:500; color:var(--t1); font-size:14px; }
+.v2 .r { display:grid; grid-template-columns:28px 1.1fr 1.4fr 0.9fr 56px; align-items:center; gap:12px; height:38px; padding:0 8px; border-top:1px solid var(--hl); font-size:14px; }
+.v2 .r.sel { background:var(--card); border-radius:8px; box-shadow:inset 0 0 0 1px var(--hl); }
+.v2 .r .n { font-weight:500; }
+.v2 .r .a, .v2 .r .o { color:var(--t2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.v2 .r .ms { text-align:right; color:var(--t2); }
+.v2 .right { padding:24px 24px 24px 0; display:flex; flex-direction:column; gap:14px; }
+.v2 .slab { flex:1; background:#151412; color:#e9e4da; border-radius:14px; padding:14px 16px; font:400 12.5px/1.6 "IBM Plex Mono",monospace; overflow:hidden; }
+.v2 .slab .bar { display:flex; gap:8px; align-items:center; color:#a39c90; font-size:12px; padding-bottom:10px; margin-bottom:10px; border-bottom:1px solid rgba(233,228,218,.08); }
+.v2 .slab .ok { color:#7fd3a8; } .v2 .slab .dim { color:#8d867b; } .v2 .slab .hi { color:#f0c674; }
+.v2 .facts { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; font-size:13px; }
+.v2 .facts b { display:block; font-weight:400; color:var(--t3); font-size:12px; }
+.v2 .go { height:40px; border-radius:8px; background:var(--acc); color:#fff; font-weight:500; display:flex; align-items:center; justify-content:center; gap:8px; }
+.v2 .ph { width:360px; height:760px; background:var(--bg); color:var(--t1); border-radius:28px; border:8px solid #1f1b16; overflow:hidden; display:flex; flex-direction:column; }
+.v2 .ph .top { padding:20px 16px 12px; display:flex; align-items:center; }
+.v2 .ph .top h2 { margin:0 auto 0 0; font-size:26px; font-weight:500; }
+.v2 .ph .search { width:auto; margin:0 16px 8px; height:40px; }
+.v2 .ph .gh { padding:16px 16px 6px; }
+.v2 .pr { display:flex; align-items:center; gap:12px; height:54px; padding:0 16px; border-top:1px solid var(--hl); }
+.v2 .pr .t { flex:1; min-width:0; } .v2 .pr b { display:block; font-weight:500; font-size:15px; }
+.v2 .pr span { display:block; font-size:12.5px; color:var(--t2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.v2 .tabbar { margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--hl); padding:8px 0 14px; font-size:12px; color:var(--t3); text-align:center; }
+.v2 .tabbar .on { color:var(--t1); font-weight:500; }
+</style>
+<style>.v2 .r > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .v2 .facts { grid-template-columns:1.4fr 1fr .7fr !important; }</style><style>
+.v3 { --bg:#0b0d14; --deep:#07080d; --card:#11141c; --raised:#1a1e28; --hl:rgba(238,240,245,.08); --t1:#eef0f5; --t2:#a3a9b8; --t3:#7a8296; --acc:#3dd598; font-family:"Geist",sans-serif; }
+.v3 .mono { font-family:"Geist Mono",monospace; font-variant-numeric:tabular-nums; }
+.v3 .ico { width:18px; height:18px; flex:none; stroke:currentColor; fill:none; stroke-width:1.5; }
+.v3 .win { width:1200px; height:760px; background:var(--bg); color:var(--t1); display:grid; grid-template-columns:56px 1fr; grid-template-rows:40px 1fr; border-radius:14px; overflow:hidden; border:1px solid #000; }
+.v3 .tabs3 { grid-column:1 / -1; display:flex; align-items:center; gap:4px; padding:0 8px; background:var(--deep); border-bottom:1px solid var(--hl); font-size:13px; color:var(--t2); }
+.v3 .tab { display:flex; align-items:center; gap:8px; height:28px; padding:0 12px; border-radius:6px; }
+.v3 .tab.on { background:var(--raised); color:var(--t1); }
+.v3 .dot { width:7px; height:7px; border-radius:50%; background:var(--acc); flex:none; }
+.v3 .rail { background:var(--deep); border-right:1px solid var(--hl); display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 0; color:var(--t3); }
+.v3 .rail div { width:36px; height:36px; display:grid; place-items:center; border-radius:8px; }
+.v3 .rail .on { background:var(--raised); color:var(--t1); }
+.v3 .center { padding:48px 0 0; display:flex; flex-direction:column; align-items:center; gap:28px; min-width:0; }
+.v3 .palette { width:720px; background:var(--card); border-radius:16px; box-shadow:inset 0 0 0 1px var(--hl), 0 24px 48px rgba(0,0,0,.35); overflow:hidden; }
+.v3 .cmd { display:flex; align-items:center; gap:10px; height:56px; padding:0 18px; border-bottom:1px solid var(--hl); font-size:17px; }
+.v3 .cmd .p { color:var(--acc); font-family:"Geist Mono"; }
+.v3 .cmd .q { color:var(--t1); } .v3 .cmd .ph2 { color:var(--t3); }
+.v3 .kc { display:inline-grid; place-items:center; min-width:20px; height:20px; font:500 11px "Geist Mono"; color:var(--t2); border:1px solid var(--hl); border-bottom-width:2px; border-radius:4px; padding:0 5px; }
+.v3 .sec3 { font-size:12px; color:var(--t3); padding:12px 18px 4px; }
+.v3 .it { display:grid; grid-template-columns:16px 1fr 1.2fr 70px 64px; align-items:center; gap:12px; height:40px; padding:0 18px; font-size:14px; }
+.v3 .it.sel { background:var(--raised); box-shadow:inset 2px 0 0 var(--acc); }
+.v3 .it .a { color:var(--t2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.v3 .it .g { color:var(--t3); font-size:13px; } .v3 .it .ms { text-align:right; color:var(--t2); }
+.v3 .foot { display:flex; gap:16px; padding:10px 18px; border-top:1px solid var(--hl); font-size:12px; color:var(--t3); }
+.v3 .thumbs { width:720px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.v3 .th { background:#06070b; border-radius:12px; box-shadow:inset 0 0 0 1px var(--hl); padding:10px 12px; font:400 11px/1.55 "Geist Mono"; color:#c9cfdc; height:150px; overflow:hidden; }
+.v3 .th .hd { display:flex; align-items:center; gap:8px; color:var(--t2); font-family:"Geist"; font-size:12px; margin-bottom:8px; }
+.v3 .ok { color:#7ee2b0; } .v3 .warn { color:#f2c46d; }
+.v3 .ph { width:360px; height:760px; background:var(--bg); color:var(--t1); border-radius:28px; border:8px solid #000; overflow:hidden; display:flex; flex-direction:column; }
+.v3 .ph .cmd { margin:16px; height:48px; border-radius:12px; background:var(--card); box-shadow:inset 0 0 0 1px var(--hl); border:0; font-size:15px; }
+.v3 .ph .it { grid-template-columns:12px 1fr 54px; height:52px; padding:0 16px; }
+.v3 .ph .it b { font-weight:500; display:block; } .v3 .ph .it small { display:block; color:var(--t2); font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.v3 .tabbar { margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--hl); padding:8px 0 14px; font-size:12px; color:var(--t3); text-align:center; }
+.v3 .tabbar .on { color:var(--t1); }
+</style>
+<div class="page">
+<header class="intro"><h1>Steelshell, three directions</h1>
+<p>The same screen in each: the hosts home with eight real-looking servers, desktop at 1200×760 and a phone at 360. Features and sections stay as they are today, only the treatment changes.</p></header>
+<div class="tabs" role="tablist">
+<button role="tab" aria-selected="true" data-for="v1">1 · Night shift</button>
+<button role="tab" aria-selected="false" data-for="v2">2 · Runbook</button>
+<button role="tab" aria-selected="false" data-for="v3">3 · Launcher</button>
+</div><section class="variant v1" id="v1" data-variant>
+<div class="dir">
+<div><b>Character</b><span>calm, exact, nocturnal</span></div>
+<div><b>World</b><span>a server room on the night shift, the terminal's own palette</span></div>
+<div><b>Moment</b><span>the live latency chart of the selected host</span></div>
+<div><b>Signature</b><span>a status dot and latency in mono next to every host</span></div>
+</div>
+<div class="stage"><div><div class="scroll"><div class="win">
+<aside class="side">
+  <div class="brand"><span class="mark">S</span>Steelshell</div>
+  <div class="nav on"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Hosts<span class="n mono">8</span></div>
+  <div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M16 7l2 2M14 9l2 2"/></svg>Keychain</div>
+  <div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5 12 11l2.5 2.5"/></svg>SFTP</div>
+  <div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/></svg>Snippets</div>
+  <div class="lab">Groups</div>
+  <div class="nav"><span class="dot" style="background:#e5484d"></span>Production<span class="n mono">3</span></div><div class="nav"><span class="dot" style="background:#d8a03c"></span>Staging<span class="n mono">1</span></div><div class="nav"><span class="dot" style="background:#5b8def"></span>Homelab<span class="n mono">2</span></div>
+  <div class="nav" style="margin-top:auto"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</div>
+</aside>
+<main class="main">
+  <div class="head"><h2>Hosts</h2><div class="search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search<span class="kc">Ctrl F</span></div><div class="btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New host</div></div>
+  <div class="recent"><span>Recent</span><span><b>prod-api-1</b>2 min ago</span><span><b>personal vps</b>yesterday</span><span><b>prod-db</b>Oct 30</span></div>
+  <table><thead><tr><th style="padding-left:12px">Name</th><th>Address</th><th>Group</th><th style="text-align:right">Latency</th></tr></thead><tbody><tr class="sel"><td><div class="nm"><span class="dot" style="background:#3dd598"></span>prod-api-1</div></td><td class="addr mono">root@10.0.4.12</td><td><div class="grp"><span class="dot" style="background:#e5484d"></span>Production</div></td><td class="ms mono">18 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>prod-db</div></td><td class="addr mono">postgres@10.0.4.20</td><td><div class="grp"><span class="dot" style="background:#e5484d"></span>Production</div></td><td class="ms mono">21 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>prod-api-2</div></td><td class="addr mono">root@10.0.4.13</td><td><div class="grp"><span class="dot" style="background:#e5484d"></span>Production</div></td><td class="ms mono">19 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>staging</div></td><td class="addr mono">root@staging.steelshell.dev</td><td><div class="grp"><span class="dot" style="background:#d8a03c"></span>Staging</div></td><td class="ms mono">42 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>homelab-nas</div></td><td class="addr mono">admin@192.168.1.40</td><td><div class="grp"><span class="dot" style="background:#5b8def"></span>Homelab</div></td><td class="ms mono">3 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>router</div></td><td class="addr mono">admin@192.168.1.2</td><td><div class="grp"><span class="dot" style="background:#5b8def"></span>Homelab</div></td><td class="ms mono">2 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>personal vps</div></td><td class="addr mono">max@vps.example.org</td><td><div class="grp"><span style="color:#85858b">—</span></div></td><td class="ms mono">75 ms</td></tr><tr><td><div class="nm"><span class="dot" style="background:#3dd598"></span>ci-runner-03.internal</div></td><td class="addr mono">ci@ci-runner-03.internal</td><td><div class="grp"><span style="color:#85858b">—</span></div></td><td class="ms mono">84 ms</td></tr></tbody></table>
+</main>
+<aside class="insp">
+  <div><h3>prod-api-1</h3><div class="sub mono">root@10.0.4.12 · port 22</div></div>
+  <div class="chart"><div class="big mono">18<small>ms now</small></div>
+    <svg viewBox="0 0 248 72" width="100%" height="72" style="margin-top:12px;display:block"><path d="M0.0,27.4 L6.4,33.4 L12.7,38.6 L19.1,46.0 L25.4,52.0 L31.8,48.6 L38.2,50.8 L44.5,44.1 L50.9,37.0 L57.2,32.7 L63.6,28.1 L69.9,38.7 L76.3,46.1 L82.7,52.1 L89.0,53.9 L95.4,45.3 L101.7,43.9 L108.1,15.2 L114.5,11.1 L120.8,33.5 L127.2,33.5 L133.5,46.3 L139.9,52.2 L146.3,53.9 L152.6,50.6 L159.0,38.3 L165.3,36.7 L171.7,32.7 L178.1,33.6 L184.4,39.1 L190.8,41.1 L197.1,52.3 L203.5,53.9 L209.8,50.4 L216.2,43.6 L222.6,31.1 L228.9,32.6 L235.3,33.7 L241.6,39.3 L248.0,46.7 L248,72 L0,72 Z" fill="rgba(61,213,152,.10)"/><path d="M0.0,27.4 L6.4,33.4 L12.7,38.6 L19.1,46.0 L25.4,52.0 L31.8,48.6 L38.2,50.8 L44.5,44.1 L50.9,37.0 L57.2,32.7 L63.6,28.1 L69.9,38.7 L76.3,46.1 L82.7,52.1 L89.0,53.9 L95.4,45.3 L101.7,43.9 L108.1,15.2 L114.5,11.1 L120.8,33.5 L127.2,33.5 L133.5,46.3 L139.9,52.2 L146.3,53.9 L152.6,50.6 L159.0,38.3 L165.3,36.7 L171.7,32.7 L178.1,33.6 L184.4,39.1 L190.8,41.1 L197.1,52.3 L203.5,53.9 L209.8,50.4 L216.2,43.6 L222.6,31.1 L228.9,32.6 L235.3,33.7 L241.6,39.3 L248.0,46.7" fill="none" stroke="#3dd598" stroke-width="1.5"/><circle cx="248.0" cy="46.7" r="3" fill="#3dd598"/></svg>
+    <div class="cap2">Latency, last 10 minutes · peak 27 ms at 14:02</div></div>
+  <dl><dt>Group</dt><dd>Production</dd><dt>Sign-in</dt><dd>Key deploy-ed25519</dd><dt>System</dt><dd>Ubuntu 24.04</dd><dt>Host key</dt><dd>Trusted, saved Oct 12</dd><dt>AI agents</dt><dd>Full access</dd></dl>
+  <div class="go"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 4 4-4 4M12 16h7"/></svg>Open terminal<span class="kc" style="margin-left:4px;color:#525252;border-color:rgba(0,0,0,.2)">Enter</span></div>
+</aside>
+</div></div><p class="cap">Desktop. Cards and colored OS tiles become one dense table; green appears only for live status and the selection.</p></div>
+<div><div class="scroll"><div class="ph"><div class="top"><h2>Hosts</h2><div class="btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New</div></div>
+<div class="search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</div>
+<div class="sec"><span>All hosts</span><span>Latency</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>prod-api-1</b><span class="mono">root@10.0.4.12</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">18 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>prod-db</b><span class="mono">postgres@10.0.4.20</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">21 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>prod-api-2</b><span class="mono">root@10.0.4.13</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">19 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>staging</b><span class="mono">root@staging.steelshell.dev</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">42 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>homelab-nas</b><span class="mono">admin@192.168.1.40</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">3 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>router</b><span class="mono">admin@192.168.1.2</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">2 ms</span></div><div class="row"><span class="dot" style="background:#3dd598"></span><div class="t"><b>personal vps</b><span class="mono">max@vps.example.org</span></div><span class="mono" style="font-size:12.5px;color:#a1a1a6">75 ms</span></div>
+<div class="tabbar"><span class="on">Hosts</span><span>SFTP</span><span>Settings</span></div></div></div><p class="cap">Phone. One list, latency on the right.</p></div></div>
+</section><section class="variant v2" id="v2" data-variant hidden>
+<div class="dir">
+<div><b>Character</b><span>methodical, legible, a little warm</span></div>
+<div><b>World</b><span>a printed runbook on the desk next to a dark terminal</span></div>
+<div><b>Moment</b><span>the last session of the selected host, a real dark terminal slab</span></div>
+<div><b>Signature</b><span>keycaps 1 to 9: press a number to connect</span></div>
+</div>
+<div class="stage"><div><div class="scroll"><div class="win">
+<aside class="side"><div class="brand"><span class="mark">S</span>Steelshell</div>
+<div class="nav on"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Hosts</div><div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M16 7l2 2M14 9l2 2"/></svg>Keychain</div><div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5 12 11l2.5 2.5"/></svg>SFTP</div><div class="nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/></svg>Snippets</div>
+<div class="nav" style="margin-top:auto"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</div></aside>
+<main class="main"><div class="head"><h2>Hosts</h2><div class="search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search<span class="kc" style="margin-left:auto">/</span></div><div class="btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New host</div></div><div class="grp"><div class="gh"><b>Production</b><span class="mono">3</span></div><div class="r sel"><span class="kc">1</span><span class="n">prod-api-1</span><span class="a mono">root@10.0.4.12</span><span class="o">Ubuntu 24.04</span><span class="ms mono">18 ms</span></div><div class="r"><span class="kc">2</span><span class="n">prod-db</span><span class="a mono">postgres@10.0.4.20</span><span class="o">Debian 12</span><span class="ms mono">21 ms</span></div><div class="r"><span class="kc">3</span><span class="n">prod-api-2</span><span class="a mono">root@10.0.4.13</span><span class="o">Ubuntu 24.04</span><span class="ms mono">19 ms</span></div></div><div class="grp"><div class="gh"><b>Staging</b><span class="mono">1</span></div><div class="r"><span class="kc">4</span><span class="n">staging</span><span class="a mono">root@staging.steelshell.dev</span><span class="o">Alpine 3.20</span><span class="ms mono">42 ms</span></div></div><div class="grp"><div class="gh"><b>Homelab</b><span class="mono">2</span></div><div class="r"><span class="kc">5</span><span class="n">homelab-nas</span><span class="a mono">admin@192.168.1.40</span><span class="o">Debian 12</span><span class="ms mono">3 ms</span></div><div class="r"><span class="kc">6</span><span class="n">router</span><span class="a mono">admin@192.168.1.2</span><span class="o">OpenWrt 23.05</span><span class="ms mono">2 ms</span></div></div><div class="grp"><div class="gh"><b>Ungrouped</b><span class="mono">2</span></div><div class="r"><span class="kc">7</span><span class="n">personal vps</span><span class="a mono">max@vps.example.org</span><span class="o">Arch Linux</span><span class="ms mono">75 ms</span></div><div class="r"><span class="kc">8</span><span class="n">ci-runner-03.internal</span><span class="a mono">ci@ci-runner-03.internal</span><span class="o">Ubuntu 22.04</span><span class="ms mono">84 ms</span></div></div></main>
+<aside class="right"><div class="slab"><div class="bar"><span class="ok">●</span>prod-api-1<span style="margin-left:auto">last session · 2 min ago</span></div>
+<div><span class="ok">root@prod-api-1</span>:~# systemctl status api --no-pager</div>
+<div>● api.service - Steelshell demo API</div>
+<div class="dim">     Loaded: loaded (/etc/systemd/system/api.service; enabled)</div>
+<div>     Active: <span class="ok">active (running)</span> since Mon 2026-11-02 09:14:07 UTC</div>
+<div class="dim">   Main PID: 1824 (node)</div>
+<div class="dim">     Memory: 164.2M</div>
+<div>&nbsp;</div>
+<div><span class="ok">root@prod-api-1</span>:~# df -h /</div>
+<div class="dim">Filesystem      Size  Used Avail Use% Mounted on</div>
+<div>/dev/vda1        78G   31G   44G  <span class="hi">42%</span> /</div>
+<div>&nbsp;</div>
+<div><span class="ok">root@prod-api-1</span>:~# <span style="background:#e9e4da">&nbsp;</span></div></div>
+<div class="facts"><div><b>Sign-in</b>Key deploy-ed25519</div><div><b>System</b>Ubuntu 24.04</div><div><b>Latency</b><span class="mono">18 ms</span></div></div>
+<div class="go"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 4 4-4 4M12 16h7"/></svg>Reconnect<span class="kc" style="background:transparent;color:#d6efe2;border-color:rgba(255,255,255,.3)">1</span></div></aside></div></div><p class="cap">Desktop, light. Groups become plain sections; the only dark object is the terminal itself.</p></div>
+<div><div class="scroll"><div class="ph"><div class="top"><h2>Hosts</h2><span class="btn" style="height:32px;font-size:13px"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New</span></div><div class="search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</div><div class="gh"><b>Production</b><span class="mono">3</span></div><div class="pr"><div class="t"><b>prod-api-1</b><span class="mono">root@10.0.4.12</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">18 ms</span></div><div class="pr"><div class="t"><b>prod-db</b><span class="mono">postgres@10.0.4.20</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">21 ms</span></div><div class="pr"><div class="t"><b>prod-api-2</b><span class="mono">root@10.0.4.13</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">19 ms</span></div><div class="gh"><b>Staging</b><span class="mono">1</span></div><div class="pr"><div class="t"><b>staging</b><span class="mono">root@staging.steelshell.dev</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">42 ms</span></div><div class="gh"><b>Homelab</b><span class="mono">2</span></div><div class="pr"><div class="t"><b>homelab-nas</b><span class="mono">admin@192.168.1.40</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">3 ms</span></div><div class="pr"><div class="t"><b>router</b><span class="mono">admin@192.168.1.2</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">2 ms</span></div><div class="gh"><b>Ungrouped</b><span class="mono">2</span></div><div class="pr"><div class="t"><b>personal vps</b><span class="mono">max@vps.example.org</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">75 ms</span></div><div class="pr"><div class="t"><b>ci-runner-03.internal</b><span class="mono">ci@ci-runner-03.internal</span></div><span class="mono" style="font-size:12.5px;color:#5e554a">84 ms</span></div><div class="tabbar"><span class="on">Hosts</span><span>SFTP</span><span>Settings</span></div></div></div><p class="cap">Phone. Sections by group, no tiles.</p></div></div>
+</section><section class="variant v3" id="v3" data-variant hidden>
+<div class="dir">
+<div><b>Character</b><span>fast, keyboard-first, quiet</span></div>
+<div><b>World</b><span>a dark terminal at night, nothing but the prompt</span></div>
+<div><b>Moment</b><span>live previews of open sessions under the launcher</span></div>
+<div><b>Signature</b><span>the › prompt mark and keycaps on every action</span></div>
+</div>
+<div class="stage"><div><div class="scroll"><div class="win">
+<div class="tabs3"><div class="tab on"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Home</div><div class="tab"><span class="dot"></span>prod-api-1</div><div class="tab"><span class="dot"></span>staging</div><div class="tab" style="color:var(--t3)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></div></div>
+<nav class="rail"><div class="on"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div><div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M16 7l2 2M14 9l2 2"/></svg></div><div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5 12 11l2.5 2.5"/></svg></div><div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/></svg></div><div style="margin-top:auto"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div></nav>
+<main class="center">
+<div class="palette">
+<div class="cmd"><span class="p mono">›</span><span class="ph2">Host, snippet or command</span><span style="margin-left:auto;display:flex;gap:4px"><span class="kc">Ctrl</span><span class="kc">K</span></span></div>
+<div class="sec3">Recent</div><div class="it sel"><span class="dot"></span><span>prod-api-1</span><span class="a mono">root@10.0.4.12</span><span class="g">Production</span><span class="ms mono">18 ms</span></div><div class="it"><span class="dot"></span><span>staging</span><span class="a mono">root@staging.steelshell.dev</span><span class="g">Staging</span><span class="ms mono">42 ms</span></div><div class="it"><span class="dot"></span><span>homelab-nas</span><span class="a mono">admin@192.168.1.40</span><span class="g">Homelab</span><span class="ms mono">3 ms</span></div>
+<div class="sec3">All hosts</div><div class="it"><span class="dot" style="background:var(--t3)"></span><span>prod-db</span><span class="a mono">postgres@10.0.4.20</span><span class="g">Production</span><span class="ms mono">21 ms</span></div><div class="it"><span class="dot" style="background:var(--t3)"></span><span>prod-api-2</span><span class="a mono">root@10.0.4.13</span><span class="g">Production</span><span class="ms mono">19 ms</span></div><div class="it"><span class="dot" style="background:var(--t3)"></span><span>router</span><span class="a mono">admin@192.168.1.2</span><span class="g">Homelab</span><span class="ms mono">2 ms</span></div><div class="it"><span class="dot" style="background:var(--t3)"></span><span>personal vps</span><span class="a mono">max@vps.example.org</span><span class="g">No group</span><span class="ms mono">75 ms</span></div>
+<div class="foot"><span><span class="kc">↵</span> connect</span><span><span class="kc">Ctrl</span> <span class="kc">↵</span> new tab</span><span><span class="kc">Tab</span> SFTP</span><span style="margin-left:auto">8 hosts · 3 groups</span></div>
+</div>
+<div class="thumbs">
+<div class="th"><div class="hd"><span class="dot"></span>prod-api-1<span class="mono" style="margin-left:auto">2 min ago</span></div>
+<div><span class="ok">root@prod-api-1</span>:~# journalctl -u api -n 3</div>
+<div>Nov 02 09:14 api[1824]: listening on :8080</div>
+<div>Nov 02 09:15 api[1824]: GET /health 200 2ms</div>
+<div>Nov 02 09:16 api[1824]: GET /v1/sync 200 14ms</div>
+<div><span class="ok">root@prod-api-1</span>:~# ▌</div></div>
+<div class="th"><div class="hd"><span class="dot" style="background:#f2c46d"></span>staging<span class="mono" style="margin-left:auto">1 h ago</span></div>
+<div><span class="ok">root@staging</span>:~# docker ps --format '{{.Names}}'</div>
+<div>backend-api-1</div><div>backend-db-1</div>
+<div class="warn">backend-worker-1 (restarting)</div>
+<div><span class="ok">root@staging</span>:~# ▌</div></div>
+</div>
+</main></div></div><p class="cap">Desktop. Home is one launcher: type a host, press Enter. Sections move to a 56px rail.</p></div>
+<div><div class="scroll"><div class="ph"><div class="cmd"><span class="p mono">›</span><span class="ph2">Connect to…</span></div><div class="sec3">Recent</div><div class="it"><span class="dot"></span><span style="min-width:0"><b>prod-api-1</b><small class="mono">root@10.0.4.12</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">18 ms</span></div><div class="it"><span class="dot"></span><span style="min-width:0"><b>prod-db</b><small class="mono">postgres@10.0.4.20</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">21 ms</span></div><div class="it"><span class="dot"></span><span style="min-width:0"><b>prod-api-2</b><small class="mono">root@10.0.4.13</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">19 ms</span></div><div class="it"><span class="dot" style="background:#f2c46d"></span><span style="min-width:0"><b>staging</b><small class="mono">root@staging.steelshell.dev</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">42 ms</span></div><div class="it"><span class="dot"></span><span style="min-width:0"><b>homelab-nas</b><small class="mono">admin@192.168.1.40</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">3 ms</span></div><div class="it"><span class="dot"></span><span style="min-width:0"><b>router</b><small class="mono">admin@192.168.1.2</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">2 ms</span></div><div class="it"><span class="dot" style="background:#f2c46d"></span><span style="min-width:0"><b>personal vps</b><small class="mono">max@vps.example.org</small></span><span class="ms mono" style="text-align:right;color:var(--t2);font-size:13px">75 ms</span></div><div class="tabbar"><span class="on">Hosts</span><span>Sessions 2</span><span>More</span></div></div></div><p class="cap">Phone. The search field is the screen; hosts sorted by last use.</p></div></div>
+</section></div><script>
+const tabs = document.querySelectorAll('[data-for]');
+function show(id) {
+  tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.for === id)));
+  document.querySelectorAll('[data-variant]').forEach(v => v.hidden = v.id !== id);
+  try { localStorage.setItem('variant', id); } catch (e) {}
+}
+tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.for)));
+let start = location.hash.slice(1);
+if (!document.getElementById(start)) { try { start = localStorage.getItem('variant') || 'v1'; } catch (e) { start = 'v1'; } }
+if (document.getElementById(start)) show(start);
+</script>
