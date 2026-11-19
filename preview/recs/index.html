@@ -1,0 +1,315 @@
+<title>Steelshell UX recommendations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root { --bg:#f2f2f7; --card:#ffffff; --t1:#111114; --t2:#5c5c66; --t3:#6d6d78; --line:rgba(17,17,20,.08); --acc:#157a52; --accbg:rgba(31,157,106,.12); --hi:#bd3844; --hibg:rgba(189,56,68,.1); --mid:#956600; --midbg:rgba(149,102,0,.12); --chip:#e4e4ea; --chipon:#ffffff; --shadow:0 1px 2px rgba(0,0,0,.05); color-scheme:light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#161618; --card:#1f1f22; --t1:#f2f2f4; --t2:#a6a6ad; --t3:#85858c; --line:rgba(255,255,255,.07); --acc:#3dd598; --accbg:rgba(61,213,152,.14); --hi:#f2626a; --hibg:rgba(242,98,106,.14); --mid:#f5b544; --midbg:rgba(245,181,68,.14); --chip:#232326; --chipon:#3a3a3e; --shadow:none; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#161618; --card:#1f1f22; --t1:#f2f2f4; --t2:#a6a6ad; --t3:#85858c; --line:rgba(255,255,255,.07); --acc:#3dd598; --accbg:rgba(61,213,152,.14); --hi:#f2626a; --hibg:rgba(242,98,106,.14); --mid:#f5b544; --midbg:rgba(245,181,68,.14); --chip:#232326; --chipon:#3a3a3e; --shadow:none; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--t1); font:400 15px/1.5 "Inter", system-ui, sans-serif; font-feature-settings:"cv11","ss01"; }
+.page { max-width:1200px; margin:0 auto; padding-block:40px 64px; padding-inline:16px; }
+h1 { font-size:28px; font-weight:600; letter-spacing:-0.02em; margin:0 0 8px; text-wrap:balance; }
+.lead { color:var(--t2); margin:0; max-width:64ch; }
+.stats { display:flex; flex-wrap:wrap; gap:24px; margin:20px 0 24px; }
+.stats div { display:flex; flex-direction:column; }
+.stats b { font:500 24px "JetBrains Mono", monospace; font-variant-numeric:tabular-nums; }
+.stats span { font-size:13px; color:var(--t2); }
+.bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:20px; }
+.chips { display:flex; flex-wrap:wrap; gap:4px; padding:3px; background:var(--chip); border-radius:10px; }
+.chip { font:inherit; font-size:13.5px; font-weight:500; color:var(--t2); background:transparent; border:0; border-radius:7px; padding:6px 10px; cursor:pointer; }
+.chip[aria-pressed="true"] { background:var(--chipon); color:var(--t1); box-shadow:var(--shadow); }
+.toggle { font:inherit; font-size:13.5px; font-weight:500; color:var(--t1); background:var(--card); border:1px solid var(--line); border-radius:10px; padding:7px 12px; cursor:pointer; }
+.toggle[aria-pressed="true"] { border-color:var(--acc); box-shadow:inset 0 0 0 1px var(--acc); color:var(--acc); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px; }
+.card { background:var(--card); border-radius:14px; padding:16px 16px 14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:8px; min-width:0; }
+.card[hidden] { display:none; }
+.card header { display:flex; gap:8px; align-items:center; font-size:12.5px; color:var(--t3); }
+.id { font:500 12px "JetBrains Mono", monospace; color:var(--t2); }
+.card h3 { margin:0; font-size:16px; font-weight:600; line-height:1.3; text-wrap:balance; }
+.problem { margin:0; color:var(--t2); font-size:14px; }
+.proposal { margin:0; font-size:14px; }
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.tag { font-size:12px; font-weight:500; padding:3px 8px; border-radius:6px; background:var(--chip); color:var(--t2); }
+.tag.imp-0 { background:var(--hibg); color:var(--hi); }
+.tag.imp-1 { background:var(--midbg); color:var(--mid); }
+.tag.quick { background:var(--accbg); color:var(--acc); }
+.tag.done { background:var(--acc); color:var(--card); }
+.card.is-done h3 { text-decoration:line-through; text-decoration-color:var(--t3); }
+.where { margin:0; font:500 12px/1.5 "JetBrains Mono", monospace; color:var(--t3); overflow-wrap:anywhere; }
+.empty { color:var(--t2); }
+@media (max-width: 420px) { .grid { grid-template-columns:minmax(0, 1fr); } }
+</style>
+<div class="page">
+<h1>Steelshell: что улучшить в удобстве и UI</h1>
+<p class="lead">Рекомендации после аудита и доработки нового интерфейса. Баги из аудита уже исправлены, здесь следующие шаги. Карточки отсортированы по пользе и объёму работы</p>
+<div class="stats"><div><b>35</b><span>рекомендаций</span></div><div><b>17</b><span>с высокой пользой</span></div><div><b>14</b><span>быстрых</span></div><div><b>2</b><span>уже сделано</span></div></div>
+<div class="bar"><div class="chips" role="group" aria-label="Раздел"><button class="chip" aria-pressed="true" data-area="">Все</button><button class="chip" aria-pressed="false" data-area="Агенты и подтверждения">Агенты и подтверждения</button><button class="chip" aria-pressed="false" data-area="Уведомления">Уведомления</button><button class="chip" aria-pressed="false" data-area="Тексты">Тексты</button><button class="chip" aria-pressed="false" data-area="Хосты">Хосты</button><button class="chip" aria-pressed="false" data-area="Аккаунт и вход">Аккаунт и вход</button><button class="chip" aria-pressed="false" data-area="Подключение и терминал">Подключение и терминал</button><button class="chip" aria-pressed="false" data-area="Телефон">Телефон</button><button class="chip" aria-pressed="false" data-area="Доступность">Доступность</button><button class="chip" aria-pressed="false" data-area="Ключи">Ключи</button><button class="chip" aria-pressed="false" data-area="Сниппеты">Сниппеты</button><button class="chip" aria-pressed="false" data-area="Визуал">Визуал</button><button class="chip" aria-pressed="false" data-area="SFTP">SFTP</button></div><button class="toggle" aria-pressed="false" id="quick">Только быстрые</button></div>
+<div class="grid"><article class="card is-done" data-area="Агенты и подтверждения" data-quick="true" data-impact="0">
+<header><span class="id">R1</span><span class="area">Агенты и подтверждения</span></header>
+<h3>«Разрешить» в запросе Claude Code не должна ловить Enter</h3>
+<p class="problem">Диалог хука Claude Code открывается с фокусом на «Разрешить» и без задержки, причём на десктопе даже тогда, когда активна другая вкладка. Первый же Enter, набранный в терминале, одобрит, например, `sudo systemctl restart api` на проде.</p>
+<p class="proposal">Убрать autofocus с «Разрешить» и включать её через секунду, как уже сделано в диалоге MCP-моста (`_armed`). Фокус ставить на «Запретить», Esc тоже запрещает. Чтобы задержка не казалась зависанием, кнопка может заливаться цветом за эту секунду.</p>
+<div class="tags"><span class="tag done">Сделано</span><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/alerts/agent_alerts.dart, ApprovalDialog</p>
+</article><article class="card is-done" data-area="Уведомления" data-quick="true" data-impact="0">
+<header><span class="id">R2</span><span class="area">Уведомления</span></header>
+<h3>Одобрять из уведомления только после разблокировки</h3>
+<p class="problem">На Android уведомления о запросе агента и о новом входе приходят с кнопками «Разрешить» и «Это я» без требования разблокировки, а текст команды виден на экране блокировки. Человек, у которого в руках ваш заблокированный телефон, может одобрить команду или подтвердить чужой вход.</p>
+<p class="proposal">Для «Разрешить» и «Это я» ставить setAuthenticationRequired(true) на Android 12+, а «Запретить» и «Отключить устройство» оставить доступными без разблокировки. Уведомлениям с командами задать VISIBILITY_PRIVATE и публичную версию без деталей: «Агент ждёт решения на prod-api-1». На Android до 12 кнопка «Разрешить» должна открывать приложение, а не решать сразу.</p>
+<div class="tags"><span class="tag done">Сделано</span><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">android/app/src/main/kotlin/dev/steelshell/steelshell/AlertsPlugin.kt, show()</p>
+</article><article class="card" data-area="Тексты" data-quick="true" data-impact="0">
+<header><span class="id">R3</span><span class="area">Тексты</span></header>
+<h3>«Только на этом устройстве» противоречит синхронизации</h3>
+<p class="problem">Форма хоста пишет «Хранится в зашифрованном виде на этом устройстве», создание ключа обещает, что ключ «никогда не покидает это устройство», удаление хоста — что он «будет удалён с этого устройства». После входа в аккаунт пароли и ключи синхронизируются, удаление расходится по всем устройствам, а сниппеты уже честно пишут «удалится со всех ваших устройств».</p>
+<p class="proposal">Сделать эти строки зависимыми от входа: без аккаунта оставить как есть, с аккаунтом писать «Зашифровано, синхронизируется только между вашими устройствами» и «Хост удалится со всех ваших устройств». То же в en. Человек, который доверяет приложению ключи, должен точно знать, куда они уходят.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">app_en.arb, app_ru.arb: encryptedOnDevice, passwordStored, keyStorageHint, generateKeyHint, deleteHostMessage, deleteKeyMessage, proxyDeleteMessage; host_form_panel.dart</p>
+</article><article class="card" data-area="Хосты" data-quick="true" data-impact="0">
+<header><span class="id">R4</span><span class="area">Хосты</span></header>
+<h3>Пустой список хостов: предложить вход и импорт</h3>
+<p class="problem">На пустом экране «Хостов пока нет» есть только «Новый хост» и «Новая группа». Тот, у кого серверы уже лежат в аккаунте, не узнает, что их можно получить входом: экран входа открывается только из карточки в Настройках.</p>
+<p class="proposal">Добавить в пустое состояние строку «Уже пользуетесь Steelshell? Войдите, и серверы появятся сами» и кнопку «Импорт из файла .sb». «Новую группу» отсюда убрать: новичку она не нужна, а в меню «+» она остаётся. Следующим шагом сюда же встанет «Импорт из ~/.ssh/config» на Windows.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/hosts_screen.dart, пустое состояние; lib/features/account/auth_screen.dart</p>
+</article><article class="card" data-area="Аккаунт и вход" data-quick="true" data-impact="0">
+<header><span class="id">R5</span><span class="area">Аккаунт и вход</span></header>
+<h3>Ключ восстановления на телефоне: файл и очистка буфера</h3>
+<p class="problem">На Android шаг «Сохраните ключ восстановления» даёт только «Скопировать ключ»: кнопка «Сохранить в файл» есть лишь на десктопе. Скопированный ключ остаётся в буфере обмена навсегда, хотя токен агентов стирается через минуту, а без этого ключа забытый пароль уже не восстановить.</p>
+<p class="proposal">На Android показать «Сохранить в файл» через системный диалог и «Поделиться…» для менеджера паролей. После копирования чистить буфер через минуту и говорить об этом в снекбаре, как у токена. Переключатель «Ключ восстановления сохранён» заменить флажком «Я сохранил ключ в надёжном месте», а анимированную обезьянку — спокойной иконкой щита.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/account/auth_screen.dart, _keyStep и _copyKey</p>
+</article><article class="card" data-area="Хосты" data-quick="false" data-impact="0">
+<header><span class="id">R6</span><span class="area">Хосты</span></header>
+<h3>Нет сети у телефона — не красить все хосты красным</h3>
+<p class="problem">Статус хоста — это TCP-проба порта раз в 45 секунд. Если у телефона нет сети или серверы видны только через VPN, каждый хост получает красное «Недоступен», и это читается как авария на серверах, а не у клиента.</p>
+<p class="proposal">Если не ответил ни один хост или система сообщает, что сети нет, показывать над списком одну плашку «Нет сети, статус серверов не проверяется» и серые точки вместо красных. Красным отмечать хост, который молчит, пока остальные отвечают. В подсказке к точке писать время проверки и причину: таймаут, отказ, имя не найдено.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/host_status.dart; lib/features/hosts/hosts_screen.dart</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="0">
+<header><span class="id">R7</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Одна карточка запроса агента: кто, где, что, сколько ждать</h3>
+<p class="problem">Сейчас три разных окна подтверждения: MCP-мост со своей вёрсткой и таймером мелким серым текстом, хук Claude Code без таймера и форма запроса с Linux-агента. В MCP-окне вместо понятного действия видно служебное «run_command», а сервер дан строкой «На prod-api-1» без пользователя и адреса.</p>
+<p class="proposal">Собрать один компонент: сверху агент и устройство с пометкой «не проверено», затем сервер плиткой хоста и root@10.0.4.12 (направление дизайна и обещает, что хост везде выглядит одинаково), команда моноширинным блоком, пояснение агента в кавычках как его слова, оставшееся время полосой. При очереди показывать «1 из 3» и «Отклонить все». На телефоне карточка выезжает нижним листом, кнопки во всю ширину внизу, в зоне большого пальца.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/agents/ui/agent_approvals.dart; lib/features/alerts/agent_alerts.dart; lib/features/account/remote_approval_dialog.dart</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="0">
+<header><span class="id">R8</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Узкое «разрешить» вместо «всё любому приложению на 15 минут»</h3>
+<p class="problem">Между «Разрешить один раз» и отказом есть только спрятанный в «⋯» пункт «Разрешить любому приложению на {host} на 15 минут», а по факту это любые команды от любого клиента без вопросов. Когда агент шлёт десяток похожих команд, человек выбирает между усталостью от кликов и слишком широким доступом.</p>
+<p class="proposal">Добавить варианты с узкой областью: «Разрешать эту команду этому агенту до конца сессии» и «15 минут читать файлы на {host} без вопросов». Пункт про полный доступ назвать прямо — «15 минут: любые команды на {host}» — и выделить как рискованный. Всё это и так попадает во «Временные разрешения» с кнопкой «Отозвать»; пусть там же будет видна область каждого разрешения.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/agents/ui/agent_approvals.dart; lib/features/agents/access/grants.dart; lib/features/agents/ui/agent_access_page.dart</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="0">
+<header><span class="id">R9</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Видно, что агенты включены, и выключить можно в один клик</h3>
+<p class="problem">Узнать, что доступ агентов включён и что агент прямо сейчас выполняет команду, можно только в Настройки → ИИ-агенты → Доступ агентов, а этот раздел стоит внизу, после «Поведения». Пока агент работает в фоне, в основном интерфейсе нет никакого следа.</p>
+<p class="proposal">Пока доступ включён, показывать внизу боковой панели над «Настройками» строку «Агенты · открыто 2 сервера»; во время команды точка меняет цвет и появляется «выполняет на prod-api-1», без пульсации. Клик открывает последние действия и кнопку «Выключить доступ агентов». Тот же пункт добавить в меню трея.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">боковая панель (lib/features/shell); трей Windows; lib/features/agents/ui/agent_access_page.dart</p>
+</article><article class="card" data-area="Подключение и терминал" data-quick="false" data-impact="0">
+<header><span class="id">R10</span><span class="area">Подключение и терминал</span></header>
+<h3>Смена ключа хоста: показать старый отпечаток и как проверить</h3>
+<p class="problem">Окно «Ключ хоста изменился» показывает только новый отпечаток и просит убедиться, что он совпадает с сервером, но не говорит, как это сделать. Старого отпечатка и даты, когда ему доверились, нет, поэтому пользователь либо жмёт «Доверять новому ключу» вслепую, либо бросает подключение.</p>
+<p class="proposal">Показать две строки, «Было, доверен 12 мар 2026» и «Стало», с подсветкой отличий. Ниже дать копируемую команду для консоли хостера: `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub`. Отпечаток разбить на группы по 4–6 символов, чтобы его было легко сверить глазами; то же сделать и для первого подключения.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/terminal/ssh_session.dart, _verifyHostKey; lib/features/terminal/session_overlays.dart</p>
+</article><article class="card" data-area="Подключение и терминал" data-quick="false" data-impact="0">
+<header><span class="id">R11</span><span class="area">Подключение и терминал</span></header>
+<h3>Ошибка подключения: своё действие для каждой причины</h3>
+<p class="problem">Лист «Не удалось подключиться» при любой причине пишет «Проверьте адрес, порт и данные для входа» и предлагает «Начать заново» или «Изменить хост». Закрытие продублировано («Закрыть» в шапке и «Закрыть вкладку» внизу), а рядом с ошибкой на проде прыгает анимированный эмодзи.</p>
+<p class="proposal">Привязать к причине кнопку: неверный пароль — «Ввести пароль» прямо в листе, ключ не подошёл — «Выбрать другой ключ», отказ или таймаут — «Изменить порт» или «Проверить прокси», имя не найдено — «Исправить адрес» с фокусом в поле. «Начать заново» переименовать в «Повторить», «Закрыть» из шапки убрать. Эмодзи заменить статичной иконкой оборванного соединения.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/terminal/connection_sheet.dart</p>
+</article><article class="card" data-area="Хосты" data-quick="false" data-impact="0">
+<header><span class="id">R12</span><span class="area">Хосты</span></header>
+<h3>Поиск хостов: подключение по адресу и подсказка для Enter</h3>
+<p class="problem">В поиске Enter молча подключает первый результат, но какой именно, не видно. На запрос root@10.0.0.5 список отвечает «Ничего не найдено», хотя диалог Ctrl+T и экран SFTP умеют подключаться к несохранённому адресу, а на телефоне без открытых сессий такой возможности нет вовсе.</p>
+<p class="proposal">Подсвечивать первый результат и показывать справа «↵ Подключиться» на десктопе. Если запрос похож на user@host:port, первой строкой выводить «Подключиться к root@10.0.0.5 · не сохранён» и рядом «Сохранить как хост». Одноразовый сервер перестаёт требовать заполнения формы.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/hosts_screen.dart, поле поиска</p>
+</article><article class="card" data-area="Хосты" data-quick="false" data-impact="0">
+<header><span class="id">R13</span><span class="area">Хосты</span></header>
+<h3>Форма хоста: «Добавить и подключиться» и ключ из списка</h3>
+<p class="problem">После «Добавить хост» человек возвращается в список и снова тапает хост, чтобы проверить, что всё работает. В списке ключей нет «Импортировать ключ…»: подсказка отправляет в раздел «Ключи», то есть прочь из незаполненной формы, хотя у прокси пункт «Новый прокси…» уже есть.</p>
+<p class="proposal">Основным действием новой формы сделать «Добавить и подключиться», обычное «Добавить» оставить вторым. В список ключей добавить «Импортировать ключ…» и «Создать ключ…» в том же стиле, что «Новый прокси…», и сразу выбирать созданный ключ.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/host_form_panel.dart</p>
+</article><article class="card" data-area="Телефон" data-quick="false" data-impact="0">
+<header><span class="id">R14</span><span class="area">Телефон</span></header>
+<h3>Сниппеты в терминале на телефоне</h3>
+<p class="problem">Палитра сниппетов открывается только по Ctrl+Shift+K или из инспектора сессии, а инспектор есть только на десктопе. На телефоне сниппет можно лишь скопировать на экране «Сниппеты», вернуться во вкладку и вставить вручную.</p>
+<p class="proposal">Добавить клавишу «Сниппеты» в панель доп. клавиш (в набор по умолчанию, рядом с «Вставить») и пункт «Сниппеты» в меню вкладки. Палитру на телефоне открывать нижним листом с поиском: тап выполняет, долгий тап вставляет без Enter, как Enter и Shift+Enter на десктопе.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/terminal/terminal_keys_bar.dart; extra_keys.dart; session_tabs.dart; lib/features/snippets/snippet_palette.dart</p>
+</article><article class="card" data-area="Аккаунт и вход" data-quick="false" data-impact="0">
+<header><span class="id">R15</span><span class="area">Аккаунт и вход</span></header>
+<h3>Новый вход: спросить «Это были вы?» и помочь, если нет</h3>
+<p class="problem">Окно называется «Новый вход в аккаунт» и советует отключить устройство и сменить пароль, но кнопка делает только первое. Если у записи нет deviceId, кнопки отключения нет совсем и остаётся одно «Это я», а голый IP почти ничего не говорит.</p>
+<p class="proposal">Заголовок сделать вопросом «Это были вы?», под ним устройство, способ входа, время и страну или город по IP, если сервер их знает. «Нет, это не я» отключает устройство и сразу открывает смену пароля (она и так отключает остальные устройства). Без deviceId вместо пустого места показывать «Открыть список устройств».</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/account/sign_in_alerts.dart, NewSignInDialog; lib/features/account/account_page.dart</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="0">
+<header><span class="id">R16</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Доступ Linux-агента не виден в приложении и не отзывается</h3>
+<p class="problem">Когда пользователь одобряет запрос с другого устройства, CLI записывает уровень доступа у себя без срока, а в приложении не остаётся ни записи, ни кнопки отзыва. Забрать доступ можно только командой на той машине или выходом всего устройства из аккаунта.</p>
+<p class="proposal">В Аккаунт → Устройства у устройства с CLI показывать «Доступ агента: prod-api-1 — полный, staging — чтение» и кнопку «Отозвать»; отзыв доставлять зашифрованной записью тем же путём, что и ответы на запросы. В окне одобрения дать срок: «1 час», «до конца дня», «пока не отзову». Рядом показывать последние действия агента с этого устройства.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: L</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/account/remote_approval_dialog.dart; lib/features/account/account_page.dart (Устройства); cli/lib/src/agents/agent_requests.dart</p>
+</article><article class="card" data-area="Телефон" data-quick="false" data-impact="0">
+<header><span class="id">R17</span><span class="area">Телефон</span></header>
+<h3>Подсказки команд на телефоне — чипами над клавишами</h3>
+<p class="problem">Серые подсказки из истории рисуются только на десктопе, а переключатель «Подсказки команд» виден и на телефоне, где ничего не делает. Как раз на телефоне длинные команды набирать дороже всего.</p>
+<p class="proposal">На сенсорных устройствах показывать 3–5 подсказок строкой чипов над панелью доп. клавиш, пока курсор стоит в приглашении shell: тап дописывает команду, долгий тап дописывает и выполняет. Пока этого нет, спрятать переключатель на телефоне, чтобы не обещать несуществующее.</p>
+<div class="tags"><span class="tag imp-0">Польза: высокий</span><span class="tag">Объём: L</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/terminal/terminal_screen.dart; command_suggestions.dart; lib/features/settings/settings_screen.dart</p>
+</article><article class="card" data-area="Доступность" data-quick="true" data-impact="1">
+<header><span class="id">R18</span><span class="area">Доступность</span></header>
+<h3>Контраст мелких подписей и видимые поля ввода</h3>
+<p class="problem">Тёмный textFaint (#85858C) даёт 4.28:1 на фоне диалога и 3.9:1 на плитке, а им набраны таймер, «1 из 3» и имя инструмента в запросе агента; светлый link (#157A52) на chrome — 4.41:1 (кнопки шапки формы на телефоне). Поле в тёмной карточке совпадает с ней по цвету (#1F1F22 на #1F1F22), поэтому «22» в поле «Порт» выглядит подписью, а не полем.</p>
+<p class="proposal">Поднять тёмный textFaint до #8E8E95 (5:1 на карточке, 4.8:1 на диалоге) и не ставить его на tile; светлый link затемнить до #126B48 (5.4:1 на chrome). Полям внутри карточек дать нижнюю линию около #6A6A70 в тёмной теме и #949499 в светлой (около 3:1), тогда редактируемое место читается и без фокуса, а сгруппированный вид сохраняется. Добавить тест, который проверяет контраст этих пар в обеих темах.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">lib/core/theme/app_colors.dart</p>
+</article><article class="card" data-area="Доступность" data-quick="true" data-impact="1">
+<header><span class="id">R19</span><span class="area">Доступность</span></header>
+<h3>Экранный диктор: названия клавиш и кнопок запроса</h3>
+<p class="problem">Клавиши панели озвучиваются своей подписью: «Paste», «Keyboard», «Joystick» по-английски даже в русском интерфейсе, а «^C», «|» и «~» — набором символов. У кнопки «⋯» в запросе агента пустой tooltip, поэтому TalkBack читает просто «кнопка», а сам диалог называется общим «Диалог».</p>
+<p class="proposal">Дать клавишам локализованные метки: «Ctrl+C, прервать», «Вертикальная черта», «Вставить», «Клавиатура», «Джойстик курсора». Кнопке «⋯» дать подпись «Другие варианты», окну запроса — его заголовок, например «Приложение хочет выполнить команду на prod-api-1». Оставшееся время объявлять за 30 и за 10 секунд.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">lib/features/terminal/extra_keys.dart; terminal_keys_bar.dart; lib/features/agents/ui/agent_approvals.dart</p>
+</article><article class="card" data-area="Тексты" data-quick="true" data-impact="1">
+<header><span class="id">R20</span><span class="area">Тексты</span></header>
+<h3>Тексты подтверждений: конкретно и одинаково в en и ru</h3>
+<p class="problem">«Разрешить это на {host}?» не говорит, что именно разрешается, «Запрет через 1:42» звучит как приказ, а «Claude Code просит разрешения использовать Bash:» называет инструмент вместо действия. Один и тот же отказ подписан то «Запретить», то «Отклонить», а раздел — то «Подтверждения», то «Разрешения».</p>
+<p class="proposal">Например: «Разрешить команду на {host}?» / «Run this command on {host}?», «Автоотказ через 1:42» / «Auto-deny in 1:42», «Claude Code хочет выполнить команду». Для агентов везде «Запретить», «Отклонить» оставить для входа устройства, раздел в обоих местах назвать «Подтверждения». В уведомлении вместо «хочет использовать Bash» писать «хочет выполнить команду» и саму команду.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">app_en.arb, app_ru.arb: approvalDialogTitle, approvalDialogBody, approvalNoticeTitle, agentsDeniesIn, accountApproveDeny, agentAlertsApprovals</p>
+</article><article class="card" data-area="Тексты" data-quick="true" data-impact="1">
+<header><span class="id">R21</span><span class="area">Тексты</span></header>
+<h3>Русский текст: кальки, тавтологии и «хост» против «сервера»</h3>
+<p class="problem">Часть строк звучит переводом: «Ключу хоста не доверились», «Скрыть скрытые файлы», «Если это не вы, выйдите с него», «Всё синхронно», «Ввод в оба», «Ошибка рукопожатия», «Файл запирается новым мастер-ключом». «Хост» и «сервер» перемешаны: «Хостов пока нет», но «Серверов пока нет» в SFTP и «Добавить сервер» в запросе агента.</p>
+<p class="proposal">Замены: «Ключ хоста не подтверждён», «Не показывать скрытые файлы», «Если это были не вы, отключите это устройство», кнопка «Отключить устройство», «Всё синхронизируется», «Ввод в обе панели», «Сбой SSH-соединения: …», «Файл защищён новым мастер-ключом», «Сортировка: по использованию». Выбрать один термин для людей, лучше «сервер», а «хост» оставить там, где речь об адресе. Карточку в Настройках без входа вместо «Ваше имя / Локальный профиль на этом устройстве» подписать «Синхронизация выключена».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">lib/l10n/app_ru.arb и парные строки в app_en.arb</p>
+</article><article class="card" data-area="Ключи" data-quick="true" data-impact="1">
+<header><span class="id">R22</span><span class="area">Ключи</span></header>
+<h3>Пустые «Ключи»: одна пара действий и подписи на телефоне</h3>
+<p class="problem">На пустом экране три кнопки про одно и то же: «Импортировать ключ» и основная «Создать ключ» в шапке плюс основная «Импортировать ключ» в центре, причём основное действие в шапке и в центре разное. На телефоне в шапке две иконки без подписи, и по «+» не понять, что он создаёт ключ.</p>
+<p class="proposal">Пока ключей нет, убрать кнопки из шапки и оставить в пустом состоянии пару: «Импортировать ключ» основной и «Создать новый» второй. На телефоне «+» открывает лист с подписанными «Импортировать» и «Создать». Если в ~/.ssh нашлись ключи, блок «Найдено на этом компьютере» ставить выше пустого состояния.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/keychain/keychain_screen.dart</p>
+</article><article class="card" data-area="Хосты" data-quick="true" data-impact="1">
+<header><span class="id">R23</span><span class="area">Хосты</span></header>
+<h3>Терминал и SFTP прямо в строке хоста при наведении</h3>
+<p class="problem">На десктопе открыть файлы хоста можно только через «⋯» или правый клик → «Открыть файлы». Звезда избранного видна у каждой строки всегда и спорит с названием за внимание.</p>
+<p class="proposal">При наведении и фокусе с клавиатуры показывать в строке две иконки: «Терминал» и «Файлы». Звезду показывать при наведении или если хост уже в избранном. На телефоне ничего не меняется, а на десктопе частый сценарий «зайти и поправить конфиг» становится короче на два клика.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/host_card.dart, правая часть строки</p>
+</article><article class="card" data-area="Телефон" data-quick="true" data-impact="1">
+<header><span class="id">R24</span><span class="area">Телефон</span></header>
+<h3>Ключи и Сниппеты на телефоне без выделенной вкладки</h3>
+<p class="problem">В нижней панели только Хосты, SFTP и Настройки, а Ключи и Сниппеты открываются из «⋯» на экране хостов. Когда они открыты, ни одна вкладка не выделена, и непонятно, где ты и как вернуться.</p>
+<p class="proposal">Минимум: на этих экранах подсвечивать вкладку «Хосты» и показывать в шапке «Назад». Лучше: четвёртая вкладка «Ключи», а сниппеты на телефоне всё равно нужнее внутри терминала (см. клавишу «Сниппеты»).</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/shell/bottom_nav.dart; lib/features/hosts/hosts_screen.dart, меню «⋯»</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="1">
+<header><span class="id">R25</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Запрос Linux-агента: подписи полей, «Позже», выбор серверов</h3>
+<p class="problem">В окне «Добавить сервер?» у полей только подсказки внутри, и после ввода остаются одни иконки. Уровень доступа заранее выставлен тем, что попросил агент, группа — свободный текст (легко получить «Прод» рядом с «Prod»), а если пароля под рукой нет, остаётся только «Отклонить».</p>
+<p class="proposal">Подписи над полями, как в форме хоста; группа — выбор из существующих с пунктом «Новая…». Уровень по умолчанию — «Не открывать агенту», а просьбу агента показывать подписью «Агент просит: полный доступ». Добавить «Решить позже»: окно закрывается, запрос ждёт со значком на Настройках, пока не истечёт; в запросе доступа к нескольким серверам дать галочку у каждого.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/account/remote_approval_dialog.dart</p>
+</article><article class="card" data-area="Агенты и подтверждения" data-quick="false" data-impact="1">
+<header><span class="id">R26</span><span class="area">Агенты и подтверждения</span></header>
+<h3>Доступ агентов: таймаут списком и полный журнал действий</h3>
+<p class="problem">«Запрещать, если нет ответа в течение» меняет значение по кругу при каждом тапе, и вариантов не видно. «Активность» показывает 8 событий со временем вида «13:58» без даты, фильтров и полного журнала, а шаг «Проверьте подключение» выглядит как кнопка, но ничего не делает.</p>
+<p class="proposal">Таймаут выбирать из списка, как остальные значения в Настройках. В «Активности» оставить 5 событий и строку «Весь журнал» с фильтрами по серверу и по отказам, датой у старых записей и подробностями по тапу: запрос к базе уже умеет фильтровать по хосту. «Проверить подключение» сделать живым: ждёт первый запрос приложения и показывает «Claude Code подключился» или что пошло не так.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/agents/ui/agent_access_page.dart; lib/features/agents/audit/agent_audit_log.dart</p>
+</article><article class="card" data-area="Уведомления" data-quick="false" data-impact="1">
+<header><span class="id">R27</span><span class="area">Уведомления</span></header>
+<h3>Звуки уведомлений: видно, какие есть, и можно послушать</h3>
+<p class="problem">У каждого события свой звук и свой канал Android, но на странице уведомлений один переключатель «Звук», и прослушать ничего нельзя. Если Android запретил уведомления, приложение об этом молчит, а порт, секретная ссылка и JSON для ~/.claude/settings.json идут вперемешку с переключателями.</p>
+<p class="proposal">Добавить секцию «Звуки»: «Нужно подтверждение», «Агент закончил», «Запрос доступа», «Звонок терминала», «Новый вход (без звука)», у каждого кнопка прослушать и переключатель, на Android — ссылка на системные настройки канала. Если уведомления запрещены, показать вверху плашку с кнопкой «Включить». Порт, ссылку и инструкции для серверов вынести в подстраницу «Настроить на сервере».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/settings/agent_alerts_page.dart; lib/features/alerts/alert_tone.dart</p>
+</article><article class="card" data-area="Аккаунт и вход" data-quick="false" data-impact="1">
+<header><span class="id">R28</span><span class="area">Аккаунт и вход</span></header>
+<h3>Сбой синхронизации заметен не только в Настройках</h3>
+<p class="problem">«Нет сети. Изменения отправятся позже» и «Синхронизация не удалась» показываются только в карточке аккаунта в Настройках. Пока синхронизация стоит, не доходят и запросы агентов с других устройств, а пользователь об этом не знает.</p>
+<p class="proposal">При ошибке или отсутствии сети показывать метку у пункта «Настройки» в боковой панели и точку на вкладке «Настройки» на телефоне. По наведению или тапу — текст статуса и кнопка «Синхронизировать».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/account/account_widgets.dart; боковая панель; lib/features/shell/bottom_nav.dart</p>
+</article><article class="card" data-area="Телефон" data-quick="false" data-impact="1">
+<header><span class="id">R29</span><span class="area">Телефон</span></header>
+<h3>Панель доп. клавиш: видно, что листается, и прячется сама</h3>
+<p class="problem">На 390 px панель обрывается на половине стрелки «←» без затухания у края, и неясно, что дальше ещё около дюжины клавиш. Значок джойстика (ромб с точкой) не узнаётся, а с физической клавиатурой на планшете панель занимает строку зря.</p>
+<p class="proposal">Добавить затухание у правого края и при первом показе слегка прокрутить панель туда и обратно (без этого при reduce motion). Джойстику дать значок крестовины со стрелками и показывать готовую подсказку «Зажмите и тяните, чтобы двигать курсор» при первом касании. Когда к Android подключена аппаратная клавиатура, сворачивать панель до кнопки «⋯».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/terminal/terminal_keys_bar.dart; extra_keys.dart; terminal_screen.dart</p>
+</article><article class="card" data-area="Сниппеты" data-quick="false" data-impact="1">
+<header><span class="id">R30</span><span class="area">Сниппеты</span></header>
+<h3>Сниппет можно выполнить, а «Удалить» не рядом с «Копировать»</h3>
+<p class="problem">В строке сниппета рядом стоят две одинаковые по весу иконки, «Скопировать» и «Удалить», причём удаление расходится по всем устройствам. Выполнить сниппет с этого экрана нельзя.</p>
+<p class="proposal">Справа поставить кнопку «Выполнить» с выбором: активная сессия или сервер из списка. «Скопировать» оставить иконкой, «Удалить» убрать в контекстное меню, а на телефоне — в свайп с отменой. Тап по строке, как и сейчас, открывает редактирование.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/snippets/snippets_screen.dart</p>
+</article><article class="card" data-area="Подключение и терминал" data-quick="false" data-impact="1">
+<header><span class="id">R31</span><span class="area">Подключение и терминал</span></header>
+<h3>Шпаргалка горячих клавиш и недостающие сочетания</h3>
+<p class="problem">Сочетания есть (Ctrl+T, Ctrl+F, Ctrl+Tab, Ctrl+Shift+D/K/W), но нигде не собраны вместе, и о большинстве узнают случайно. Нет привычных Ctrl+1…9 для вкладок, Ctrl+N для нового хоста и Ctrl+, для настроек.</p>
+<p class="proposal">По Ctrl+/ открывать лист со всеми сочетаниями по разделам и добавить строку «Сочетания клавиш» в Настройки. Добавить Ctrl+1…9, Ctrl+N на экране хостов и Ctrl+, для настроек. В контекстных меню показывать сочетание серым справа, как уже сделано у «Закрыть вкладку».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/shell/app_shell.dart; lib/features/terminal/terminal_screen.dart; session_tabs.dart</p>
+</article><article class="card" data-area="Доступность" data-quick="false" data-impact="1">
+<header><span class="id">R32</span><span class="area">Доступность</span></header>
+<h3>Действия с хостом для TalkBack без меню и перетаскивания</h3>
+<p class="problem">В коде нет ни одного customSemanticsActions: с TalkBack у строки хоста доступно только «подключиться», остальное — через кнопку «Ещё» и всплывающее меню. Перенос в группу делается перетаскиванием, а альтернатива спрятана в режиме выбора.</p>
+<p class="proposal">Добавить строке хоста действия «Открыть файлы», «Изменить», «В избранное» и «Переместить в группу…»; такие же — группе и файлу в SFTP. «Переместить в группу…» открывает список групп, так что без drag-and-drop можно обойтись.</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: M</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/hosts/host_card.dart; group_card.dart; lib/features/sftp/file_list.dart</p>
+</article><article class="card" data-area="Ключи" data-quick="false" data-impact="1">
+<header><span class="id">R33</span><span class="area">Ключи</span></header>
+<h3>Поставить открытый ключ на сервер из приложения</h3>
+<p class="problem">После «Создать ключ» приложение просит самому добавить открытый ключ в ~/.ssh/authorized_keys на каждом сервере. Это значит войти по паролю, открыть файл и вставить строку, и как раз здесь новички ошибаются с правами.</p>
+<p class="proposal">В карточке ключа и в инспекторе сессии добавить «Установить на сервер…»: выбрать хосты, Steelshell входит текущим способом, дописывает ключ с правами 700/600 и предлагает переключить хост на вход по ключу. Результат показать списком: «prod-api-1 — готово, staging — нет доступа».</p>
+<div class="tags"><span class="tag imp-1">Польза: средний</span><span class="tag">Объём: L</span><span class="tag">Меняет UX</span></div>
+<p class="where">lib/features/keychain/keychain_screen.dart; key_generate_panel.dart; lib/features/terminal/session_inspector.dart</p>
+</article><article class="card" data-area="Визуал" data-quick="true" data-impact="2">
+<header><span class="id">R34</span><span class="area">Визуал</span></header>
+<h3>Нули в сегментах, ширина шапок и вес заголовков</h3>
+<p class="problem">У нового пользователя сегменты читаются как «Группы 0 · Избранное 0». В «Сниппетах» и «Настройках» список ограничен примерно 800 px, а поиск и «+» прижаты к краю окна, а в светлой теме названия строк (w500) выглядят обычным текстом рядом с адресом.</p>
+<p class="proposal">Не показывать счётчик, когда он равен нулю. Ограничить шапку той же шириной, что и список, чтобы кнопки стояли над правым краем карточки. Заголовкам строк в светлой теме дать w600 и проверить тёмную, чтобы там не стало слишком жирно.</p>
+<div class="tags"><span class="tag imp-2">Польза: низкий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">lib/features/hosts/hosts_screen.dart (фильтры); lib/features/snippets/snippets_screen.dart; lib/features/settings/settings_screen.dart; lib/core/theme/app_text.dart</p>
+</article><article class="card" data-area="SFTP" data-quick="true" data-impact="2">
+<header><span class="id">R35</span><span class="area">SFTP</span></header>
+<h3>SFTP: состояние скрытых файлов, ссылки и тень кнопки</h3>
+<p class="problem">Кнопка скрытых файлов — перечёркнутый глаз без выделенного состояния, и не понять, показаны ли они сейчас. На телефоне у ссылки current не видно цели, хотя на десктопе она есть, а под круглой кнопкой загрузки торчит жёсткий полумесяц тени.</p>
+<p class="proposal">Сделать кнопку переключателем с заливкой во включённом состоянии. На телефоне выводить цель ссылки второй строкой: «→ /srv/app/releases/42 · 12 мар 2026». Кнопке загрузки дать мягкую тень из палитры без смещения.</p>
+<div class="tags"><span class="tag imp-2">Польза: низкий</span><span class="tag">Объём: S</span><span class="tag quick">Быстро</span><span class="tag">Только вид</span></div>
+<p class="where">lib/features/sftp/sftp_toolbar.dart; lib/features/sftp/file_list.dart</p>
+</article></div>
+<p class="empty" id="empty" hidden>Нет карточек с такими фильтрами</p>
+</div>
+<script>
+let area = '';
+let quickOnly = false;
+const cards = [...document.querySelectorAll('.card')];
+function apply() {
+  let shown = 0;
+  cards.forEach(c => {
+    const ok = (!area || c.dataset.area === area) && (!quickOnly || c.dataset.quick === 'true');
+    c.hidden = !ok;
+    if (ok) shown++;
+  });
+  document.getElementById('empty').hidden = shown > 0;
+}
+document.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+  area = b.dataset.area;
+  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  apply();
+}));
+const q = document.getElementById('quick');
+q.addEventListener('click', () => { quickOnly = !quickOnly; q.setAttribute('aria-pressed', String(quickOnly)); apply(); });
+</script>
