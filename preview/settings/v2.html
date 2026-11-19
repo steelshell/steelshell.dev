@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steelshell settings, v2 Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+html,body{background:#0B0B0D}
+body{font-family:Inter,system-ui,sans-serif;font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased;font-size:14px;line-height:20px}
+
+.t-dark{
+  --backdrop:#0B0B0D;--brand:#3DD598;--on-brand:#04150E;--link:#3DD598;
+  --chrome:#0E0E10;--well:#141416;--canvas:#161618;--card:#1F1F22;--card-hover:#252528;--raised:#232326;--tile:#2A2A2E;--field:#1F1F22;
+  --border:#303034;--border-strong:#3A3A3E;--text:#F2F2F4;--muted:#A6A6AD;--faint:#8E8E95;
+  --danger:#F2626A;--hair:rgba(255,255,255,.07);--sep:rgba(242,242,244,.07);
+  --seg-track:#141416;--seg-thumb:#333337;--seg-ring:rgba(255,255,255,.05);--sw-off:#3A3A3E;--knob:#F2F2F4;
+  --sel:rgba(61,213,152,.10);--shadow-sm:none;--thumb-shadow:none;
+  --shadow-win:0 24px 64px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.07);
+  --nav-sel:#232326;--nav-sel-icon:#F2F2F4;--pnav:#141416;
+  --avatar:#3F63DD;
+}
+.t-light{
+  --backdrop:#D9D9E0;--brand:#1B875E;--on-brand:#FFFFFF;--link:#126B48;
+  --chrome:#E9E9EE;--well:#E8E8ED;--canvas:#F2F2F7;--card:#FFFFFF;--card-hover:#F7F7FA;--raised:#FFFFFF;--tile:#F2F2F7;--field:#E4E4EA;
+  --border:#E2E2E8;--border-strong:#C8C8D0;--text:#111114;--muted:#5C5C66;--faint:#65656F;
+  --danger:#BD3844;--hair:rgba(0,0,0,.07);--sep:rgba(17,17,20,.09);
+  --seg-track:#EFEFF3;--seg-thumb:#FFFFFF;--seg-ring:rgba(0,0,0,.06);--sw-off:#E4E4EA;--knob:#FFFFFF;
+  --sel:rgba(27,135,94,.08);--shadow-sm:0 1px 2px rgba(0,0,0,.04);--thumb-shadow:0 1px 2px rgba(0,0,0,.12);
+  --shadow-win:0 24px 64px rgba(20,20,30,.16),0 0 0 1px rgba(0,0,0,.08);
+  --nav-sel:#FFFFFF;--nav-sel-icon:#1B875E;--pnav:#EAEAEF;
+  --avatar:#3F63DD;
+}
+
+.page{
+  --t-bg:#141517;--t-fg:#DDE3EC;--t-cur:#3DD598;--t-r:#F2626A;--t-g:#3DD598;--t-y:#F5B544;--t-b:#5B9DFF;--t-m:#B58CF0;--t-c:#3CC5D8;--t-dim:#5D6677;
+  --t-size:14px;--t-lh:1.2;--t-font:"JetBrains Mono";
+  background:var(--backdrop);color:var(--text);min-height:100vh;padding:32px 40px 64px;
+  transition:background-color .2s ease;
+}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
+.i.s16{width:16px;height:16px}
+.i.s14{width:14px;height:14px}
+.i.s12{width:12px;height:12px}
+.tnum{font-variant-numeric:tabular-nums}
+.mono{font-family:"JetBrains Mono","Cascadia Mono",Consolas,monospace;font-feature-settings:normal}
+
+.note{width:1280px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:32px}
+.note-kicker{font-size:12px;color:var(--faint);margin-bottom:4px}
+.note h1{font-size:20px;line-height:28px;font-weight:600;letter-spacing:-.15px;margin-bottom:8px}
+.note p{font-size:14px;line-height:22px;color:var(--muted);max-width:820px}
+.note p + p{margin-top:8px}
+.note b{font-weight:500;color:var(--text)}
+.toggle{display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;background:var(--card);color:var(--text);font-size:13px;font-weight:500;box-shadow:var(--shadow-sm),inset 0 0 0 1px var(--hair)}
+.toggle:hover{background:var(--card-hover)}
+.toggle .i{color:var(--faint)}
+
+.stage{margin-bottom:40px}
+.stage-label{display:flex;gap:12px;align-items:baseline;font-size:13px;color:var(--muted);margin-bottom:12px}
+.stage-label span{color:var(--faint);font-size:12px}
+.phones{display:flex;gap:48px;align-items:flex-start}
+
+.win{width:1280px;height:800px;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-win);background:var(--canvas)}
+.titlebar{height:40px;flex:none;background:var(--chrome);display:flex;align-items:center}
+.tb-brand{display:flex;align-items:center;gap:10px;padding:0 14px;font-size:13px;font-weight:600;flex:1}
+.tb-brand img{width:18px;height:18px}
+.tb-btn{width:46px;height:40px;display:grid;place-items:center;color:var(--muted)}
+.tb-btn svg{width:10px;height:10px;stroke:currentColor;stroke-width:1;fill:none}
+.app{flex:1;display:flex;min-height:0}
+.side{width:212px;flex:none;display:flex;flex-direction:column;padding:6px 0 8px;background:var(--canvas)}
+.nav-i{display:flex;align-items:center;gap:12px;min-height:36px;padding:7px 10px;margin:1px 8px;border-radius:10px;color:var(--muted);font-size:14.5px;font-weight:500}
+.nav-i .i{color:var(--faint)}
+.nav-i.on{background:var(--nav-sel);color:var(--text);box-shadow:var(--shadow-sm)}
+.nav-i.on .i{color:var(--nav-sel-icon)}
+.side .grow{flex:1}
+.main{flex:1;overflow:auto;padding:20px 24px 24px;scrollbar-width:thin}
+
+.head{display:flex;align-items:center;justify-content:space-between;height:40px;margin-bottom:16px}
+.display{font-size:28px;line-height:36px;font-weight:600;letter-spacing:-.2px}
+.search{display:flex;align-items:center;gap:10px;width:280px;height:40px;padding:0 12px;border-radius:10px;background:var(--field);color:var(--faint);font-size:14px}
+.crumb{display:flex;align-items:center;gap:4px;height:20px;margin:0 0 4px -4px;color:var(--muted);font-size:13px}
+.crumb:hover{color:var(--text)}
+
+.card{background:var(--card);border-radius:14px;box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;background:var(--tile);color:var(--text);font-size:13.5px;font-weight:500;white-space:nowrap;transition:background-color .12s ease}
+.btn:hover{background:var(--border-strong)}
+.t-light .btn:hover{background:var(--field)}
+.btn .i{color:var(--muted)}
+.btn.sm{height:32px;padding:0 12px;font-size:13px}
+.link{color:var(--link);font-size:13px;font-weight:500;white-space:nowrap}
+.link:hover{text-decoration:underline;text-underline-offset:3px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex:none;display:inline-block}
+.dot.off{background:var(--faint)}
+.kc{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:6px;background:var(--seg-track);box-shadow:inset 0 0 0 1px var(--hair),inset 0 -1px 0 var(--hair);font:500 11px/1 "JetBrains Mono",monospace;color:var(--muted)}
+
+.hero{padding:20px 20px 16px;margin-bottom:16px}
+.hero-top{display:flex;align-items:center;gap:16px}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--avatar);color:#fff;display:grid;place-items:center;font-size:19px;font-weight:600;letter-spacing:.2px;flex:none}
+.who{flex:1;min-width:0}
+.who-name{font-size:18px;line-height:24px;font-weight:600;letter-spacing:-.1px}
+.who-mail{font-size:13.5px;color:var(--muted)}
+.sync{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-top:4px}
+.sync .e2e{display:flex;align-items:center;gap:6px;color:var(--faint)}
+.sync .sep{width:3px;height:3px;border-radius:50%;background:var(--faint);opacity:.6}
+.hero-act{display:flex;gap:8px}
+.hero-devs{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--sep)}
+.dev{display:flex;align-items:center;gap:10px;height:48px;padding:0 14px 0 8px;border-radius:10px;background:var(--tile)}
+.dev-ic{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--muted);background:var(--card)}
+.t-light .dev-ic{background:#FFFFFF}
+.dev b{display:block;font-size:13px;line-height:16px;font-weight:500}
+.dev small{display:block;font-size:12px;line-height:16px;color:var(--faint)}
+.dev.this{box-shadow:inset 0 0 0 1px var(--border-strong)}
+.dev.this small{color:var(--link)}
+.hero-devs .grow{flex:1}
+.hero-devs .link{display:flex;align-items:center;gap:6px}
+
+.tiles{display:grid;grid-template-columns:404px 248px 1fr;grid-template-rows:212px 152px 60px;gap:16px}
+.tile{background:var(--card);border-radius:14px;padding:16px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);cursor:pointer;transition:background-color .12s ease;min-width:0;position:relative}
+.tile:hover{background:var(--card-hover)}
+.tile:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.th{display:flex;align-items:center;gap:10px;height:24px;flex:none}
+.th .i{color:var(--faint)}
+.th .tt{font-size:14.5px;font-weight:600}
+.th .tv{margin-left:auto;font-size:13px;color:var(--muted)}
+.th .chev{color:var(--faint);margin-left:auto}
+.th .tv + .chev{margin-left:4px}
+.tile.strip{flex-direction:row;align-items:center;gap:12px;padding:0 16px}
+.t-term{grid-column:1;grid-row:1}
+.t-appr{grid-column:2;grid-row:1}
+.t-agents{grid-column:3;grid-row:1/span 2}
+.t-notif{grid-column:1;grid-row:2}
+.t-beh{grid-column:2;grid-row:2}
+.t-kbd{grid-column:1;grid-row:3}
+.t-about{grid-column:2/span 2;grid-row:3}
+
+.term{background:var(--t-bg);color:var(--t-fg);font-family:var(--t-font),"JetBrains Mono","Cascadia Mono",monospace;font-size:var(--t-size);line-height:var(--t-lh);border-radius:10px;padding:12px 14px;overflow:hidden;white-space:pre;font-feature-settings:normal;font-variant-ligatures:contextual;transition:background-color .2s ease,color .2s ease}
+.term .g{color:var(--t-g)}.term .b{color:var(--t-b)}.term .y{color:var(--t-y)}.term .r{color:var(--t-r)}.term .c{color:var(--t-c)}.term .m{color:var(--t-m)}.term .d{color:var(--t-dim)}
+.t-dark .term{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.qlink{color:var(--muted);font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.qlink:hover{color:var(--text)}
+.qlink .i{color:var(--faint)}
+.cur{display:inline-block;width:.6em;height:calc(var(--t-lh) * 1em);vertical-align:top;background:var(--t-cur)}
+.page[data-cursor=underline] .cur{background:linear-gradient(to top,var(--t-cur) 2px,transparent 2px)}
+.page[data-cursor=bar] .cur{background:linear-gradient(to right,var(--t-cur) 2px,transparent 2px)}
+.t-term .term{flex:1;margin-top:12px}
+.tfoot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:12.5px;line-height:16px;color:var(--muted)}
+.ansi{display:flex;gap:4px}
+.ansi i{width:10px;height:10px;border-radius:3px;display:block}
+
+.mini{flex:1;margin-top:12px;border-radius:10px;background:var(--canvas);box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.mini-bar{height:10px;background:var(--chrome);display:flex;justify-content:flex-end;gap:4px;padding:3px 6px}
+.mini-bar i{width:4px;height:4px;border-radius:1px;background:var(--faint);opacity:.5}
+.mini-body{flex:1;display:flex;gap:8px;padding:8px}
+.mini-side{width:44px;display:flex;flex-direction:column;gap:5px}
+.mini-side i{height:4px;border-radius:2px;background:var(--faint);opacity:.35}
+.mini-side i.on{height:8px;margin:-2px 0;border-radius:3px;background:var(--nav-sel);opacity:1;box-shadow:var(--shadow-sm)}
+.mini-main{flex:1;display:flex;flex-direction:column;gap:6px}
+.mini-title{width:40%;height:6px;border-radius:2px;background:var(--text);opacity:.8}
+.mini-card{flex:1;border-radius:5px;background:var(--card);display:flex;flex-direction:column;justify-content:space-around;padding:2px 6px;box-shadow:var(--shadow-sm)}
+.mini-card span{display:flex;align-items:center;gap:5px}
+.mini-card span:before{content:"";width:6px;height:6px;border-radius:2px;background:var(--tile)}
+.mini-card span:after{content:"";height:3px;flex:1;max-width:60%;border-radius:2px;background:var(--muted);opacity:.45}
+.mini-card span b{order:3;margin-left:auto;width:4px;height:4px;border-radius:50%;background:var(--brand)}
+
+.seg{display:flex;padding:2px;border-radius:10px;background:var(--seg-track);flex:none}
+.seg button{flex:1;height:28px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:background-color .12s ease,color .12s ease}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:var(--seg-thumb);color:var(--text);box-shadow:var(--thumb-shadow),inset 0 0 0 1px var(--seg-ring)}
+.t-appr .seg{margin-top:12px}
+.t-appr .seg button{padding:0 6px}
+.tmeta{display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px;line-height:16px;color:var(--faint)}
+.tmeta span{color:var(--muted)}
+
+.ag-status{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--muted)}
+.ag-status b{font-weight:500;color:var(--text)}
+.ag-block{margin-top:16px;padding-top:12px;border-top:1px solid var(--sep)}
+.ag-label{font-size:12px;line-height:16px;color:var(--faint);margin-bottom:8px;display:flex;justify-content:space-between}
+.ag-item{display:grid;grid-template-columns:1fr auto;column-gap:12px;padding:6px 0}
+.ag-item .cmd{font-size:12.5px;line-height:18px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ag-item time{font-size:12px;color:var(--faint);line-height:18px}
+.ag-item small{grid-column:1/-1;font-size:12px;line-height:16px;color:var(--muted)}
+.ag-bottom{margin-top:auto}
+.ag-dev{display:flex;align-items:center;gap:10px}
+.ag-dev .dev-ic{width:28px;height:28px;background:var(--tile)}
+.ag-dev b{display:block;font-size:13px;line-height:16px;font-weight:500}
+.ag-dev small{display:block;font-size:12px;line-height:16px;color:var(--muted)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:var(--tile);font-size:12.5px;font-weight:500;color:var(--text);white-space:nowrap}
+.chip .pl{width:8px;height:9px;display:block;color:var(--muted)}
+.chip .pl svg{width:8px;height:9px;fill:currentColor;display:block}
+.chip.mute{color:var(--muted)}
+.chip.mute .i{color:var(--faint)}
+.tsub{font-size:12.5px;line-height:16px;color:var(--muted);margin-top:4px}
+
+.mrow{display:flex;align-items:center;gap:8px;height:28px;font-size:13px;color:var(--text)}
+.mrow span{flex:1;white-space:nowrap}
+.t-beh .mrows{margin-top:10px;display:flex;flex-direction:column;gap:2px}
+
+.sw{width:44px;height:26px;border-radius:13px;background:var(--sw-off);position:relative;flex:none;transition:background-color .15s ease;box-shadow:inset 0 0 0 1px var(--hair)}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--knob);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s ease}
+.sw.on{background:var(--brand);box-shadow:none}
+.sw.on:after{transform:translateX(18px)}
+.t-dark .sw.on:after{background:#FFFFFF}
+.sw.sm{width:34px;height:20px;border-radius:10px}
+.sw.sm:after{width:14px;height:14px}
+.sw.sm.on:after{transform:translateX(14px)}
+
+.t-kbd .tt,.t-about .tt{font-size:14.5px;font-weight:600}
+.t-kbd .i,.t-about .i{color:var(--faint)}
+.strip .grow{flex:1}
+.strip .muted{font-size:13px;color:var(--muted)}
+.kcs{display:flex;gap:4px;align-items:center}
+.ver{font-size:13px;color:var(--muted)}
+.uptodate{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.uptodate .i{color:var(--brand)}
+.about-mark{width:20px;height:20px}
+
+.tp{display:grid;grid-template-columns:minmax(0,1fr) 504px;gap:16px;align-items:start}
+.sec{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;line-height:16px;font-weight:500;color:var(--muted);padding:0 4px 8px}
+.sec span{font-weight:400;color:var(--faint)}
+.col > .card + .sec{margin-top:20px}
+.list .row{display:flex;align-items:center;gap:12px;min-height:48px;padding:8px 16px;position:relative}
+.list .row + .row:before{content:"";position:absolute;top:0;left:16px;right:0;height:1px;background:var(--sep)}
+.row .lbl{flex:1;min-width:0}
+.row .lbl b{display:block;font-size:14px;line-height:20px;font-weight:500}
+.row .lbl small{display:block;font-size:12.5px;line-height:16px;color:var(--muted);margin-top:2px}
+.row.stack{flex-direction:column;align-items:stretch;gap:10px;padding-top:12px;padding-bottom:12px}
+.row .val{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.row .val .i{color:var(--faint)}
+.row.danger b{color:var(--danger);font-weight:500}
+.row.danger .i{color:var(--danger)}
+.fonts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.fopt{height:56px;border-radius:10px;background:var(--seg-track);padding:8px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;transition:background-color .12s ease}
+.fopt:hover{background:var(--tile)}
+.fopt .fs{font-size:15px;line-height:20px;color:var(--text);font-feature-settings:normal;white-space:nowrap;overflow:hidden}
+.fopt .fn{font-size:11.5px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fopt.on{background:var(--sel);box-shadow:inset 0 0 0 1.5px var(--brand)}
+.fopt.on .fn{color:var(--text)}
+.stepper{display:flex;align-items:center;padding:2px;border-radius:10px;background:var(--seg-track)}
+.stepper button{width:32px;height:28px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}
+.stepper button:hover{background:var(--seg-thumb);color:var(--text)}
+.stepper .v{min-width:52px;text-align:center;font-size:13px;font-weight:500}
+.range{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--faint)}
+.sel{display:flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 12px;border-radius:10px;background:var(--seg-track);font-size:13px;font-weight:500;color:var(--text)}
+.sel .i{color:var(--faint)}
+.glyph{display:inline-block;width:7px;height:12px;border-radius:1px}
+.glyph.block{background:currentColor;opacity:.85}
+.glyph.under{border-bottom:2px solid currentColor;opacity:.85}
+.glyph.bar{border-left:2px solid currentColor;opacity:.85}
+.seg.scroll button{padding:0 9px}
+
+.theme-card{padding:16px}
+.theme-card .term{height:164px}
+.pv-meta{display:flex;align-items:center;justify-content:space-between;margin:10px 2px 16px;font-size:12.5px;line-height:16px;color:var(--muted)}
+.ansi16{display:grid;grid-template-columns:repeat(8,10px);grid-auto-rows:10px;gap:3px}
+.ansi16 i{border-radius:2px;display:block}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.swc{height:56px;border-radius:10px;background:var(--bg);color:var(--fg);padding:8px 10px;text-align:left;position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 0 0 0 1px rgba(127,127,140,.18);transition:box-shadow .12s ease}
+.swc:hover{box-shadow:inset 0 0 0 1px rgba(127,127,140,.45)}
+.swc .nm{font-size:11.5px;line-height:16px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swc.on .nm{padding-right:18px}
+.swc .ln{display:flex;align-items:center;gap:3px}
+.swc .ln i{width:8px;height:8px;border-radius:2px;display:block}
+.swc .ln .pr{margin-left:auto;font:500 11px/1 "JetBrains Mono",monospace;color:var(--fg);opacity:.7;display:flex;align-items:center;gap:2px}
+.swc .ln .pr em{display:inline-block;width:6px;height:11px;background:var(--cu);opacity:1}
+.swc.on{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--brand)}
+.swc .ck{display:none;position:absolute;top:6px;right:6px;width:16px;height:16px;border-radius:50%;background:var(--brand);color:var(--on-brand);place-items:center}
+.swc .ck svg{width:10px;height:10px;stroke-width:2.5}
+.swc.on .ck{display:grid}
+.foot{font-size:12.5px;line-height:16px;color:var(--faint);padding:8px 4px 0}
+
+.phone{width:390px;height:844px;border-radius:40px;overflow:hidden;position:relative;background:var(--canvas);box-shadow:var(--shadow-win);display:flex;flex-direction:column;flex:none}
+.p-status{height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:4px 24px 0 28px;font-size:13px;font-weight:600}
+.p-sys{display:flex;gap:6px;align-items:center;color:var(--text)}
+.p-sys svg{width:16px;height:16px;fill:currentColor}
+.p-scroll{flex:1;overflow:auto;padding:0 16px 96px;scrollbar-width:none}
+.p-scroll::-webkit-scrollbar{display:none}
+.p-title{font-size:28px;line-height:36px;font-weight:600;letter-spacing:-.2px;margin:8px 4px 12px}
+.p-search{width:auto;height:36px;margin-bottom:16px}
+.p-hero{padding:16px;margin-bottom:12px}
+.p-hero .avatar{width:44px;height:44px;font-size:16px}
+.p-hero .hero-top{gap:12px}
+.p-hero .who-name{font-size:16px;line-height:22px}
+.p-hero .who-mail{font-size:13px;line-height:18px}
+.p-hero .chev{color:var(--faint)}
+.p-hero .sync{margin-top:12px;font-size:12.5px}
+.p-devrow{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--sep)}
+.p-devrow .dev-ic{background:var(--tile);position:relative}
+.p-devrow .dev-ic.this{box-shadow:inset 0 0 0 1.5px var(--brand);color:var(--text)}
+.p-devrow .grow{flex:1}
+.p-devrow .btn{height:32px;padding:0 12px;font-size:13px}
+.p-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.p-tiles .tile{padding:12px}
+.p-tiles .th{height:20px;gap:8px}
+.p-tiles .th .tt{font-size:14px}
+.p-tiles .th .i{width:16px;height:16px}
+.p-tiles .mini{flex:none;height:52px;margin-top:10px}
+.p-tiles .mini-side{width:28px}
+.p-appr .seg{margin-top:10px}
+.p-appr .seg button{padding:0;font-size:12px;height:26px}
+.p-term .term{margin-top:10px;font-size:11px;padding:8px 9px;height:52px;line-height:1.3}
+.p-term .tfoot{margin-top:10px;font-size:12px}
+.p-agents{grid-column:1/-1}
+.p-agents .ag-status{margin-top:8px;font-size:12.5px}
+.p-agents .ag-last{margin-top:4px;font-size:12px;line-height:16px;color:var(--faint);padding-left:16px}
+.p-rows .row{min-height:48px;padding:6px 16px}
+.p-rows .row > .i{color:var(--faint)}
+.p-rows .row + .row:before{left:46px}
+.p-nav{position:absolute;left:0;right:0;bottom:0;height:64px;background:var(--pnav);border-top:1px solid var(--hair);display:flex;padding-top:6px}
+.p-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;font-weight:500;color:var(--muted)}
+.p-nav a .i{width:20px;height:20px;color:var(--faint)}
+.p-nav a.on{color:var(--text);font-weight:600}
+.p-nav a.on .i{color:var(--text)}
+.p-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:44px;margin:0 -4px 8px}
+.p-back{display:flex;align-items:center;gap:2px;color:var(--link);font-size:15px}
+.p-bar h2{font-size:16px;font-weight:600}
+.p-preview{position:sticky;top:0;z-index:2;background:var(--canvas);padding-bottom:4px}
+.p-preview .term{height:96px;padding:10px 12px}
+.p-preview .pv-meta{margin:8px 4px 12px;font-size:12px}
+.p-gal{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 20px;padding:4px 16px;scrollbar-width:none}
+.p-gal::-webkit-scrollbar{display:none}
+.p-gal .swc{width:128px;flex:none}
+.p-term-pg .fonts{grid-template-columns:repeat(2,minmax(0,1fr))}
+.p-term-pg .fopt{height:52px}
+.p-term-pg .sec{padding-top:0}
+.p-term-pg .card + .sec{margin-top:20px}
+.p-term-pg .seg button{padding:0 10px;font-size:12.5px}
+
+.view{display:none}
+.view.on{display:block}
+.page[data-only=desktop] .stage.phone-stage,.page[data-only=phones] .stage.desk-stage{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-hosts" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 7.65-7.65M15 8l2.5 2.5M17.5 5.5 20 8"/></symbol>
+    <symbol id="i-sftp" viewBox="0 0 24 24"><path d="M10 19H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v3"/><path d="m14 15 2.5-2.5L19 15M16.5 12.5V21"/></symbol>
+    <symbol id="i-snip" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1M10 12h4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-term" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 10 3 2-3 2M12.5 15H17"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+    <symbol id="i-kbd" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 15.5h8"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/></symbol>
+    <symbol id="i-volx" viewBox="0 0 24 24"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5zM22 9l-6 6M16 9l6 6"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 8 9"><path d="M0 .6v7.8a.5.5 0 0 0 .76.43l6.5-3.9a.5.5 0 0 0 0-.86L.76.17A.5.5 0 0 0 0 .6z"/></symbol>
+  </defs>
+</svg>
+
+<div class="page t-dark" id="root">
+
+  <header class="note">
+    <div>
+      <div class="note-kicker">Steelshell settings redesign · v2</div>
+      <h1>Overview</h1>
+      <p>Settings opens as a calm overview of how this Steelshell is set up. The account sits on top with its sync state and the three devices that share it, and every category below is a tile that already shows its current value: your prompt in your terminal theme, font and cursor, the app appearance switch, whether agents are on and what they did today. Simple choices change right there with segmented controls, steppers and switches, and a category page groups the rest into cards next to a live preview.</p>
+      <p><b>What changes for you:</b> no 25-row column with an empty right half and no subpage for a three-option value. Terminal settings leave Appearance and get their own page with a theme gallery you can see before you pick, AI agents move from the bottom to the first screen, and search finds any setting.</p>
+    </div>
+    <button class="toggle" id="themeToggle"><svg class="i s16"><use href="#i-sun"/></svg><span>Light theme</span></button>
+  </header>
+
+  <!-- DESKTOP HOME -->
+  <section class="stage desk-stage">
+    <div class="stage-label">Desktop · Settings home <span class="tnum">1280 × 800</span><span>Click the Terminal tile to open it</span></div>
+    <div class="win" data-win>
+      <div class="titlebar">
+        <div class="tb-brand"><img src="data:image/png;base64,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" alt="">Steelshell</div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><path d="M0 5.5h10"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9" rx="1"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><path d="m.5.5 9 9m0-9-9 9"/></svg></div>
+      </div>
+      <div class="app">
+        <nav class="side">
+          <a class="nav-i"><svg class="i"><use href="#i-hosts"/></svg>Hosts</a>
+          <a class="nav-i"><svg class="i"><use href="#i-key"/></svg>Keychain</a>
+          <a class="nav-i"><svg class="i"><use href="#i-sftp"/></svg>SFTP</a>
+          <a class="nav-i"><svg class="i"><use href="#i-snip"/></svg>Snippets</a>
+          <span class="grow"></span>
+          <a class="nav-i on"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+        </nav>
+        <main class="main">
+          <div class="view v-home on">
+            <div class="head">
+              <h1 class="display">Settings</h1>
+              <div class="search"><svg class="i"><use href="#i-search"/></svg>Search settings</div>
+            </div>
+
+            <section class="hero card">
+              <div class="hero-top">
+                <div class="avatar">MB</div>
+                <div class="who">
+                  <div class="who-name">Maks Belov</div>
+                  <div class="who-mail">maks@example.com</div>
+                  <div class="sync"><i class="dot"></i><span class="tnum">Synced 2 min ago · 31 servers, 2 keys</span><i class="sep"></i><span class="e2e"><svg class="i s14"><use href="#i-lock"/></svg>End-to-end encrypted</span></div>
+                </div>
+                <div class="hero-act">
+                  <button class="btn"><svg class="i s16"><use href="#i-laptop"/></svg>Devices</button>
+                  <button class="btn"><svg class="i s16"><use href="#i-shield"/></svg>Security</button>
+                </div>
+              </div>
+              <div class="hero-devs">
+                <div class="dev this"><span class="dev-ic"><svg class="i s16"><use href="#i-laptop"/></svg></span><span><b>Windows laptop</b><small>This device</small></span></div>
+                <div class="dev"><span class="dev-ic"><svg class="i s16"><use href="#i-phone"/></svg></span><span><b>Pixel 8</b><small class="tnum">Last active: 5 min ago</small></span></div>
+                <div class="dev"><span class="dev-ic"><svg class="i s16"><use href="#i-term"/></svg></span><span><b>Linux CLI</b><small class="tnum">build-01 · 1 h ago</small></span></div>
+                <span class="grow"></span>
+                <button class="qlink"><svg class="i s16"><use href="#i-plus"/></svg>Sign in a device</button>
+              </div>
+            </section>
+
+            <div class="tiles">
+              <a class="tile t-term" tabindex="0" data-open="term">
+                <div class="th"><svg class="i"><use href="#i-term"/></svg><span class="tt">Terminal</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="term"><span class="d">Last login: Wed Nov 19 22:04</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ uptime -p
+up 41 days, 3 hours
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ ls
+<span class="b">app</span>  <span class="b">logs</span>  <span class="b">releases</span>  <span class="g">deploy.sh</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div>
+                <div class="tfoot"><span class="tnum" data-tsum>Steelshell · JetBrains Mono 14 pt · Block</span><span class="ansi"><i style="background:var(--t-r)"></i><i style="background:var(--t-g)"></i><i style="background:var(--t-y)"></i><i style="background:var(--t-b)"></i><i style="background:var(--t-m)"></i><i style="background:var(--t-c)"></i></span></div>
+              </a>
+
+              <div class="tile t-appr" tabindex="0">
+                <div class="th"><svg class="i"><use href="#i-moon"/></svg><span class="tt">Appearance</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="mini" aria-hidden="true">
+                  <div class="mini-bar"><i></i><i></i><i></i></div>
+                  <div class="mini-body">
+                    <div class="mini-side"><i class="on"></i><i></i><i></i><i></i></div>
+                    <div class="mini-main"><div class="mini-title"></div><div class="mini-card"><span><b></b></span><span><b></b></span><span></span></div></div>
+                  </div>
+                </div>
+                <div class="seg" data-set="appearance"><button data-v="light">Light</button><button data-v="dark" class="on">Dark</button><button data-v="system">System</button></div>
+                <div class="tmeta">Language<span>Same as the system</span></div>
+              </div>
+
+              <div class="tile t-agents" tabindex="0">
+                <div class="th"><svg class="i"><use href="#i-cpu"/></svg><span class="tt">AI agents</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="ag-status"><i class="dot"></i><span class="tnum"><b>On</b> · 31 servers shared · 2 requests today</span></div>
+                <div class="ag-block">
+                  <div class="ag-label"><span>Activity today</span></div>
+                  <div class="ag-item"><span class="cmd"><span class="mono">df -h</span> on prod-api-1</span><time class="tnum">10:42</time><small>You allowed it</small></div>
+                  <div class="ag-item"><span class="cmd"><span class="mono">journalctl -u api</span> on prod-api-1</span><time class="tnum">09:15</time><small>Allowed by server setting</small></div>
+                </div>
+                <div class="ag-block">
+                  <div class="ag-label"><span>Approvals</span></div>
+                  <div class="ag-item" style="padding:0"><span class="cmd" style="color:var(--muted)">Deny if unanswered after</span><time class="tnum" style="color:var(--text)">2 min</time></div>
+                </div>
+                <div class="ag-block ag-bottom">
+                  <div class="ag-label"><span>Agents on other devices</span></div>
+                  <div class="ag-dev"><span class="dev-ic"><svg class="i s16"><use href="#i-term"/></svg></span><span><b>Linux CLI on build-01</b><small>Read only until you revoke it</small></span></div>
+                </div>
+              </div>
+
+              <div class="tile t-notif" tabindex="0">
+                <div class="th"><svg class="i"><use href="#i-bell"/></svg><span class="tt">Notifications</span><span class="tv">On</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="tsub">Claude Code, Codex and other terminal apps</div>
+                <div class="chips">
+                  <span class="chip"><span class="pl"><svg viewBox="0 0 8 9"><use href="#i-play"/></svg></span>Needs approval</span>
+                  <span class="chip"><span class="pl"><svg viewBox="0 0 8 9"><use href="#i-play"/></svg></span>Agent finished</span>
+                  <span class="chip"><span class="pl"><svg viewBox="0 0 8 9"><use href="#i-play"/></svg></span>Access request</span>
+                  <span class="chip"><span class="pl"><svg viewBox="0 0 8 9"><use href="#i-play"/></svg></span>Terminal bell</span>
+                  <span class="chip mute"><svg class="i s14"><use href="#i-volx"/></svg>New sign-in</span>
+                </div>
+              </div>
+
+              <div class="tile t-beh" tabindex="0">
+                <div class="th"><svg class="i"><use href="#i-sliders"/></svg><span class="tt">Behaviour</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="mrows">
+                  <div class="mrow"><span>Close to tray</span><button class="sw sm on" aria-label="Close to tray"></button></div>
+                  <div class="mrow"><span>Show server status</span><button class="sw sm on" aria-label="Show server status"></button></div>
+                  <div class="mrow"><span>Check for updates on start</span><button class="sw sm on" aria-label="Check for updates on start"></button></div>
+                </div>
+              </div>
+
+              <div class="tile strip t-kbd" tabindex="0">
+                <svg class="i"><use href="#i-kbd"/></svg><span class="tt">Keyboard</span><span class="grow"></span>
+                <span class="muted">All shortcuts</span><span class="kcs"><span class="kc">Ctrl</span><span class="kc">/</span></span>
+                <svg class="i s16" style="color:var(--faint)"><use href="#i-chev"/></svg>
+              </div>
+
+              <div class="tile strip t-about" tabindex="0">
+                <img class="about-mark" src="data:image/png;base64,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" alt=""><span class="tt">Steelshell</span><span class="ver tnum">0.5.1</span>
+                <span class="uptodate" data-upd><svg class="i s16"><use href="#i-circle-check"/></svg><span>You're up to date</span></span>
+                <span class="grow"></span>
+                <button class="qlink">Releases<svg class="i s14"><use href="#i-ext"/></svg></button>
+                <button class="btn sm" data-check>Check now</button>
+                <svg class="i s16" style="color:var(--faint)"><use href="#i-chev"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="view v-term"><button class="crumb" data-back><svg class="i s16"><use href="#i-back"/></svg>Settings</button><div class="head"><h1 class="display">Terminal</h1><div class="search"><svg class="i"><use href="#i-search"/></svg>Search settings</div></div><div class="tp"><div class="col"><div class="sec">Font and cursor</div><div class="card list"><div class="row stack"><div class="lbl"><b>Terminal font</b></div><div class="fonts" data-set="font"><button class="fopt" data-v="Cascadia Mono"><span class="fs" style="font-family:'Cascadia Mono',monospace">0O il1 =&gt;</span><span class="fn">Cascadia Mono</span></button><button class="fopt on" data-v="JetBrains Mono"><span class="fs" style="font-family:'JetBrains Mono',monospace">0O il1 =&gt;</span><span class="fn">JetBrains Mono</span></button><button class="fopt" data-v="Fira Code"><span class="fs" style="font-family:'Fira Code','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Fira Code</span></button><button class="fopt" data-v="Source Code Pro"><span class="fs" style="font-family:'Source Code Pro','Liberation Mono','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Source Code Pro</span></button></div></div><div class="row"><div class="lbl"><b>Terminal font size</b><small>You can also press Ctrl + and Ctrl − in the terminal, and Ctrl 0 to reset.</small></div><div class="stepper"><button data-step="-1" aria-label="Smaller"><svg class="i s16"><use href="#i-minus"/></svg></button><span class="v tnum" data-tsize>14 pt</span><button data-step="1" aria-label="Larger"><svg class="i s16"><use href="#i-plus"/></svg></button></div></div><div class="row"><div class="lbl"><b>Zoom range</b><small>Limits for pinching and Ctrl+plus or minus</small></div><div class="range"><span class="sel tnum">8 pt<svg class="i s14"><use href="#i-down"/></svg></span>–<span class="sel tnum">24 pt<svg class="i s14"><use href="#i-down"/></svg></span></div></div><div class="row"><div class="lbl"><b>Line spacing</b></div><div class="seg" data-set="lh"><button data-v="1.05">Compact</button><button data-v="1.2" class="on">Normal</button><button data-v="1.4">Relaxed</button></div></div><div class="row"><div class="lbl"><b>Cursor style</b></div><div class="seg" data-set="cursor"><button data-v="block" class="on"><i class="glyph block"></i>Block</button><button data-v="underline"><i class="glyph under"></i>Underline</button><button data-v="bar"><i class="glyph bar"></i>Bar</button></div></div><div class="row"><div class="lbl"><b>Smooth cursor</b><small>The cursor glides to where it moves</small></div><button class="sw on" aria-pressed="true"></button></div></div><div class="sec">Behaviour</div><div class="card list"><div class="row"><div class="lbl"><b>Scrollback</b><small>How much history each terminal keeps</small></div><div class="seg scroll tnum" data-set="scroll"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k" class="on">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></div></div><div class="row"><div class="lbl"><b>Status bar</b><small>Connection, ping and terminal size under the terminal</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row"><div class="lbl"><b>Command suggestions</b><small>Grey hints from the commands you ran before</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row danger"><div class="lbl"><b>Clear command history</b></div><svg class="i s16"><use href="#i-trash"/></svg></div></div></div><div class="col"><div class="sec">Terminal theme <span class="tnum">14 themes</span></div><div class="card theme-card"><div class="term"><span class="d">Last login: Wed Nov 19 22:04 from 10.0.4.1</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ systemctl status api
+<span class="g">●</span> api.service - Steelshell API
+     Active: <span class="g">active (running)</span> since Tue 09:12
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ git log --oneline -1
+<span class="y">a3f9c1e</span> (<span class="c">HEAD -&gt;</span> <span class="g">main</span>) Fix reconnect after sleep
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div><div class="pv-meta"><span class="tnum" data-tsum>Steelshell · JetBrains Mono 14 pt · Block</span><span class="ansi"><i style="background:var(--t-r)"></i><i style="background:var(--t-g)"></i><i style="background:var(--t-y)"></i><i style="background:var(--t-b)"></i><i style="background:var(--t-m)"></i><i style="background:var(--t-c)"></i><i style="background:var(--t-dim)"></i><i style="background:var(--t-fg)"></i></span></div><div class="gallery" data-gallery></div></div><div class="foot">Themes apply instantly to every open session.</div></div></div></div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESKTOP TERMINAL -->
+  <section class="stage desk-stage">
+    <div class="stage-label">Desktop · Terminal category <span class="tnum">1280 × 800</span><span>Pick a theme, font, size or cursor and every preview on this page follows</span></div>
+    <div class="win" data-win>
+      <div class="titlebar">
+        <div class="tb-brand"><img src="data:image/png;base64,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" alt="">Steelshell</div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><path d="M0 5.5h10"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9" rx="1"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 10 10"><path d="m.5.5 9 9m0-9-9 9"/></svg></div>
+      </div>
+      <div class="app">
+        <nav class="side">
+          <a class="nav-i"><svg class="i"><use href="#i-hosts"/></svg>Hosts</a>
+          <a class="nav-i"><svg class="i"><use href="#i-key"/></svg>Keychain</a>
+          <a class="nav-i"><svg class="i"><use href="#i-sftp"/></svg>SFTP</a>
+          <a class="nav-i"><svg class="i"><use href="#i-snip"/></svg>Snippets</a>
+          <span class="grow"></span>
+          <a class="nav-i on"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+        </nav>
+        <main class="main">
+          <div class="view v-term on"><button class="crumb" data-back><svg class="i s16"><use href="#i-back"/></svg>Settings</button><div class="head"><h1 class="display">Terminal</h1><div class="search"><svg class="i"><use href="#i-search"/></svg>Search settings</div></div><div class="tp"><div class="col"><div class="sec">Font and cursor</div><div class="card list"><div class="row stack"><div class="lbl"><b>Terminal font</b></div><div class="fonts" data-set="font"><button class="fopt" data-v="Cascadia Mono"><span class="fs" style="font-family:'Cascadia Mono',monospace">0O il1 =&gt;</span><span class="fn">Cascadia Mono</span></button><button class="fopt on" data-v="JetBrains Mono"><span class="fs" style="font-family:'JetBrains Mono',monospace">0O il1 =&gt;</span><span class="fn">JetBrains Mono</span></button><button class="fopt" data-v="Fira Code"><span class="fs" style="font-family:'Fira Code','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Fira Code</span></button><button class="fopt" data-v="Source Code Pro"><span class="fs" style="font-family:'Source Code Pro','Liberation Mono','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Source Code Pro</span></button></div></div><div class="row"><div class="lbl"><b>Terminal font size</b><small>You can also press Ctrl + and Ctrl − in the terminal, and Ctrl 0 to reset.</small></div><div class="stepper"><button data-step="-1" aria-label="Smaller"><svg class="i s16"><use href="#i-minus"/></svg></button><span class="v tnum" data-tsize>14 pt</span><button data-step="1" aria-label="Larger"><svg class="i s16"><use href="#i-plus"/></svg></button></div></div><div class="row"><div class="lbl"><b>Zoom range</b><small>Limits for pinching and Ctrl+plus or minus</small></div><div class="range"><span class="sel tnum">8 pt<svg class="i s14"><use href="#i-down"/></svg></span>–<span class="sel tnum">24 pt<svg class="i s14"><use href="#i-down"/></svg></span></div></div><div class="row"><div class="lbl"><b>Line spacing</b></div><div class="seg" data-set="lh"><button data-v="1.05">Compact</button><button data-v="1.2" class="on">Normal</button><button data-v="1.4">Relaxed</button></div></div><div class="row"><div class="lbl"><b>Cursor style</b></div><div class="seg" data-set="cursor"><button data-v="block" class="on"><i class="glyph block"></i>Block</button><button data-v="underline"><i class="glyph under"></i>Underline</button><button data-v="bar"><i class="glyph bar"></i>Bar</button></div></div><div class="row"><div class="lbl"><b>Smooth cursor</b><small>The cursor glides to where it moves</small></div><button class="sw on" aria-pressed="true"></button></div></div><div class="sec">Behaviour</div><div class="card list"><div class="row"><div class="lbl"><b>Scrollback</b><small>How much history each terminal keeps</small></div><div class="seg scroll tnum" data-set="scroll"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k" class="on">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></div></div><div class="row"><div class="lbl"><b>Status bar</b><small>Connection, ping and terminal size under the terminal</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row"><div class="lbl"><b>Command suggestions</b><small>Grey hints from the commands you ran before</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row danger"><div class="lbl"><b>Clear command history</b></div><svg class="i s16"><use href="#i-trash"/></svg></div></div></div><div class="col"><div class="sec">Terminal theme <span class="tnum">14 themes</span></div><div class="card theme-card"><div class="term"><span class="d">Last login: Wed Nov 19 22:04 from 10.0.4.1</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ systemctl status api
+<span class="g">●</span> api.service - Steelshell API
+     Active: <span class="g">active (running)</span> since Tue 09:12
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ git log --oneline -1
+<span class="y">a3f9c1e</span> (<span class="c">HEAD -&gt;</span> <span class="g">main</span>) Fix reconnect after sleep
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div><div class="pv-meta"><span class="tnum" data-tsum>Steelshell · JetBrains Mono 14 pt · Block</span><span class="ansi"><i style="background:var(--t-r)"></i><i style="background:var(--t-g)"></i><i style="background:var(--t-y)"></i><i style="background:var(--t-b)"></i><i style="background:var(--t-m)"></i><i style="background:var(--t-c)"></i><i style="background:var(--t-dim)"></i><i style="background:var(--t-fg)"></i></span></div><div class="gallery" data-gallery></div></div><div class="foot">Themes apply instantly to every open session.</div></div></div></div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHONES -->
+  <section class="stage phone-stage">
+    <div class="stage-label">Phone · Settings and Terminal <span class="tnum">390 × 844</span></div>
+    <div class="phones">
+
+      <div class="phone">
+        <div class="p-status"><span class="tnum">9:41</span><span class="p-sys"><svg viewBox="0 0 16 16"><path d="M1 13h2v2H1zM5 10h2v5H5zM9 7h2v8H9zM13 3h2v12h-2z"/></svg><svg viewBox="0 0 16 16"><path d="M8 13.5 10 11a3 3 0 0 0-4 0zM3.5 8.5l1.3 1.5a5 5 0 0 1 6.4 0l1.3-1.5a7 7 0 0 0-9 0zM1 5.6l1.3 1.5a8.5 8.5 0 0 1 11.4 0L15 5.6a10.5 10.5 0 0 0-14 0z"/></svg><svg viewBox="0 0 16 16"><rect x="1" y="4" width="12" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2.5" y="5.5" width="8" height="5" rx="1"/><rect x="14" y="6.5" width="1.5" height="3" rx=".5"/></svg></span></div>
+        <div class="p-scroll">
+          <div class="view v-home on">
+            <h1 class="p-title">Settings</h1>
+            <div class="search p-search"><svg class="i s16"><use href="#i-search"/></svg>Search settings</div>
+
+            <section class="hero card p-hero">
+              <div class="hero-top">
+                <div class="avatar">MB</div>
+                <div class="who"><div class="who-name">Maks Belov</div><div class="who-mail">maks@example.com</div></div>
+                <svg class="i s16 chev"><use href="#i-chev"/></svg>
+              </div>
+              <div class="sync"><i class="dot"></i><span class="tnum">Synced 2 min ago · 31 servers, 2 keys</span></div>
+              <div class="p-devrow">
+                <span class="dev-ic this" title="Pixel 8, this device"><svg class="i s16"><use href="#i-phone"/></svg></span>
+                <span class="dev-ic" title="Windows laptop"><svg class="i s16"><use href="#i-laptop"/></svg></span>
+                <span class="dev-ic" title="Linux CLI"><svg class="i s16"><use href="#i-term"/></svg></span>
+                <span class="grow"></span>
+                <button class="btn">Devices</button>
+                <button class="btn">Security</button>
+              </div>
+            </section>
+
+            <div class="p-tiles">
+              <div class="tile p-appr">
+                <div class="th"><svg class="i"><use href="#i-moon"/></svg><span class="tt">Appearance</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="mini" aria-hidden="true">
+                  <div class="mini-bar"><i></i><i></i><i></i></div>
+                  <div class="mini-body">
+                    <div class="mini-side"><i class="on"></i><i></i><i></i><i></i></div>
+                    <div class="mini-main"><div class="mini-title"></div><div class="mini-card"><span><b></b></span><span><b></b></span><span></span></div></div>
+                  </div>
+                </div>
+                <div class="seg" data-set="appearance"><button data-v="light">Light</button><button data-v="dark" class="on">Dark</button><button data-v="system">System</button></div>
+              </div>
+              <a class="tile p-term" data-open="term">
+                <div class="th"><svg class="i"><use href="#i-term"/></svg><span class="tt">Terminal</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="term"><span class="b">app</span>  <span class="b">logs</span>  <span class="b">releases</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div>
+                <div class="tfoot"><span class="tnum" data-tsum-short>JetBrains Mono · 14 pt</span></div>
+              </a>
+              <div class="tile p-agents">
+                <div class="th"><svg class="i"><use href="#i-cpu"/></svg><span class="tt">AI agents</span><svg class="i s16 chev"><use href="#i-chev"/></svg></div>
+                <div class="ag-status"><i class="dot"></i><span class="tnum"><b>On</b> · 31 servers shared · 2 requests today</span></div>
+                <div class="ag-last tnum"><span class="mono">df -h</span> on prod-api-1 · You allowed it · 10:42</div>
+              </div>
+            </div>
+
+            <div class="card list p-rows">
+              <div class="row"><svg class="i"><use href="#i-bell"/></svg><span class="lbl"><b>Notifications</b></span><span class="val">4 sounds<svg class="i s16"><use href="#i-chev"/></svg></span></div>
+              <div class="row"><svg class="i"><use href="#i-kbd"/></svg><span class="lbl"><b>Extra keys</b></span><span class="val tnum">21 keys<svg class="i s16"><use href="#i-chev"/></svg></span></div>
+              <div class="row"><svg class="i"><use href="#i-sliders"/></svg><span class="lbl"><b>Behaviour</b></span><span class="val"><svg class="i s16"><use href="#i-chev"/></svg></span></div>
+              <div class="row"><svg class="i"><use href="#i-info"/></svg><span class="lbl"><b>About</b></span><span class="val tnum">0.5.1 · Up to date<svg class="i s16"><use href="#i-chev"/></svg></span></div>
+            </div>
+          </div>
+          <div class="view v-term p-term-pg"><div class="p-bar"><button class="p-back" data-back><svg class="i"><use href="#i-back"/></svg>Settings</button><h2>Terminal</h2><span></span></div><div class="p-preview"><div class="term"><span class="d">Last login: Wed Nov 19 22:04</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ uptime -p
+up 41 days, 3 hours
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div><div class="pv-meta"><span class="tnum" data-tsum>Steelshell · JetBrains Mono 14 pt · Block</span><span class="ansi"><i style="background:var(--t-r)"></i><i style="background:var(--t-g)"></i><i style="background:var(--t-y)"></i><i style="background:var(--t-b)"></i><i style="background:var(--t-m)"></i><i style="background:var(--t-c)"></i><i style="background:var(--t-dim)"></i><i style="background:var(--t-fg)"></i></span></div></div><div class="sec">Terminal theme <span class="tnum">14 themes</span></div><div class="p-gal" data-gallery></div><div class="sec">Font and cursor</div><div class="card list"><div class="row stack"><div class="lbl"><b>Terminal font</b></div><div class="fonts" data-set="font"><button class="fopt" data-v="Cascadia Mono"><span class="fs" style="font-family:'Cascadia Mono',monospace">0O il1 =&gt;</span><span class="fn">Cascadia Mono</span></button><button class="fopt on" data-v="JetBrains Mono"><span class="fs" style="font-family:'JetBrains Mono',monospace">0O il1 =&gt;</span><span class="fn">JetBrains Mono</span></button><button class="fopt" data-v="Fira Code"><span class="fs" style="font-family:'Fira Code','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Fira Code</span></button><button class="fopt" data-v="Source Code Pro"><span class="fs" style="font-family:'Source Code Pro','Liberation Mono','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Source Code Pro</span></button></div></div><div class="row"><div class="lbl"><b>Terminal font size</b><small>You can also pinch the terminal with two fingers to zoom.</small></div><div class="stepper"><button data-step="-1" aria-label="Smaller"><svg class="i s16"><use href="#i-minus"/></svg></button><span class="v tnum" data-tsize>14 pt</span><button data-step="1" aria-label="Larger"><svg class="i s16"><use href="#i-plus"/></svg></button></div></div><div class="row stack"><div class="lbl"><b>Zoom range</b><small>Limits for pinching. Go smaller to fit wide apps like btop, which needs 80 columns.</small></div><div class="range"><span class="sel tnum">8 pt<svg class="i s14"><use href="#i-down"/></svg></span>–<span class="sel tnum">24 pt<svg class="i s14"><use href="#i-down"/></svg></span></div></div><div class="row"><div class="lbl"><b>Line spacing</b></div><div class="seg" data-set="lh"><button data-v="1.05">Compact</button><button data-v="1.2" class="on">Normal</button><button data-v="1.4">Relaxed</button></div></div><div class="row"><div class="lbl"><b>Cursor style</b></div><div class="seg" data-set="cursor"><button data-v="block" class="on"><i class="glyph block"></i>Block</button><button data-v="underline"><i class="glyph under"></i>Underline</button><button data-v="bar"><i class="glyph bar"></i>Bar</button></div></div></div><div class="sec">Behaviour</div><div class="card list"><div class="row"><div class="lbl"><b>Extra keys</b><small>The key bar above the keyboard</small></div><span class="val tnum">21 keys<svg class="i s16"><use href="#i-chev"/></svg></span></div><div class="row"><div class="lbl"><b>Scrollback</b></div><div class="seg scroll tnum" data-set="scroll"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k" class="on">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></div></div><div class="row"><div class="lbl"><b>Command suggestions</b><small>Grey hints from the commands you ran before</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row danger"><div class="lbl"><b>Clear command history</b></div><svg class="i s16"><use href="#i-trash"/></svg></div></div></div>
+        </div>
+        <nav class="p-nav">
+          <a><svg class="i"><use href="#i-hosts"/></svg>Hosts</a>
+          <a><svg class="i"><use href="#i-sftp"/></svg>SFTP</a>
+          <a class="on"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+        </nav>
+      </div>
+
+      <div class="phone">
+        <div class="p-status"><span class="tnum">9:41</span><span class="p-sys"><svg viewBox="0 0 16 16"><path d="M1 13h2v2H1zM5 10h2v5H5zM9 7h2v8H9zM13 3h2v12h-2z"/></svg><svg viewBox="0 0 16 16"><path d="M8 13.5 10 11a3 3 0 0 0-4 0zM3.5 8.5l1.3 1.5a5 5 0 0 1 6.4 0l1.3-1.5a7 7 0 0 0-9 0zM1 5.6l1.3 1.5a8.5 8.5 0 0 1 11.4 0L15 5.6a10.5 10.5 0 0 0-14 0z"/></svg><svg viewBox="0 0 16 16"><rect x="1" y="4" width="12" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2.5" y="5.5" width="8" height="5" rx="1"/><rect x="14" y="6.5" width="1.5" height="3" rx=".5"/></svg></span></div>
+        <div class="p-scroll">
+          <div class="view v-term p-term-pg on"><div class="p-bar"><button class="p-back" data-back><svg class="i"><use href="#i-back"/></svg>Settings</button><h2>Terminal</h2><span></span></div><div class="p-preview"><div class="term"><span class="d">Last login: Wed Nov 19 22:04</span>
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ uptime -p
+up 41 days, 3 hours
+<span class="g">user@prod-api-1</span>:<span class="b">~</span>$ <span class="cur"></span></div><div class="pv-meta"><span class="tnum" data-tsum>Steelshell · JetBrains Mono 14 pt · Block</span><span class="ansi"><i style="background:var(--t-r)"></i><i style="background:var(--t-g)"></i><i style="background:var(--t-y)"></i><i style="background:var(--t-b)"></i><i style="background:var(--t-m)"></i><i style="background:var(--t-c)"></i><i style="background:var(--t-dim)"></i><i style="background:var(--t-fg)"></i></span></div></div><div class="sec">Terminal theme <span class="tnum">14 themes</span></div><div class="p-gal" data-gallery></div><div class="sec">Font and cursor</div><div class="card list"><div class="row stack"><div class="lbl"><b>Terminal font</b></div><div class="fonts" data-set="font"><button class="fopt" data-v="Cascadia Mono"><span class="fs" style="font-family:'Cascadia Mono',monospace">0O il1 =&gt;</span><span class="fn">Cascadia Mono</span></button><button class="fopt on" data-v="JetBrains Mono"><span class="fs" style="font-family:'JetBrains Mono',monospace">0O il1 =&gt;</span><span class="fn">JetBrains Mono</span></button><button class="fopt" data-v="Fira Code"><span class="fs" style="font-family:'Fira Code','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Fira Code</span></button><button class="fopt" data-v="Source Code Pro"><span class="fs" style="font-family:'Source Code Pro','Liberation Mono','DejaVu Sans Mono',monospace">0O il1 =&gt;</span><span class="fn">Source Code Pro</span></button></div></div><div class="row"><div class="lbl"><b>Terminal font size</b><small>You can also pinch the terminal with two fingers to zoom.</small></div><div class="stepper"><button data-step="-1" aria-label="Smaller"><svg class="i s16"><use href="#i-minus"/></svg></button><span class="v tnum" data-tsize>14 pt</span><button data-step="1" aria-label="Larger"><svg class="i s16"><use href="#i-plus"/></svg></button></div></div><div class="row stack"><div class="lbl"><b>Zoom range</b><small>Limits for pinching. Go smaller to fit wide apps like btop, which needs 80 columns.</small></div><div class="range"><span class="sel tnum">8 pt<svg class="i s14"><use href="#i-down"/></svg></span>–<span class="sel tnum">24 pt<svg class="i s14"><use href="#i-down"/></svg></span></div></div><div class="row"><div class="lbl"><b>Line spacing</b></div><div class="seg" data-set="lh"><button data-v="1.05">Compact</button><button data-v="1.2" class="on">Normal</button><button data-v="1.4">Relaxed</button></div></div><div class="row"><div class="lbl"><b>Cursor style</b></div><div class="seg" data-set="cursor"><button data-v="block" class="on"><i class="glyph block"></i>Block</button><button data-v="underline"><i class="glyph under"></i>Underline</button><button data-v="bar"><i class="glyph bar"></i>Bar</button></div></div></div><div class="sec">Behaviour</div><div class="card list"><div class="row"><div class="lbl"><b>Extra keys</b><small>The key bar above the keyboard</small></div><span class="val tnum">21 keys<svg class="i s16"><use href="#i-chev"/></svg></span></div><div class="row"><div class="lbl"><b>Scrollback</b></div><div class="seg scroll tnum" data-set="scroll"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k" class="on">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></div></div><div class="row"><div class="lbl"><b>Command suggestions</b><small>Grey hints from the commands you ran before</small></div><button class="sw on" aria-pressed="true"></button></div><div class="row danger"><div class="lbl"><b>Clear command history</b></div><svg class="i s16"><use href="#i-trash"/></svg></div></div></div>
+        </div>
+        <nav class="p-nav">
+          <a><svg class="i"><use href="#i-hosts"/></svg>Hosts</a>
+          <a><svg class="i"><use href="#i-sftp"/></svg>SFTP</a>
+          <a class="on"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+        </nav>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('root');
+  const THEMES = [
+    ['steelshell', 'Steelshell', '141517', 'DDE3EC', '3DD598', 'F2626A', '3DD598', 'F5B544', '5B9DFF', 'B58CF0', '3CC5D8', '5D6677'],
+    ['dracula', 'Dracula', '282A36', 'F8F8F2', 'F8F8F2', 'FF5555', '50FA7B', 'F1FA8C', 'BD93F9', 'FF79C6', '8BE9FD', '6272A4'],
+    ['one-dark', 'One Dark', '282C34', 'ABB2BF', '528BFF', 'E05561', '8CC265', 'D18F52', '4AA5F0', 'C162DE', '42B3C2', '4F5666'],
+    ['nord', 'Nord', '2E3440', 'D8DEE9', 'D8DEE9', 'BF616A', 'A3BE8C', 'EBCB8B', '81A1C1', 'B48EAD', '88C0D0', '4C566A'],
+    ['tokyo-night', 'Tokyo Night', '1A1B26', 'C0CAF5', 'C0CAF5', 'F7768E', '9ECE6A', 'E0AF68', '7AA2F7', 'BB9AF7', '7DCFFF', '414868'],
+    ['catppuccin', 'Catppuccin Mocha', '1E1E2E', 'CDD6F4', 'F5E0DC', 'F38BA8', 'A6E3A1', 'F9E2AF', '89B4FA', 'F5C2E7', '94E2D5', '585B70'],
+    ['gruvbox', 'Gruvbox Dark', '282828', 'EBDBB2', 'EBDBB2', 'CC241D', '98971A', 'D79921', '458588', 'B16286', '689D6A', '928374'],
+    ['solarized', 'Solarized Dark', '002B36', '839496', '93A1A1', 'DC322F', '859900', 'B58900', '268BD2', 'D33682', '2AA198', '586E75'],
+    ['monokai', 'Monokai', '272822', 'F8F8F2', 'F8F8F0', 'F92672', 'A6E22E', 'F4BF75', '66D9EF', 'AE81FF', 'A1EFE4', '75715E'],
+    ['github-dark', 'GitHub Dark', '0D1117', 'E6EDF3', '2F81F7', 'FF7B72', '3FB950', 'D29922', '58A6FF', 'BC8CFF', '39C5CF', '6E7681'],
+    ['rose-pine', 'Rosé Pine', '191724', 'E0DEF4', 'EBBCBA', 'EB6F92', '31748F', 'F6C177', '9CCFD8', 'C4A7E7', 'EBBCBA', '6E6A86'],
+    ['kanagawa', 'Kanagawa', '1F1F28', 'DCD7BA', 'C8C093', 'C34043', '76946A', 'C0A36E', '7E9CD8', '957FB8', '6A9589', '727169'],
+    ['everforest', 'Everforest', '2D353B', 'D3C6AA', 'D3C6AA', 'E67E80', 'A7C080', 'DBBC7F', '7FBBB3', 'D699B6', '83C092', '859289'],
+    ['github-light', 'GitHub Light', 'FFFFFF', '1F2328', '0969DA', 'CF222E', '116329', '4D2D00', '0969DA', '8250DF', '1B7C83', '57606A'],
+  ];
+  const state = { theme: 'Steelshell', font: 'JetBrains Mono', size: 14, cursor: 'Block', mode: 'dark' };
+  const query = (location.search + location.hash).toLowerCase();
+  const toggle = document.getElementById('themeToggle');
+
+  const all = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  function sync(set, value) {
+    all(`[data-set="${set}"]`).forEach((group) =>
+      all('[data-v]', group).forEach((b) => b.classList.toggle('on', b.dataset.v === value)));
+  }
+
+  function applyMode(mode) {
+    state.mode = mode;
+    const dark = mode === 'system' ? matchMedia('(prefers-color-scheme: dark)').matches : mode === 'dark';
+    root.classList.toggle('t-dark', dark);
+    root.classList.toggle('t-light', !dark);
+    toggle.querySelector('span').textContent = dark ? 'Light theme' : 'Dark theme';
+    toggle.querySelector('use').setAttribute('href', dark ? '#i-sun' : '#i-moon');
+    sync('appearance', mode);
+  }
+
+  function summary() {
+    all('[data-tsum]').forEach((el) => (el.textContent = `${state.theme} · ${state.font} ${state.size} pt · ${state.cursor}`));
+    all('[data-tsum-short]').forEach((el) => (el.textContent = `${state.font} · ${state.size} pt`));
+    all('[data-tsize]').forEach((el) => (el.textContent = `${state.size} pt`));
+  }
+
+  function applyTheme(id) {
+    const t = THEMES.find((x) => x[0] === id);
+    if (!t) return;
+    const [, name, bg, fg, cur, r, g, y, b, m, c, dim] = t;
+    Object.entries({ bg, fg, cur, r, g, y, b, m, c, dim }).forEach(([k, v]) => root.style.setProperty(`--t-${k}`, `#${v}`));
+    state.theme = name;
+    all('.swc').forEach((s) => s.classList.toggle('on', s.dataset.theme === id));
+    summary();
+  }
+
+  all('[data-gallery]').forEach((gallery) => {
+    THEMES.forEach(([id, name, bg, fg, cur, r, g, y, b, m, c]) => {
+      const el = document.createElement('button');
+      el.className = 'swc' + (id === 'steelshell' ? ' on' : '');
+      el.dataset.theme = id;
+      el.style.cssText = `--bg:#${bg};--fg:#${fg};--cu:#${cur}`;
+      el.title = name;
+      el.innerHTML = `<span class="nm">${name}</span><span class="ln">${[r, g, y, b, m, c]
+        .map((x) => `<i style="background:#${x}"></i>`).join('')}<span class="pr">~$<em></em></span></span>` +
+        '<span class="ck"><svg class="i"><use href="#i-check"/></svg></span>';
+      el.addEventListener('click', () => applyTheme(id));
+      gallery.appendChild(el);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const segBtn = e.target.closest('[data-set] [data-v]');
+    if (segBtn) {
+      e.stopPropagation();
+      const set = segBtn.closest('[data-set]').dataset.set;
+      const v = segBtn.dataset.v;
+      sync(set, v);
+      if (set === 'appearance') applyMode(v);
+      if (set === 'lh') root.style.setProperty('--t-lh', v);
+      if (set === 'cursor') {
+        root.dataset.cursor = v;
+        state.cursor = segBtn.textContent.trim();
+        summary();
+      }
+      if (set === 'font') {
+        root.style.setProperty('--t-font', `"${v}"`);
+        state.font = v;
+        summary();
+      }
+      return;
+    }
+    const step = e.target.closest('[data-step]');
+    if (step) {
+      state.size = Math.min(24, Math.max(8, state.size + Number(step.dataset.step)));
+      root.style.setProperty('--t-size', `${state.size}px`);
+      summary();
+      return;
+    }
+    const sw = e.target.closest('.sw');
+    if (sw) {
+      e.stopPropagation();
+      sw.classList.toggle('on');
+      sw.setAttribute('aria-pressed', sw.classList.contains('on'));
+      return;
+    }
+    const check = e.target.closest('[data-check]');
+    if (check) {
+      const label = check.closest('.tile').querySelector('[data-upd] span');
+      label.textContent = 'Checking…';
+      setTimeout(() => (label.textContent = "You're up to date"), 900);
+      return;
+    }
+    const open = e.target.closest('[data-open]');
+    if (open) {
+      const host = open.closest('.main, .p-scroll');
+      const target = host && host.querySelector('.v-term');
+      if (target) {
+        all('.view', host).forEach((v) => v.classList.toggle('on', v === target));
+        host.scrollTop = 0;
+      }
+      return;
+    }
+    const back = e.target.closest('[data-back]');
+    if (back) {
+      const host = back.closest('.main, .p-scroll');
+      const home = host && host.querySelector('.v-home');
+      if (home) {
+        all('.view', host).forEach((v) => v.classList.toggle('on', v === home));
+        host.scrollTop = 0;
+      }
+    }
+  });
+
+  toggle.addEventListener('click', () => applyMode(root.classList.contains('t-dark') ? 'light' : 'dark'));
+
+  const only = query.match(/only=(desktop|phones)/);
+  if (only) root.dataset.only = only[1];
+  applyMode(/light/.test(query) ? 'light' : 'dark');
+  summary();
+})();
+
+</script>
+</body>
+</html>

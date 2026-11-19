@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steelshell settings redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+:root { --bg:#f2f2f7; --card:#fff; --t1:#111114; --t2:#5c5c66; --line:rgba(17,17,20,.1); --acc:#126b48; --chip:#e4e4ea; color-scheme:light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#161618; --card:#1f1f22; --t1:#f2f2f4; --t2:#a6a6ad; --line:rgba(255,255,255,.08); --acc:#3dd598; --chip:#232326; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#161618; --card:#1f1f22; --t1:#f2f2f4; --t2:#a6a6ad; --line:rgba(255,255,255,.08); --acc:#3dd598; --chip:#232326; color-scheme:dark; }
+* { box-sizing:border-box; }
+html, body { height:100%; }
+body { margin:0; background:var(--bg); color:var(--t1); font:400 15px/1.5 "Inter", system-ui, sans-serif; display:flex; flex-direction:column; }
+header { padding:16px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+h1 { margin:0; font-size:18px; font-weight:600; }
+.tabs { display:flex; flex-wrap:wrap; gap:3px; padding:3px; background:var(--chip); border-radius:10px; }
+.tabs button { font:inherit; font-size:14px; font-weight:500; color:var(--t2); background:transparent; border:0; border-radius:7px; padding:6px 12px; cursor:pointer; }
+.tabs button[aria-selected="true"] { background:var(--card); color:var(--t1); box-shadow:0 1px 2px rgba(0,0,0,.08); }
+.hint { color:var(--t2); font-size:13px; margin:0; max-width:60ch; }
+iframe { flex:1; width:100%; border:0; background:var(--bg); }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Настройки: три направления</h1><p class="hint">Выбери вариант или скажи, что взять из каждого. Внутри каждого макета есть переключатель тёмной и светлой темы</p></div>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-src="v1.html">1 · Две колонки</button>
+    <button role="tab" aria-selected="false" data-src="v2.html">2 · Обзор плитками</button>
+    <button role="tab" aria-selected="false" data-src="v3.html">3 · Живое превью</button>
+  </div>
+</header>
+<iframe id="frame" src="v1.html" title="Макет настроек"></iframe>
+<script>
+const tabs = document.querySelectorAll('[data-src]');
+const frame = document.getElementById('frame');
+function show(src) {
+  tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.src === src)));
+  frame.src = src;
+}
+tabs.forEach(t => t.addEventListener('click', () => { show(t.dataset.src); history.replaceState(null, '', '#' + t.dataset.src.replace('.html', '')); }));
+const start = location.hash.slice(1);
+if (['v1', 'v2', 'v3'].includes(start)) show(start + '.html');
+</script>
+</body>
+</html>

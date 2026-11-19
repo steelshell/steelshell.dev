@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steelshell · Settings · Live preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0A0A0B}
+button,select{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none;cursor:pointer}
+i[data-i]{display:inline-grid;place-items:center;font-style:normal;flex:none}
+i[data-i] svg{width:18px;height:18px;display:block}
+
+.ss{min-height:100vh;font:400 14px/20px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;background:var(--page);color:var(--text);
+  --t-bg:#141517;--t-fg:#DDE3EC;--t-cur:#3DD598;--t-size:14px;--t-lh:20px;--t-font:'JetBrains Mono',monospace;
+  --k1:#F2626A;--k2:#3DD598;--k3:#F5B544;--k4:#5B9DFF;--k5:#B58CF0;--k6:#3CC5D8}
+.ss.dark{color-scheme:dark;
+  --page:#0A0A0B;--page-text:#A6A6AD;--page-faint:#6E6E75;
+  --brand:#3DD598;--on-brand:#04150E;--link:#3DD598;
+  --chrome:#0E0E10;--canvas:#161618;--card:#1F1F22;--card-hover:#29292D;--tile:#2A2A2E;
+  --text:#F2F2F4;--muted:#A6A6AD;--faint:#8E8E95;--danger:#F2626A;--warning:#F5B544;
+  --sep:rgba(242,242,244,.07);--hair:rgba(255,255,255,.08);
+  --seg-bg:#2A2A2E;--seg-on:#46464B;--seg-shadow:none;--tog-off:#3A3A3E;
+  --nav-on:#232326;--nav-on-shadow:none;--nav-on-icon:#F2F2F4;--chip-on:#2A2A2E;--chip-shadow:none;
+  --search:#1F1F22;--card-shadow:none;--key:#2A2A2E;
+  --win-edge:rgba(255,255,255,.09);--win-shadow:0 24px 64px rgba(0,0,0,.6);
+  --pv-shadow:0 0 0 1px rgba(255,255,255,.06),0 12px 32px rgba(0,0,0,.5);
+  --kc:rgba(255,255,255,.16);--bar-ask:#55555B;--bezel:#000;--bezel-edge:#2A2A2E}
+.ss.light{color-scheme:light;
+  --page:#DCDCE2;--page-text:#45454D;--page-faint:#6E6E78;
+  --brand:#1B875E;--on-brand:#fff;--link:#126B48;
+  --chrome:#E9E9EE;--canvas:#F2F2F7;--card:#FFFFFF;--card-hover:#F4F4F8;--tile:#F2F2F7;
+  --text:#111114;--muted:#5C5C66;--faint:#65656F;--danger:#BD3844;--warning:#956600;
+  --sep:rgba(17,17,20,.1);--hair:rgba(0,0,0,.08);
+  --seg-bg:#EEEEF2;--seg-on:#FFFFFF;--seg-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06);--tog-off:#DCDCE2;
+  --nav-on:#FFFFFF;--nav-on-shadow:0 1px 2px rgba(0,0,0,.05);--nav-on-icon:#1B875E;--chip-on:#FFFFFF;--chip-shadow:0 1px 2px rgba(0,0,0,.06);
+  --search:#E4E4EA;--card-shadow:0 1px 2px rgba(0,0,0,.04);--key:#E9E9EE;
+  --win-edge:rgba(0,0,0,.10);--win-shadow:0 24px 64px rgba(0,0,0,.16);
+  --pv-shadow:0 0 0 1px rgba(0,0,0,.06),0 10px 28px rgba(0,0,0,.12);
+  --kc:rgba(0,0,0,.16);--bar-ask:#C2C2CA;--bezel:#18181A;--bezel-edge:#18181A}
+
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:0}
+kbd{font:500 11px/16px Inter,sans-serif;padding:0 5px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--kc);color:var(--muted);white-space:nowrap;display:inline-block}
+.dot{display:inline-block;width:6px;height:6px;border-radius:3px;background:var(--faint);flex:none}
+.dot.ok{background:var(--brand)} .dot.bad{background:var(--danger)} .dot.warn{background:var(--warning)}
+
+/* page */
+.note{max-width:1280px;margin:0 auto;padding:48px 0 40px;color:var(--page-text)}
+.note-k{font:500 13px Inter;color:var(--page-faint)}
+.note h1{font:600 32px/40px Inter;letter-spacing:-.01em;color:var(--text);margin:4px 0 16px}
+.note p{max-width:760px;font-size:15px;line-height:24px}
+.note h2{font:500 13px Inter;color:var(--page-faint);margin:24px 0 8px}
+.note ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 40px;max-width:1000px}
+.note li{font-size:14px;line-height:20px;padding-left:16px;position:relative}
+.note li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:3px;background:var(--brand)}
+.note .try{margin-top:20px;font-size:13px;color:var(--page-faint)}
+.theme-btn{position:fixed;top:16px;right:16px;z-index:50;height:36px;padding:0 14px;border-radius:10px;background:var(--card);color:var(--text);font:500 13px Inter;box-shadow:0 0 0 1px var(--hair),0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px}
+.theme-btn i svg{width:16px;height:16px}
+.stage{display:flex;flex-direction:column;align-items:center;gap:56px;padding:0 60px 96px}
+.fr figcaption{font:500 13px/20px Inter;color:var(--page-text);margin-bottom:12px;display:flex;gap:12px;align-items:baseline}
+.fr figcaption span{color:var(--page-faint);font-weight:400}
+.phones{display:flex;gap:64px;width:1280px;justify-content:center}
+
+/* desktop window */
+.win{width:1280px;height:800px;border-radius:8px;overflow:hidden;background:var(--canvas);box-shadow:0 0 0 1px var(--win-edge),var(--win-shadow);display:flex;flex-direction:column}
+.tb{height:32px;flex:none;display:flex;align-items:center;padding-left:16px;font:500 12px Inter;color:var(--faint)}
+.tb-sp{flex:1}
+.tb-btn{width:46px;height:32px;display:grid;place-items:center;color:var(--muted)}
+.tb-btn svg{width:10px;height:10px}
+.app{flex:1;display:flex;min-height:0}
+.nav{width:212px;flex:none;display:flex;flex-direction:column;gap:2px;padding:4px 8px 8px}
+.nv{height:36px;display:flex;align-items:center;gap:12px;padding:0 10px;border-radius:8px;font:500 15px Inter;color:var(--muted)}
+.nv i svg{width:18px;height:18px}
+.nv.on{background:var(--nav-on);box-shadow:var(--nav-on-shadow);color:var(--text)}
+.nv.on i{color:var(--nav-on-icon)}
+.nv-sp{flex:1}
+.set{flex:1;min-width:0;display:grid;grid-template-columns:560px minmax(0,1fr);column-gap:24px;padding:0 24px;height:100%}
+
+/* left pane */
+.lp{position:relative;height:100%;overflow-y:auto;scrollbar-width:none;padding-bottom:40px}
+.lp::-webkit-scrollbar{display:none}
+.lp-head{position:sticky;top:0;z-index:5;background:var(--canvas);padding:16px 0 12px}
+.lp-head::after{content:'';position:absolute;left:-24px;right:-24px;bottom:0;height:1px;background:var(--sep);opacity:0;transition:opacity .15s}
+.lp-head.scrolled::after{opacity:1}
+.lp-title{height:40px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.lp-title h1{font:600 28px/36px Inter;letter-spacing:-.01em}
+.search{width:236px;height:36px;border-radius:10px;background:var(--search);display:flex;align-items:center;gap:8px;padding:0 8px 0 12px;color:var(--faint);font-size:14px}
+.search span{flex:1}
+.search i svg{width:16px;height:16px}
+.chips{display:flex;gap:2px;margin-top:12px}
+.chips button{height:28px;padding:0 9px;border-radius:8px;font:500 13px Inter;color:var(--muted);white-space:nowrap;transition:background-color .15s,color .15s}
+.chips button:hover{color:var(--text)}
+.chips button.on{background:var(--chip-on);box-shadow:var(--chip-shadow);color:var(--text)}
+.back{display:inline-flex;align-items:center;gap:4px;height:20px;margin-bottom:4px;font:500 13px Inter;color:var(--muted)}
+.back i svg{width:14px;height:14px}
+
+.sec{margin-top:24px}
+.sec.first{margin-top:4px}
+.sec-h{font:500 13px/16px Inter;color:var(--muted);padding:0 16px 8px;display:flex;justify-content:space-between}
+.sec-h span{font-weight:400;color:var(--faint)}
+.foot{font-size:12px;line-height:16px;color:var(--faint);padding:8px 16px 0}
+.card{background:var(--card);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden}
+.card+.card{margin-top:12px}
+.row{display:flex;align-items:center;gap:12px;min-height:48px;padding:8px 16px;position:relative}
+.row+.row::before,.sw-grid+.row::before,.sw-row+.row::before{content:'';position:absolute;top:0;left:52px;right:0;height:1px;background:var(--sep)}
+.row:has(> .os)::before,.row:has(> .tile-ic)::before{left:60px}
+.am .play i svg{width:14px;height:14px}
+.row.link{cursor:pointer;transition:background-color .15s}
+.row.link:hover{background:var(--card-hover)}
+.row .ic{width:24px;height:24px;color:var(--muted)}
+.lb{flex:1;min-width:0;display:flex;flex-direction:column}
+.t{font:500 15px/20px Inter}
+.t2{font:500 14px/20px Inter;display:flex;align-items:center;gap:8px}
+.h{font-size:13px;line-height:18px;color:var(--muted)}
+.h kbd{margin:0 1px}
+.val{font-size:14px;color:var(--muted);white-space:nowrap}
+.chev{color:var(--faint)} .chev svg{width:16px!important;height:16px!important}
+.danger-t{color:var(--danger)} .danger-t .ic{color:var(--danger)}
+.link-t{color:var(--link)}
+
+/* controls */
+.tog{width:40px;height:24px;border-radius:12px;background:var(--tog-off);position:relative;flex:none;transition:background-color .15s}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform .15s}
+.tog[aria-checked=true]{background:var(--brand)}
+.tog[aria-checked=true]::after{transform:translateX(16px)}
+.seg{display:inline-flex;padding:2px;border-radius:10px;background:var(--seg-bg);flex:none}
+.seg button{height:28px;padding:0 12px;border-radius:8px;font:500 13px Inter;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:background-color .15s,color .15s}
+.seg button.on{background:var(--seg-on);box-shadow:var(--seg-shadow);color:var(--text)}
+.seg.full{display:flex}
+.seg.full button{flex:1;padding:0 4px}
+.cg{display:inline-block;width:8px;height:12px;flex:none}
+.cg.blk{background:currentColor;border-radius:1px}
+.cg.und{border-bottom:2px solid currentColor}
+.cg.bar{border-left:2px solid currentColor;width:4px}
+.selw{position:relative;display:inline-flex;flex:none}
+.selw select{appearance:none;-webkit-appearance:none;height:32px;border-radius:10px;background:var(--seg-bg);padding:0 32px 0 12px;font:500 13px Inter;color:var(--text);outline:none}
+.selw select:focus-visible{box-shadow:0 0 0 2px var(--brand)}
+.selw i{position:absolute;right:10px;top:8px;color:var(--muted);pointer-events:none}
+.selw i svg{width:16px;height:16px}
+.selw.sm select{padding:0 28px 0 10px}
+.selw.sm i{right:8px}
+.range{display:flex;align-items:center;gap:6px;color:var(--faint)}
+.step{display:inline-flex;align-items:center;height:32px;border-radius:10px;background:var(--seg-bg);flex:none}
+.step button{width:32px;height:32px;display:grid;place-items:center;color:var(--text);border-radius:10px}
+.step button:hover{background:var(--hair)}
+.step button i svg{width:16px;height:16px}
+.step output{min-width:52px;text-align:center;font:500 13px Inter;border-left:1px solid var(--sep);border-right:1px solid var(--sep);line-height:20px}
+.btn-s{height:28px;padding:0 12px;border-radius:8px;background:var(--seg-bg);font:500 13px Inter;color:var(--text);white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:6px}
+.btn-s.danger{color:var(--danger)}
+.btn-s i svg{width:14px;height:14px}
+.play{width:32px;height:32px;border-radius:16px;background:var(--seg-bg);display:grid;place-items:center;color:var(--text);flex:none}
+.play i svg{width:12px;height:12px}
+
+/* swatches */
+.sw-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:0 16px 16px}
+.sw-b{display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left}
+.sw{position:relative;display:flex;flex-direction:column;gap:5px;height:48px;border-radius:8px;padding:9px 8px;background:var(--sbg);box-shadow:inset 0 0 0 1px rgba(128,128,128,.22);transition:box-shadow .15s}
+.sw-b:hover .sw{box-shadow:inset 0 0 0 1px rgba(128,128,128,.5)}
+.sw.on{box-shadow:inset 0 0 0 1px rgba(128,128,128,.22),0 0 0 2px var(--card),0 0 0 4px var(--brand)}
+.sw .l{display:flex;gap:3px;height:3px}
+.sw .l b{height:3px;border-radius:2px;display:block}
+.sw .sc{position:absolute;width:4px;height:7px;border-radius:1px;left:23px;top:31px}
+.sw-n{font-size:12px;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sw-b.on .sw-n{color:var(--text)}
+
+/* terminal */
+.term{background:var(--t-bg);color:var(--t-fg);font-family:var(--t-font);font-size:var(--t-size);line-height:var(--t-lh);overflow:hidden;font-variant-ligatures:none;font-variant-numeric:normal}
+.term .ti{height:100%;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.term .ln{white-space:pre;height:var(--t-lh);flex:none}
+.k1{color:var(--k1)}.k2{color:var(--k2)}.k3{color:var(--k3)}.k4{color:var(--k4)}.k5{color:var(--k5)}.k6{color:var(--k6)}
+.kd{color:var(--t-fg);opacity:.5}
+.b{font-weight:700}
+.cur{color:var(--t-fg);opacity:1}
+.ss:not(.no-suggest) .cur{color:color-mix(in srgb,var(--t-fg) 42%,transparent)}
+.ghost{color:var(--t-fg);opacity:.42}
+.ss.no-suggest .ghost{display:none}
+.ss.cur-block .cur{background:var(--t-cur);color:var(--t-bg)!important}
+.ss.cur-underline .cur{box-shadow:inset 0 -2px 0 var(--t-cur)}
+.ss.cur-bar .cur{box-shadow:inset 2px 0 0 var(--t-cur)}
+.ss.smooth .cur{transition:box-shadow .12s,background-color .12s}
+
+/* desktop preview */
+.rp{padding-top:16px;min-width:0}
+.rp.ag{padding-top:40px}
+.rp-head{height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rp-t{font:500 15px/20px Inter}
+.rp-cap{color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-win{margin-top:12px;border-radius:12px;overflow:hidden;box-shadow:var(--pv-shadow);background:var(--t-bg)}
+.pv-tabs{height:36px;background:var(--chrome);display:flex;align-items:flex-end;gap:2px;padding:0 8px}
+.pv-tab{height:28px;display:flex;align-items:center;gap:8px;padding:0 10px 0 12px;border-radius:8px 8px 0 0;font:500 13px Inter;color:var(--muted)}
+.pv-tab i svg{width:12px;height:12px;opacity:.6}
+.pv-tab.on{background:var(--t-bg);color:var(--t-fg)}
+.pv-add{height:28px;width:28px;color:var(--muted)} .pv-add svg{width:14px!important;height:14px!important}
+.pv-term{height:320px;padding:10px 12px}
+.pv-status{height:28px;background:var(--card);border-top:1px solid var(--hair);display:flex;align-items:center;gap:12px;padding:0 12px;font-size:12px;color:var(--muted)}
+.pv-status .sp{flex:1}
+.pv-status .t2{font:500 12px Inter;gap:6px;color:var(--text)}
+.ss.no-statusbar .pv-status{display:none}
+.ss.no-statusbar .pv-term{height:348px}
+.pv-hh{font:500 13px/16px Inter;color:var(--muted);margin:20px 0 8px 4px}
+.pv-hh span{color:var(--faint);font-weight:400;margin-left:4px}
+.hrow{display:flex;align-items:center;gap:12px;height:56px;padding:0 16px;position:relative}
+.hrow+.hrow::before{content:'';position:absolute;top:0;left:60px;right:0;height:1px;background:var(--sep)}
+.os{width:32px;height:32px;border-radius:8px;background:var(--tile);display:grid;place-items:center;color:var(--muted);flex:none}
+.os svg{width:16px;height:16px}
+.hs{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);white-space:nowrap}
+.hs.bad{color:var(--danger)}
+.ss.no-hoststatus .hs{visibility:hidden}
+.pv-note{font-size:12px;line-height:16px;color:var(--faint);margin:12px 0 0 4px}
+
+/* account */
+.av{width:40px;height:40px;border-radius:20px;background:#4C63E6;color:#fff;font:600 17px/40px Inter;text-align:center;flex:none}
+.acct{min-height:64px;padding:12px 16px}
+.acct-meta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--sep)}
+.am{display:flex;align-items:center;gap:12px;padding:10px 16px;min-height:56px}
+.am+.am{border-left:1px solid var(--sep)}
+.am>i{color:var(--muted)}
+a.am:hover{background:var(--card-hover)}
+
+/* agents card */
+.tile-ic{width:32px;height:32px;border-radius:8px;background:var(--tile);display:grid;place-items:center;color:var(--text);flex:none}
+.tile-ic svg{width:18px;height:18px}
+.h .dot{margin-right:6px;vertical-align:1px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--sep)}
+.st{padding:10px 16px 12px;display:flex;flex-direction:column;gap:2px}
+.st+.st{border-left:1px solid var(--sep)}
+.st:hover{background:var(--card-hover)}
+.st .n{font:500 20px/28px Inter;display:flex;align-items:center;gap:8px}
+.st .sl{font-size:12px;line-height:16px;color:var(--muted)}
+.ss.agents-off .st .n{color:var(--faint)}
+.banner{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;background:var(--card);border-radius:14px;margin-bottom:12px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--warning) 40%,transparent)}
+.banner>i{color:var(--warning);margin-top:1px}
+
+/* agent page */
+.master{display:flex;align-items:center;gap:12px}
+.master-st{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.ag-row .t{display:flex;align-items:center;gap:8px}
+.ag-row.off .t{color:var(--muted)}
+.tag{font:500 11px/16px Inter;padding:0 6px;border-radius:4px;background:color-mix(in srgb,var(--warning) 16%,transparent);color:var(--warning)}
+.act .lb .t{font:500 13px/20px 'JetBrains Mono',monospace}
+.act .lb .t em{font:400 13px Inter;color:var(--muted);font-style:normal}
+.when{font-size:12px;color:var(--faint)}
+.ws{padding:20px}
+.ws-top{display:flex;align-items:baseline;gap:10px}
+.ws-n{font:600 32px/40px Inter;letter-spacing:-.01em}
+.ws-l{color:var(--muted);font-size:14px}
+.ws-bar{display:flex;gap:2px;height:8px;margin-top:12px;border-radius:4px;overflow:hidden}
+.ws-bar b{display:block;height:8px;transition:flex-grow .2s}
+.f-full{background:var(--warning)} .f-read{background:var(--brand)} .f-ask{background:var(--bar-ask)}
+.ws-leg{display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}
+.ws-leg span{display:flex;align-items:center;gap:6px}
+.ws-leg em{font-style:normal;color:var(--text);font-weight:500}
+.sq{width:8px;height:8px;border-radius:2px;display:inline-block}
+.ws-tbl{margin-top:16px;border-top:1px solid var(--sep);padding-top:8px}
+.wr{display:grid;grid-template-columns:96px 1fr auto;gap:12px;height:26px;align-items:center;font:400 12px 'JetBrains Mono',monospace}
+.wr .id{color:var(--faint)}
+.wr.wh{color:var(--faint);font-size:11px}
+.wr .ac{text-align:right;color:var(--muted)}
+.wr .ac.full{color:var(--warning)} .wr .ac.read{color:var(--brand)}
+.wr.more{grid-template-columns:1fr;color:var(--faint)}
+.ws-hid{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--sep);font-size:12px;color:var(--muted)}
+.ws-hid i svg{width:14px;height:14px}
+.ss.agents-off .ws-tbl,.ss.agents-off .ws-bar,.ss.agents-off .ws-leg,.ss.agents-off .ws-hid{opacity:.35}
+
+/* phone */
+.phone{width:390px;height:844px;border-radius:44px;overflow:hidden;background:var(--canvas);position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 10px var(--bezel),0 0 0 11px var(--bezel-edge),var(--win-shadow);margin:11px}
+.p-sb{height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font:600 14px Inter;position:relative}
+.p-cam{position:absolute;left:50%;top:12px;width:12px;height:12px;margin-left:-6px;border-radius:6px;background:#000}
+.p-sbi{display:flex;gap:6px;align-items:center}
+.p-sbi svg{display:block;fill:currentColor}
+.p-bar{display:none;height:44px;flex:none;align-items:center;justify-content:center;position:relative;font:600 17px Inter}
+.p-bar i{position:absolute;right:16px;top:12px;color:var(--text)} .p-bar i svg{width:20px;height:20px}
+.phone.opened .p-bar{display:flex}
+.phone.opened .p-large,.phone.opened .p-search{display:none}
+.p-scroll{flex:1;overflow-y:auto;position:relative;scrollbar-width:none}
+.p-scroll::-webkit-scrollbar{display:none}
+.p-large{padding:4px 20px 0}
+.p-large h1{font:600 32px/40px Inter;letter-spacing:-.01em}
+.p-search{margin:12px 16px 0;height:40px;border-radius:10px;background:var(--search);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--faint);font-size:15px}
+.p-pin{position:sticky;top:0;z-index:5;background:var(--canvas);padding:12px 16px 8px}
+.phone.opened .p-pin{padding-top:4px;box-shadow:0 1px 0 var(--sep)}
+.strip{border-radius:12px;overflow:hidden;background:var(--t-bg);box-shadow:0 0 0 1px var(--hair);cursor:pointer}
+.strip-head{display:none;height:28px;align-items:center;gap:8px;padding:8px 12px 0;font:500 12px Inter;color:color-mix(in srgb,var(--t-fg) 62%,transparent)}
+.strip-head .mono{font-size:11px;color:color-mix(in srgb,var(--t-fg) 45%,transparent);flex:1}
+.strip-head i svg{width:16px;height:16px}
+.strip-row{display:flex;align-items:center}
+.strip-term{flex:1;height:calc(var(--t-lh) + 24px);padding:12px 0 12px 12px}
+.strip-open{display:flex;align-items:center;gap:4px;padding:0 10px 0 8px;font:500 12px Inter;color:color-mix(in srgb,var(--t-fg) 60%,transparent);white-space:nowrap}
+.strip-open i svg{width:16px;height:16px}
+.xkeys{display:none;gap:6px;padding:6px 8px;background:var(--card);border-top:1px solid var(--hair);overflow:hidden}
+.xkeys b{height:32px;min-width:40px;padding:0 8px;border-radius:8px;background:var(--key);display:grid;place-items:center;font:700 13px 'JetBrains Mono',monospace;color:var(--text);flex:none}
+.phone.xo .strip-head{display:flex}
+.phone.xo .strip-open{display:none}
+.phone.xo .strip-term{height:calc(var(--t-lh) * 6 + 16px);padding:8px 12px}
+.phone.xo .xkeys{display:flex}
+.p-chips{margin:10px -16px 0;padding:0 16px;overflow-x:auto;scrollbar-width:none}
+.p-chips::-webkit-scrollbar{display:none}
+.p-chips button{height:32px;padding:0 12px;font-size:14px}
+.p-body{padding:0 16px 24px}
+.phone .row{min-height:52px;padding:10px 16px}
+.phone .t{font-size:16px;line-height:22px}
+.row.stack{flex-direction:column;align-items:stretch;gap:10px}
+.row.stack .rh{display:flex;align-items:center;gap:12px}
+.row.stack .seg{margin-left:36px}
+.sw-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 16px 14px 52px}
+.sw-row::-webkit-scrollbar{display:none}
+.sw-row .sw-b{width:76px;flex:none}
+.sw-row .sw{height:52px}
+.p-nav{height:64px;flex:none;display:flex;background:var(--chrome);border-top:1px solid var(--hair)}
+.p-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:500 12px Inter;color:var(--muted)}
+.p-nav a i svg{width:22px;height:22px}
+.p-nav a.on{color:var(--text);font-weight:600}
+
+/* shot modes */
+.shot .note,.shot .theme-btn{display:none}
+.shot-desk .stage,.shot-agent .stage{padding:0;gap:0}
+.shot-desk #f-agent,.shot-desk #f-phone,.shot-agent #f-desk,.shot-agent #f-phone{display:none}
+.shot-desk figcaption,.shot-agent figcaption{display:none}
+.shot-desk .win,.shot-agent .win{border-radius:0;box-shadow:none}
+.shot-phone #f-desk,.shot-phone #f-agent{display:none}
+.shot-phone .stage{padding:28px 24px}
+.shot-phone .phones{width:auto;gap:48px}
+</style>
+</head>
+<body>
+<div class="ss dark cur-block smooth" id="ss">
+
+<button class="theme-btn" id="themeBtn"><i data-i="sunmoon"></i><span>Light theme</span></button>
+
+<header class="note">
+  <div class="note-k">Steelshell · Settings redesign</div>
+  <h1>Live preview</h1>
+  <p>Settings becomes a two-pane workbench: every control sits inline in one column of grouped cards, and the right half of the window holds a live mini terminal and host list that redraw while you change them. Theme, font, size, cursor, status bar, suggestions and server status are visible before you leave Settings, and a sticky index with search keeps every section one click away. Agent access uses the same split, with per-server access on the left and exactly what Claude Code and Codex can see on the right. On the phone a small terminal strip stays pinned over the list and opens up while you are in Terminal.</p>
+  <h2>What changes for you</h2>
+  <ul>
+    <li>Appearance, language, font, size, cursor and scrollback are set in place, with no subpage per value</li>
+    <li>Terminal gets its own section, out of Appearance, with all 14 themes visible as swatches</li>
+    <li>You see the terminal and the host list change as you click, in the real theme, font and size</li>
+    <li>The account card shows sync status and devices; AI agents get a status card with the master switch</li>
+    <li>Search and a section index replace one 25-row scroll, and the empty right half now does work</li>
+    <li>Agent access shows what agents see: visible servers, their access level and what stays hidden</li>
+  </ul>
+  <p class="try">Try it: click a theme swatch, a cursor style, the font size stepper, the status bar or suggestions switch, or change a server's access on the Agent access page.</p>
+</header>
+
+<main class="stage">
+
+<!-- ================= DESKTOP: SETTINGS HOME ================= -->
+<figure class="fr" id="f-desk">
+  <figcaption>Desktop · Settings home <span>1280 × 800</span></figcaption>
+  <div class="win">
+    <div class="tb" data-titlebar></div>
+    <div class="app">
+      <nav class="nav" data-nav></nav>
+      <div class="set">
+        <div class="lp" data-lp>
+          <div class="lp-head">
+            <div class="lp-title"><h1>Settings</h1><label class="search"><i data-i="search"></i><span>Search settings</span><kbd>Ctrl F</kbd></label></div>
+            <div class="chips">
+              <button data-to="account" class="on">Account</button><button data-to="appearance">Appearance</button><button data-to="terminal">Terminal</button><button data-to="behaviour">Behaviour</button><button data-to="agents">AI agents</button><button data-to="notifications">Notifications</button><button data-to="about">About</button>
+            </div>
+          </div>
+
+          <section class="sec first" data-sec="account">
+            <div class="card">
+              <a class="row link acct"><span class="av">M</span><span class="lb"><span class="t">Maks</span><span class="h">maks@example.com</span></span><span class="val">Account</span><i data-i="chev" class="chev"></i></a>
+              <div class="acct-meta">
+                <div class="am"><i data-i="cloudcheck"></i><span class="lb"><span class="t2"><span class="dot ok"></span>Synced 2 min ago</span><span class="h">End-to-end encrypted</span></span><button class="play" aria-label="Sync now" title="Sync now"><i data-i="refresh"></i></button></div>
+                <a class="am"><i data-i="devices"></i><span class="lb"><span class="t2">3 devices</span><span class="h">This PC, Pixel 8, build-01</span></span><i data-i="chev" class="chev"></i></a>
+              </div>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="appearance">
+            <h2 class="sec-h">Appearance</h2>
+            <div class="card">
+              <div class="row"><i data-i="sunmoon" class="ic"></i><span class="lb"><span class="t">App appearance</span></span>
+                <span class="seg" data-seg="appearance"><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="system">System</button></span></div>
+              <div class="row"><i data-i="globe" class="ic"></i><span class="lb"><span class="t">Language</span></span>
+                <span class="selw"><select data-sel="lang" aria-label="Language"><option value="system">Same as the system</option><option value="en">English</option><option value="ru">Русский</option></select><i data-i="chevd"></i></span></div>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="terminal">
+            <h2 class="sec-h">Terminal</h2>
+            <div class="card">
+              <div class="row"><i data-i="palette" class="ic"></i><span class="lb"><span class="t">Terminal theme</span></span><span class="val" data-out="themeName">Steelshell</span></div>
+              <div class="sw-grid" data-swatches="grid"></div>
+              <div class="row"><i data-i="type" class="ic"></i><span class="lb"><span class="t">Terminal font</span></span>
+                <span class="selw"><select data-sel="font" aria-label="Terminal font"><option>Cascadia Mono</option><option>JetBrains Mono</option><option>Fira Code</option><option>Source Code Pro</option></select><i data-i="chevd"></i></span></div>
+              <div class="row"><i data-i="size" class="ic"></i><span class="lb"><span class="t">Terminal font size</span><span class="h">Also <kbd>Ctrl +</kbd> <kbd>Ctrl −</kbd> in the terminal, <kbd>Ctrl 0</kbd> resets</span></span>
+                <span class="step" data-step="size"><button data-d="-1" aria-label="Smaller"><i data-i="minus"></i></button><output data-out="size">14 pt</output><button data-d="1" aria-label="Larger"><i data-i="plus"></i></button></span></div>
+              <div class="row"><i data-i="cursor" class="ic"></i><span class="lb"><span class="t">Cursor style</span></span>
+                <span class="seg" data-seg="cursor"><button data-v="block"><b class="cg blk"></b>Block</button><button data-v="underline"><b class="cg und"></b>Underline</button><button data-v="bar"><b class="cg bar"></b>Bar</button></span></div>
+              <div class="row"><i data-i="zoom" class="ic"></i><span class="lb"><span class="t">Zoom range</span><span class="h">Limits for Ctrl+plus or minus</span></span>
+                <span class="range"><span class="selw sm"><select data-sel="zmin" aria-label="Smallest">ZMIN</select><i data-i="chevd"></i></span>–<span class="selw sm"><select data-sel="zmax" aria-label="Largest">ZMAX</select><i data-i="chevd"></i></span></span></div>
+              <div class="row"><i data-i="spline" class="ic"></i><span class="lb"><span class="t">Smooth cursor</span><span class="h">The cursor glides to where it moves</span></span><button class="tog" data-tog="smooth" role="switch"></button></div>
+            </div>
+            <div class="card">
+              <div class="row"><i data-i="panel" class="ic"></i><span class="lb"><span class="t">Status bar</span><span class="h">Connection, ping and terminal size under the terminal</span></span><button class="tog" data-tog="statusbar" role="switch"></button></div>
+              <div class="row"><i data-i="zap" class="ic"></i><span class="lb"><span class="t">Command suggestions</span><span class="h">Grey hints from the commands you ran before</span></span><button class="tog" data-tog="suggest" role="switch"></button></div>
+              <div class="row"><i data-i="layers" class="ic"></i><span class="lb"><span class="t">Scrollback</span><span class="h" data-out="scrollHint">10,000 lines, for new sessions</span></span>
+                <span class="seg" data-seg="scrollback"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></span></div>
+            </div>
+            <div class="card">
+              <a class="row link danger-t"><i data-i="trash" class="ic"></i><span class="lb"><span class="t">Clear command history</span></span></a>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="behaviour">
+            <h2 class="sec-h">Behaviour</h2>
+            <div class="card">
+              <a class="row link"><i data-i="keyboard" class="ic"></i><span class="lb"><span class="t">Keyboard shortcuts</span></span><i data-i="chev" class="chev"></i></a>
+              <div class="row"><i data-i="tray" class="ic"></i><span class="lb"><span class="t">Close to tray</span><span class="h">Keep running in the tray when the window closes</span></span><button class="tog" data-tog="tray" role="switch"></button></div>
+              <div class="row"><i data-i="activity" class="ic"></i><span class="lb"><span class="t">Show server status</span><span class="h">Checks that each server answers and shows its ping</span></span><button class="tog" data-tog="hoststatus" role="switch"></button></div>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="agents">
+            <h2 class="sec-h">AI agents</h2>
+            <div class="card">
+              <div class="row acct"><span class="tile-ic"><i data-i="cpu"></i></span><span class="lb"><span class="t">Agent access</span><span class="h" data-out="agentState"><span class="dot ok"></span>Listening on 127.0.0.1:47213</span></span><button class="tog" data-tog="agents" role="switch"></button></div>
+              <div class="stats">
+                <a class="st"><span class="n" data-out="sharedN">31</span><span class="sl">servers shared</span></a>
+                <a class="st"><span class="n">2</span><span class="sl">apps connected</span></a>
+                <a class="st"><span class="n"><span class="dot warn"></span>1</span><span class="sl">request waiting</span></a>
+              </div>
+            </div>
+            <div class="card">
+              <a class="row link"><i data-i="server" class="ic"></i><span class="lb"><span class="t">Servers and access levels</span></span><span class="val" data-out="sharedOf">31 of 34</span><i data-i="chev" class="chev"></i></a>
+              <a class="row link"><i data-i="terminal" class="ic"></i><span class="lb"><span class="t">Set up an app</span></span><span class="val">Claude Code, Codex</span><i data-i="chev" class="chev"></i></a>
+              <a class="row link"><i data-i="list" class="ic"></i><span class="lb"><span class="t">Activity</span></span><span class="val">128 this week</span><i data-i="chev" class="chev"></i></a>
+              <a class="row link"><i data-i="devices" class="ic"></i><span class="lb"><span class="t">Agents on other devices</span></span><span class="val">build-01</span><i data-i="chev" class="chev"></i></a>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="notifications">
+            <h2 class="sec-h">Notifications</h2>
+            <div class="card">
+              <div class="row"><i data-i="bell" class="ic"></i><span class="lb"><span class="t">Notifications from the terminal</span><span class="h">Shown when an app sends an OSC 9, 777 or 99 notification</span></span><button class="tog" data-tog="notif" role="switch"></button></div>
+              <div class="row"><i data-i="eye" class="ic"></i><span class="lb"><span class="t">Also when the tab is on screen</span></span><button class="tog" data-tog="visible" role="switch"></button></div>
+              <div class="row"><i data-i="bellring" class="ic"></i><span class="lb"><span class="t">Notify on the terminal bell</span></span><button class="tog" data-tog="bell" role="switch"></button></div>
+            </div>
+            <h2 class="sec-h" style="margin-top:16px">Sounds</h2>
+            <div class="card">
+              <div class="row"><i data-i="shieldq" class="ic"></i><span class="lb"><span class="t">Needs approval</span><span class="h">Claude Code asks before running a command</span></span><button class="play" aria-label="Play: Needs approval"><i data-i="play"></i></button></div>
+              <div class="row"><i data-i="check" class="ic"></i><span class="lb"><span class="t">Agent finished</span><span class="h">An app in the terminal finished or waits for you</span></span><button class="play" aria-label="Play: Agent finished"><i data-i="play"></i></button></div>
+              <div class="row"><i data-i="key" class="ic"></i><span class="lb"><span class="t">Access request</span><span class="h">An agent on another device asks for a server</span></span><button class="play" aria-label="Play: Access request"><i data-i="play"></i></button></div>
+              <div class="row"><i data-i="bellring" class="ic"></i><span class="lb"><span class="t">Terminal bell</span><span class="h">A program on the server rang the bell</span></span><button class="play" aria-label="Play: Terminal bell"><i data-i="play"></i></button></div>
+              <div class="row"><i data-i="login" class="ic"></i><span class="lb"><span class="t">New sign-in</span><span class="h">Shown without a sound</span></span></div>
+            </div>
+            <div class="card">
+              <a class="row link"><i data-i="send" class="ic"></i><span class="lb"><span class="t">Send a test notification</span></span></a>
+              <a class="row link"><i data-i="server" class="ic"></i><span class="lb"><span class="t">Set up on a server</span><span class="h">Port, secret link and settings for Claude Code, Codex and tmux</span></span><i data-i="chev" class="chev"></i></a>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="about">
+            <h2 class="sec-h">About</h2>
+            <div class="card">
+              <div class="row"><i data-i="info" class="ic"></i><span class="lb"><span class="t">Version <span class="mono" style="font-size:14px;color:var(--muted);margin-left:6px">0.5.1</span></span><span class="h">You're up to date</span></span><button class="btn-s">Check now</button></div>
+              <div class="row"><i data-i="refresh" class="ic"></i><span class="lb"><span class="t">Check for updates on start</span></span><button class="tog" data-tog="updates" role="switch"></button></div>
+              <a class="row link"><i data-i="tag" class="ic"></i><span class="lb"><span class="t">Releases</span></span><i data-i="ext" class="chev"></i></a>
+              <a class="row link"><i data-i="scroll" class="ic"></i><span class="lb"><span class="t">Open-source licenses</span></span><i data-i="chev" class="chev"></i></a>
+            </div>
+          </section>
+        </div>
+
+        <aside class="rp">
+          <div class="rp-head"><span class="rp-t">Preview</span><span class="rp-cap mono" data-out="caption">Steelshell · JetBrains Mono 14 pt · Block</span></div>
+          <div class="pv-win">
+            <div class="pv-tabs">
+              <span class="pv-tab on"><span class="dot ok"></span>prod-api-1<i data-i="x"></i></span>
+              <span class="pv-tab">personal vps</span>
+              <i data-i="plus" class="pv-add"></i>
+            </div>
+            <div class="term pv-term" data-term></div>
+            <div class="pv-status"><span class="t2"><span class="dot ok"></span>Connected</span><span class="mono">root@10.0.4.12</span><span class="sp"></span><span>24 ms</span><span class="mono" data-out="grid">49×13</span></div>
+          </div>
+          <div class="pv-hh">Hosts<span>3</span></div>
+          <div class="card" data-hosts></div>
+          <p class="pv-note">Themes apply instantly to every open session.</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<!-- ================= DESKTOP: AGENT ACCESS ================= -->
+<figure class="fr" id="f-agent">
+  <figcaption>Desktop · Agent access <span>deeper state, same split</span></figcaption>
+  <div class="win">
+    <div class="tb" data-titlebar></div>
+    <div class="app">
+      <nav class="nav" data-nav></nav>
+      <div class="set">
+        <div class="lp" data-lp>
+          <div class="lp-head">
+            <a class="back"><i data-i="chevl"></i>Settings</a>
+            <div class="lp-title"><h1>Agent access</h1><div class="master"><span class="master-st" data-out="agentState2"><span class="dot ok"></span>Listening</span><button class="tog" data-tog="agents" role="switch" aria-label="Allow agent access"></button></div></div>
+            <div class="chips">
+              <button data-to="a-servers" class="on">Servers</button><button data-to="a-approvals">Approvals</button><button data-to="a-conn">Connection</button><button data-to="a-setup">Set up an app</button><button data-to="a-activity">Activity</button><button data-to="a-other">Other devices</button>
+            </div>
+          </div>
+
+          <section class="sec first" data-sec="a-servers">
+            <h2 class="sec-h">Servers<span data-out="sharedCount">31 of 34 shared</span></h2>
+            <div class="card" data-agent-rows></div>
+            <p class="foot">New servers stay off until you share them here. Anything you let an agent read can leave this computer through the agent.</p>
+          </section>
+
+          <section class="sec" data-sec="a-grants" data-grant-sec>
+            <h2 class="sec-h">Temporary permissions</h2>
+            <div class="card">
+              <div class="row"><i data-i="clock" class="ic"></i><span class="lb"><span class="t">Any command on prod-api-2</span><span class="h">18 min left</span></span><button class="btn-s danger" data-act="revoke">Revoke</button></div>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="a-approvals">
+            <h2 class="sec-h">Approvals</h2>
+            <div class="card">
+              <div class="row"><i data-i="timer" class="ic"></i><span class="lb"><span class="t">Deny if unanswered after</span></span>
+                <span class="seg" data-seg="timeout"><button data-v="1">1 min</button><button data-v="2">2 min</button><button data-v="5">5 min</button></span></div>
+              <div class="row"><i data-i="window" class="ic"></i><span class="lb"><span class="t">Show the window for approvals</span><span class="h">Brings Steelshell to the front without taking keyboard focus</span></span><button class="tog" data-tog="showwin" role="switch"></button></div>
+              <div class="row"><i data-i="shield" class="ic"></i><span class="lb"><span class="t">Hide secrets in output</span><span class="h">Removes saved passwords, private keys and common API tokens from what agents receive. Best effort.</span></span><button class="tog" data-tog="redact" role="switch"></button></div>
+            </div>
+            <p class="foot">If you don’t answer in time, Steelshell refuses the request and tells the app.</p>
+          </section>
+
+          <section class="sec" data-sec="a-conn">
+            <h2 class="sec-h">Connection</h2>
+            <div class="card">
+              <div class="row"><i data-i="link" class="ic"></i><span class="lb"><span class="t">Server URL</span><span class="h mono">http://127.0.0.1:47213/mcp</span></span><button class="btn-s"><i data-i="copy"></i>Copy</button></div>
+              <div class="row"><i data-i="key" class="ic"></i><span class="lb"><span class="t">Access token</span><span class="h mono">•••••••••••••••••••• 7f3a</span></span><button class="btn-s">Show token</button><button class="btn-s"><i data-i="copy"></i>Copy</button></div>
+              <a class="row link link-t"><i data-i="refresh" class="ic" style="color:var(--link)"></i><span class="lb"><span class="t">Regenerate token</span></span></a>
+            </div>
+            <p class="foot">Only apps on this computer can connect, and only through the bridge or with this token.</p>
+          </section>
+
+          <section class="sec" data-sec="a-setup">
+            <h2 class="sec-h">Set up an app</h2>
+            <div class="card">
+              <a class="row link"><span class="tile-ic"><i data-i="terminal"></i></span><span class="lb"><span class="t">Claude Code</span><span class="h"><span class="dot ok"></span>Through the bridge · last request 09:41</span></span><i data-i="chev" class="chev"></i></a>
+              <a class="row link"><span class="tile-ic"><i data-i="terminal"></i></span><span class="lb"><span class="t">Codex</span><span class="h"><span class="dot ok"></span>With the access token · yesterday</span></span><i data-i="chev" class="chev"></i></a>
+              <a class="row link"><span class="tile-ic"><i data-i="plug"></i></span><span class="lb"><span class="t">Other MCP app</span><span class="h">Claude Desktop, Cursor, VS Code, Gemini CLI, Windsurf…</span></span><i data-i="chev" class="chev"></i></a>
+            </div>
+          </section>
+
+          <section class="sec" data-sec="a-activity">
+            <h2 class="sec-h">Activity</h2>
+            <div class="card act">
+              <div class="row"><i data-i="terminal" class="ic"></i><span class="lb"><span class="t">systemctl status nginx <em>on prod-web-1</em></span><span class="h">Allowed by server setting</span></span><span class="when">09:41</span></div>
+              <div class="row"><i data-i="terminal" class="ic"></i><span class="lb"><span class="t">docker compose pull <em>on prod-api-1</em></span><span class="h">You allowed it</span></span><span class="when">09:38</span></div>
+              <div class="row"><i data-i="file" class="ic"></i><span class="lb"><span class="t">/etc/nginx/nginx.conf <em>on prod-web-1</em></span><span class="h">Allowed by server setting</span></span><span class="when">09:36</span></div>
+              <div class="row"><i data-i="terminal" class="ic"></i><span class="lb"><span class="t">rm -rf /var/cache/api <em>on prod-api-2</em></span><span class="h danger-t">You denied it</span></span><span class="when">09:31</span></div>
+              <a class="row link"><i data-i="list" class="ic"></i><span class="lb"><span class="t" style="font-family:Inter;font-size:15px">Full log</span></span><i data-i="chev" class="chev"></i></a>
+            </div>
+            <p class="foot">Steelshell keeps the commands and paths agents used, with anything that looks like a secret left out. It never keeps their output.</p>
+          </section>
+
+          <section class="sec" data-sec="a-other">
+            <h2 class="sec-h">Agents on other devices</h2>
+            <div class="card">
+              <div class="row"><span class="tile-ic"><i data-i="server"></i></span><span class="lb"><span class="t">build-01</span><span class="h">steelshell CLI on Linux · 4 servers</span></span><button class="btn-s danger">Revoke</button></div>
+            </div>
+            <p class="foot">Servers you shared with the steelshell CLI on other computers. A revoke takes effect when that computer syncs.</p>
+          </section>
+        </div>
+
+        <aside class="rp ag">
+          <div class="rp-head"><span class="rp-t">What agents see</span><span class="rp-cap mono">list_hosts · live</span></div>
+          <div class="card ws" style="margin-top:12px">
+            <div class="ws-top"><span class="ws-n" data-out="visN">31</span><span class="ws-l" data-out="visL">servers visible to Claude Code and Codex</span></div>
+            <div class="ws-bar"><b class="f-full" data-bar="full"></b><b class="f-read" data-bar="read"></b><b class="f-ask" data-bar="ask"></b></div>
+            <div class="ws-leg">
+              <span><b class="sq f-full"></b>Allow everything <em data-out="nFull">5</em></span>
+              <span><b class="sq f-read"></b>Allow reading <em data-out="nRead">9</em></span>
+              <span><b class="sq f-ask"></b>Ask every time <em data-out="nAsk">17</em></span>
+            </div>
+            <div class="ws-tbl" data-ws-tbl></div>
+            <div class="ws-hid"><i data-i="eyeoff"></i><span data-out="hidden">Hidden: db-primary, vault-1, backup-nas</span></div>
+          </div>
+          <div class="card">
+            <div class="row"><i data-i="lock" class="ic"></i><span class="lb"><span class="t">Passwords and private keys</span><span class="h">Never sent. Steelshell signs in and hands back only the results</span></span></div>
+            <div class="row"><i data-i="shield" class="ic"></i><span class="lb"><span class="t">Secrets in output</span><span class="h" data-out="redactHint">Removed before agents get it, best effort</span></span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<!-- ================= PHONE ================= -->
+<div class="phones" id="f-phone">
+  <figure class="fr"><figcaption>Phone · Settings root <span>390 × 844</span></figcaption><div data-phone="root"></div></figure>
+  <figure class="fr"><figcaption>Phone · Terminal, opened <span>strip expanded, list scrolled</span></figcaption><div data-phone="opened"></div></figure>
+</div>
+</main>
+</div>
+
+<template id="tpl-phone">
+<div class="phone">
+  <div class="p-sb"><span>9:41</span><span class="p-cam"></span><span class="p-sbi">
+    <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+    <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 12 5.4 8.9a3.8 3.8 0 0 1 5.2 0z"/><path d="M8 4.6c2 0 3.8.8 5.1 2l-1.4 1.6A5.3 5.3 0 0 0 8 6.7c-1.4 0-2.7.6-3.7 1.5L2.9 6.6A7.3 7.3 0 0 1 8 4.6z"/><path d="M8 0c3.1 0 5.9 1.2 8 3.2l-1.4 1.6A9.6 9.6 0 0 0 8 2.1a9.6 9.6 0 0 0-6.6 2.7L0 3.2A11.7 11.7 0 0 1 8 0z"/></svg>
+    <svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.5"/><rect x="23.5" y="4" width="2" height="4" rx="1" opacity=".45"/></svg>
+  </span></div>
+  <div class="p-bar">Settings<i data-i="search"></i></div>
+  <div class="p-scroll">
+    <div class="p-large"><h1>Settings</h1></div>
+    <div class="p-search"><i data-i="search"></i><span>Search settings</span></div>
+    <div class="p-pin">
+      <div class="strip">
+        <div class="strip-head"><span>Preview</span><span class="mono" data-out="capShort">Steelshell · 14 pt</span><i data-i="chevu"></i></div>
+        <div class="strip-row"><div class="term strip-term" data-term="phone"></div><span class="strip-open">Preview<i data-i="chevd"></i></span></div>
+        <div class="xkeys"><b>Esc</b><b>Tab</b><b>Ctrl</b><b>Alt</b><b>←</b><b>↓</b><b>↑</b><b>→</b><b>^C</b><b>|</b></div>
+      </div>
+      <div class="chips p-chips" style="display:flex">
+        <button data-to="account" class="on">Account</button><button data-to="appearance">Appearance</button><button data-to="terminal">Terminal</button><button data-to="behaviour">Behaviour</button><button data-to="agents">AI agents</button><button data-to="notifications">Notifications</button><button data-to="about">About</button>
+      </div>
+    </div>
+    <div class="p-body">
+      <section class="sec first" data-sec="account">
+        <div class="card">
+          <a class="row link acct"><span class="av">M</span><span class="lb"><span class="t">Maks</span><span class="h">maks@example.com</span></span><i data-i="chev" class="chev"></i></a>
+          <a class="row link"><i data-i="cloudcheck" class="ic"></i><span class="lb"><span class="t2"><span class="dot ok"></span>Synced 2 min ago</span><span class="h">End-to-end encrypted</span></span><span class="val">3 devices</span><i data-i="chev" class="chev"></i></a>
+        </div>
+      </section>
+      <section class="sec" data-sec="appearance">
+        <h2 class="sec-h">Appearance</h2>
+        <div class="card">
+          <div class="row stack"><div class="rh"><i data-i="sunmoon" class="ic"></i><span class="lb"><span class="t">App appearance</span></span></div>
+            <span class="seg full" data-seg="appearance"><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="system">System</button></span></div>
+          <div class="row"><i data-i="globe" class="ic"></i><span class="lb"><span class="t">Language</span></span>
+            <span class="selw"><select data-sel="lang" aria-label="Language"><option value="system">Same as the system</option><option value="en">English</option><option value="ru">Русский</option></select><i data-i="chevd"></i></span></div>
+        </div>
+      </section>
+      <section class="sec" data-sec="terminal">
+        <h2 class="sec-h">Terminal</h2>
+        <div class="card">
+          <div class="row"><i data-i="palette" class="ic"></i><span class="lb"><span class="t">Terminal theme</span></span><span class="val" data-out="themeName">Steelshell</span></div>
+          <div class="sw-row" data-swatches="row"></div>
+          <div class="row"><i data-i="type" class="ic"></i><span class="lb"><span class="t">Terminal font</span></span>
+            <span class="selw"><select data-sel="font" aria-label="Terminal font"><option>Cascadia Mono</option><option>JetBrains Mono</option><option>Fira Code</option><option>Source Code Pro</option></select><i data-i="chevd"></i></span></div>
+          <div class="row"><i data-i="size" class="ic"></i><span class="lb"><span class="t">Font size</span></span>
+            <span class="step" data-step="size"><button data-d="-1" aria-label="Smaller"><i data-i="minus"></i></button><output data-out="size">14 pt</output><button data-d="1" aria-label="Larger"><i data-i="plus"></i></button></span></div>
+          <div class="row stack"><div class="rh"><i data-i="cursor" class="ic"></i><span class="lb"><span class="t">Cursor style</span></span></div>
+            <span class="seg full" data-seg="cursor"><button data-v="block"><b class="cg blk"></b>Block</button><button data-v="underline"><b class="cg und"></b>Underline</button><button data-v="bar"><b class="cg bar"></b>Bar</button></span></div>
+          <div class="row"><i data-i="zoom" class="ic"></i><span class="lb"><span class="t">Zoom range</span><span class="h">Limits for pinching</span></span>
+            <span class="range"><span class="selw sm"><select data-sel="zmin" aria-label="Smallest">ZMIN</select><i data-i="chevd"></i></span>–<span class="selw sm"><select data-sel="zmax" aria-label="Largest">ZMAX</select><i data-i="chevd"></i></span></span></div>
+        </div>
+        <div class="card">
+          <a class="row link"><i data-i="keyboard" class="ic"></i><span class="lb"><span class="t">Extra keys</span></span><span class="val">21 keys</span><i data-i="chev" class="chev"></i></a>
+          <div class="row"><i data-i="zap" class="ic"></i><span class="lb"><span class="t">Command suggestions</span><span class="h">Grey hints from the commands you ran before</span></span><button class="tog" data-tog="suggest" role="switch"></button></div>
+          <div class="row stack"><div class="rh"><i data-i="layers" class="ic"></i><span class="lb"><span class="t">Scrollback</span><span class="h" data-out="scrollHint">10,000 lines, for new sessions</span></span></div>
+            <span class="seg full" data-seg="scrollback"><button data-v="1k">1k</button><button data-v="5k">5k</button><button data-v="10k">10k</button><button data-v="50k">50k</button><button data-v="100k">100k</button></span></div>
+        </div>
+        <div class="card"><a class="row link danger-t"><i data-i="trash" class="ic"></i><span class="lb"><span class="t">Clear command history</span></span></a></div>
+      </section>
+      <section class="sec" data-sec="behaviour">
+        <h2 class="sec-h">Behaviour</h2>
+        <div class="card">
+          <div class="row"><i data-i="vibrate" class="ic"></i><span class="lb"><span class="t">Haptic feedback</span></span><button class="tog" data-tog="haptics" role="switch"></button></div>
+          <div class="row"><i data-i="activity" class="ic"></i><span class="lb"><span class="t">Show server status</span><span class="h">Checks that each server answers and shows its ping</span></span><button class="tog" data-tog="hoststatus" role="switch"></button></div>
+        </div>
+      </section>
+      <section class="sec" data-sec="agents">
+        <h2 class="sec-h">AI agents</h2>
+        <div class="card">
+          <div class="row"><span class="tile-ic"><i data-i="key"></i></span><span class="lb"><span class="t2"><span class="dot warn"></span>1 request waiting</span><span class="h">Claude Code on build-01 asks for prod-api-1</span></span><button class="btn-s">Review</button></div>
+          <a class="row link"><i data-i="devices" class="ic"></i><span class="lb"><span class="t">Agents on other devices</span><span class="h">build-01 · 4 servers</span></span><i data-i="chev" class="chev"></i></a>
+        </div>
+      </section>
+      <section class="sec" data-sec="notifications">
+        <h2 class="sec-h">Notifications</h2>
+        <div class="banner"><i data-i="belloff"></i><span class="lb"><span class="t2">Notifications are off</span><span class="h">Android doesn't let Steelshell show notifications, so you won't see when an agent finishes or waits for approval.</span></span><button class="btn-s">Turn on</button></div>
+        <div class="card">
+          <div class="row"><i data-i="bell" class="ic"></i><span class="lb"><span class="t">Notifications from the terminal</span></span><button class="tog" data-tog="notif" role="switch"></button></div>
+          <div class="row"><i data-i="bellring" class="ic"></i><span class="lb"><span class="t">Notify on the terminal bell</span></span><button class="tog" data-tog="bell" role="switch"></button></div>
+        </div>
+        <div class="card">
+          <div class="row"><i data-i="shieldq" class="ic"></i><span class="lb"><span class="t">Needs approval</span></span><button class="play" aria-label="Play: Needs approval"><i data-i="play"></i></button></div>
+          <div class="row"><i data-i="check" class="ic"></i><span class="lb"><span class="t">Agent finished</span></span><button class="play" aria-label="Play: Agent finished"><i data-i="play"></i></button></div>
+          <div class="row"><i data-i="key" class="ic"></i><span class="lb"><span class="t">Access request</span></span><button class="play" aria-label="Play: Access request"><i data-i="play"></i></button></div>
+          <a class="row link"><i data-i="server" class="ic"></i><span class="lb"><span class="t">Set up on a server</span></span><i data-i="chev" class="chev"></i></a>
+        </div>
+      </section>
+      <section class="sec" data-sec="about">
+        <h2 class="sec-h">About</h2>
+        <div class="card">
+          <div class="row"><i data-i="info" class="ic"></i><span class="lb"><span class="t">Version <span class="mono" style="font-size:14px;color:var(--muted);margin-left:4px">0.5.1</span></span><span class="h">You're up to date</span></span><button class="btn-s">Check now</button></div>
+          <div class="row"><i data-i="refresh" class="ic"></i><span class="lb"><span class="t">Check for updates on start</span></span><button class="tog" data-tog="updates" role="switch"></button></div>
+          <a class="row link"><i data-i="tag" class="ic"></i><span class="lb"><span class="t">Releases</span></span><i data-i="ext" class="chev"></i></a>
+          <a class="row link"><i data-i="scroll" class="ic"></i><span class="lb"><span class="t">Open-source licenses</span></span><i data-i="chev" class="chev"></i></a>
+        </div>
+      </section>
+    </div>
+  </div>
+  <nav class="p-nav"><a><i data-i="server"></i><span>Hosts</span></a><a><i data-i="sftp"></i><span>SFTP</span></a><a class="on"><i data-i="gear"></i><span>Settings</span></a></nav>
+</div>
+</template>
+
+<script>
+const ICONS = {
+  search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  server:'<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/>',
+  key:'<path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/>',
+  sftp:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M10 11v6"/><path d="m8 13 2-2 2 2"/><path d="M15 17v-6"/><path d="m13 15 2 2 2-2"/>',
+  braces:'<path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/><path d="M12 9.5h.01"/><path d="M12 14.5h.01"/>',
+  gear:'<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
+  chev:'<path d="m9 18 6-6-6-6"/>', chevd:'<path d="m6 9 6 6 6-6"/>', chevu:'<path d="m18 15-6-6-6 6"/>', chevl:'<path d="m15 18-6-6 6-6"/>',
+  sunmoon:'<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  palette:'<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 11.95 2z"/>',
+  type:'<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/>',
+  size:'<path d="M21 14h-5"/><path d="M16 16v-3.5a2.5 2.5 0 0 1 5 0V16"/><path d="M4.5 13h6"/><path d="m3 16 4.5-9 4.5 9"/>',
+  cursor:'<path d="M17 22h-1a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h1"/><path d="M7 22h1a4 4 0 0 0 4-4v-1"/><path d="M7 2h1a4 4 0 0 1 4 4v1"/>',
+  zoom:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/>',
+  spline:'<circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><path d="M5 17A12 12 0 0 1 17 5"/>',
+  panel:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 15h18"/>',
+  zap:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  layers:'<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+  trash:'<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/>',
+  keyboard:'<path d="M10 8h.01"/><path d="M12 12h.01"/><path d="M14 8h.01"/><path d="M16 12h.01"/><path d="M18 8h.01"/><path d="M6 8h.01"/><path d="M7 16h10"/><path d="M8 12h.01"/><rect width="20" height="16" x="2" y="4" rx="2"/>',
+  tray:'<path d="M12 3v10"/><path d="m8 9 4 4 4-4"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>',
+  activity:'<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  cpu:'<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>',
+  list:'<path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/>',
+  devices:'<path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="M10 19v-3.96 3.15"/><path d="M7 19h5"/><rect width="6" height="10" x="16" y="12" rx="2"/>',
+  bell:'<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>',
+  bellring:'<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/>',
+  belloff:'<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M17 17H4a1 1 0 0 1-.74-1.673C4.59 13.956 6 12.499 6 8a6 6 0 0 1 .258-1.742"/><path d="m2 2 20 20"/><path d="M8.668 3.01A6 6 0 0 1 18 8c0 2.687.77 4.653 1.707 6.05"/>',
+  eye:'<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',
+  eyeoff:'<path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/>',
+  play:'<path d="M6 3.5v17l14-8.5z" fill="currentColor" stroke="none"/>',
+  send:'<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>',
+  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  tag:'<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+  scroll:'<path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/>',
+  ext:'<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+  cloudcheck:'<path d="m17 15-5.5 5.5L9 18"/><path d="M5 17.743A7 7 0 1 1 15.71 10h1.79a4.5 4.5 0 0 1 1.5 8.742"/>',
+  copy:'<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  timer:'<path d="M10 2h4"/><path d="m12 14 3-3"/><circle cx="12" cy="14" r="8"/>',
+  window:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  shieldq:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  lock:'<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  vibrate:'<path d="m2 8 2 2-2 2 2 2-2 2"/><path d="m22 8-2 2 2 2-2 2 2 2"/><rect width="8" height="14" x="8" y="5" rx="1"/>',
+  terminal:'<polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>',
+  plug:'<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
+  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  check:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  login:'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/>',
+  plus:'<path d="M5 12h14"/><path d="M12 5v14"/>', minus:'<path d="M5 12h14"/>', x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'
+};
+const UBUNTU = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.6" fill="none" stroke="#E95420" stroke-width="2.4"/><circle cx="4.6" cy="12" r="2.6" fill="#E95420"/><circle cx="15.7" cy="5.6" r="2.6" fill="#E95420"/><circle cx="15.7" cy="18.4" r="2.6" fill="#E95420"/></svg>';
+const DEBIAN = '<svg viewBox="0 0 24 24" fill="none" stroke="#D70A53" stroke-width="2.2" stroke-linecap="round"><path d="M13.5 19.5a7.5 7.5 0 1 1 6-7.5c0 2.8-2.2 4.6-4.6 4.6a3.6 3.6 0 0 1-3.6-3.6c0-1.6 1.2-2.8 2.7-2.8"/></svg>';
+const svg = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+
+const THEMES = [
+  {id:'steelshell',name:'Steelshell',bg:'#141517',fg:'#DDE3EC',cur:'#3DD598',a:['#1E2531','#F2626A','#3DD598','#F5B544','#5B9DFF','#B58CF0','#3CC5D8']},
+  {id:'dracula',name:'Dracula',bg:'#282A36',fg:'#F8F8F2',cur:'#F8F8F2',a:['#21222C','#FF5555','#50FA7B','#F1FA8C','#BD93F9','#FF79C6','#8BE9FD']},
+  {id:'one-dark',name:'One Dark',bg:'#282C34',fg:'#ABB2BF',cur:'#528BFF',a:['#3F4451','#E05561','#8CC265','#D18F52','#4AA5F0','#C162DE','#42B3C2']},
+  {id:'nord',name:'Nord',bg:'#2E3440',fg:'#D8DEE9',cur:'#D8DEE9',a:['#3B4252','#BF616A','#A3BE8C','#EBCB8B','#81A1C1','#B48EAD','#88C0D0']},
+  {id:'tokyo-night',name:'Tokyo Night',bg:'#1A1B26',fg:'#C0CAF5',cur:'#C0CAF5',a:['#15161E','#F7768E','#9ECE6A','#E0AF68','#7AA2F7','#BB9AF7','#7DCFFF']},
+  {id:'catppuccin',name:'Catppuccin Mocha',bg:'#1E1E2E',fg:'#CDD6F4',cur:'#F5E0DC',a:['#45475A','#F38BA8','#A6E3A1','#F9E2AF','#89B4FA','#F5C2E7','#94E2D5']},
+  {id:'gruvbox',name:'Gruvbox Dark',bg:'#282828',fg:'#EBDBB2',cur:'#EBDBB2',a:['#282828','#CC241D','#98971A','#D79921','#458588','#B16286','#689D6A']},
+  {id:'solarized',name:'Solarized Dark',bg:'#002B36',fg:'#839496',cur:'#93A1A1',a:['#073642','#DC322F','#859900','#B58900','#268BD2','#D33682','#2AA198']},
+  {id:'monokai',name:'Monokai',bg:'#272822',fg:'#F8F8F2',cur:'#F8F8F0',a:['#3E3D32','#F92672','#A6E22E','#F4BF75','#66D9EF','#AE81FF','#A1EFE4']},
+  {id:'github-dark',name:'GitHub Dark',bg:'#0D1117',fg:'#E6EDF3',cur:'#2F81F7',a:['#484F58','#FF7B72','#3FB950','#D29922','#58A6FF','#BC8CFF','#39C5CF']},
+  {id:'rose-pine',name:'Rosé Pine',bg:'#191724',fg:'#E0DEF4',cur:'#EBBCBA',a:['#26233A','#EB6F92','#31748F','#F6C177','#9CCFD8','#C4A7E7','#EBBCBA']},
+  {id:'kanagawa',name:'Kanagawa',bg:'#1F1F28',fg:'#DCD7BA',cur:'#C8C093',a:['#090618','#C34043','#76946A','#C0A36E','#7E9CD8','#957FB8','#6A9589']},
+  {id:'everforest',name:'Everforest',bg:'#2D353B',fg:'#D3C6AA',cur:'#D3C6AA',a:['#475258','#E67E80','#A7C080','#DBBC7F','#7FBBB3','#D699B6','#83C092']},
+  {id:'github-light',name:'GitHub Light',bg:'#FFFFFF',fg:'#1F2328',cur:'#0969DA',a:['#24292F','#CF222E','#116329','#4D2D00','#0969DA','#8250DF','#1B7C83']}
+];
+const FONTS = {'Cascadia Mono':"'Cascadia Mono','Cascadia Code',monospace",'JetBrains Mono':"'JetBrains Mono',monospace",'Fira Code':"'Fira Code',monospace",'Source Code Pro':"'Source Code Pro',monospace"};
+const CURSOR_NAMES = {block:'Block',underline:'Underline',bar:'Bar'};
+const SCROLL = {'1k':'1,000','5k':'5,000','10k':'10,000','50k':'50,000','100k':'100,000'};
+
+const PROMPT = '<span class="k2 b">root@prod-api-1</span>:<span class="k4 b">~</span># ';
+const LOG = (t, rest) => `<span class="kd">Nov 20 ${t}</span> api[2841]: ${rest}`;
+const LINES = [
+  PROMPT + 'uptime',
+  ' 09:41:18 up 41 days,  3:12,  1 user,  load average: 0.42, 0.37, 0.31',
+  PROMPT + 'systemctl status api',
+  '<span class="k2">●</span> api.service - Steelshell API',
+  '     Loaded: loaded (/etc/systemd/system/api.service; <span class="k2">enabled</span>; preset: <span class="k2">enabled</span>)',
+  '     Active: <span class="k2 b">active (running)</span> since Thu 2026-11-19 09:12:04 UTC; 1 day ago',
+  '   Main PID: 2841 (api)',
+  '     Memory: 182.4M (peak: 240.1M)',
+  '        CPU: 41min 12.380s',
+  LOG('09:41:07', '<span class="k6">GET</span> /v1/sync <span class="k2">200</span> 12ms'),
+  LOG('09:41:09', '<span class="k6">POST</span> /v1/devices <span class="k2">201</span> 48ms'),
+  LOG('09:41:12', '<span class="k6">GET</span> /v1/hosts/h-9f <span class="k3">404</span> 3ms'),
+  LOG('09:41:15', '<span class="k6">POST</span> /v1/auth <span class="k1 b">500</span> <span class="k5">retrying</span>'),
+  PROMPT + 'sudo systemctl rest<span class="cur" data-ch="a">a</span><span class="ghost">rt api</span>'
+];
+const LINES_PHONE = LINES.slice(0, -1).concat(PROMPT + 'git pu<span class="cur" data-ch="l">l</span><span class="ghost">l --rebase</span>');
+
+const PV_HOSTS = [
+  {name:'prod-api-1',addr:'root@10.0.4.12',os:UBUNTU,st:'24 ms',ok:true},
+  {name:'personal vps',addr:'max@vps.example.org',os:svg(ICONS.server),st:'61 ms',ok:true},
+  {name:'build-01',addr:'ci@10.0.7.3',os:DEBIAN,st:'Offline',ok:false}
+];
+
+const LEVELS = [['off','Off'],['ask','Ask every time'],['read','Allow reading, ask for commands'],['full','Allow everything']];
+const AGH = [
+  {id:'h-1a2b3c4d',name:'prod-api-1',addr:'root@10.0.4.12',lvl:'ask',os:UBUNTU},
+  {id:'h-7c41e09a',name:'prod-api-2',addr:'root@10.0.4.13',lvl:'ask',os:UBUNTU,grant:true},
+  {id:'h-2f90b3d1',name:'prod-web-1',addr:'deploy@10.0.4.20',lvl:'read',os:UBUNTU},
+  {id:'h-0d3e5b88',name:'db-primary',addr:'postgres@10.0.5.2',lvl:'off',os:DEBIAN},
+  {id:'h-5e12aa70',name:'staging-web-2',addr:'deploy@10.1.0.8',lvl:'full',os:UBUNTU},
+  {id:'h-94bc2f13',name:'staging-db',addr:'postgres@10.1.0.9',lvl:'read',os:DEBIAN},
+  {id:'h-3a77d0c2',name:'build-01',addr:'ci@10.0.7.3',lvl:'full',os:DEBIAN},
+  {id:'h-c81f6e45',name:'personal vps',addr:'max@vps.example.org',lvl:'ask',os:svg(ICONS.server)}
+];
+const REST = {full:3, read:7, ask:14, off:2};
+const REST_HIDDEN = ['vault-1','backup-nas'];
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ss = $('#ss');
+const params = new URLSearchParams(location.search);
+const startLight = params.has('light') || location.hash.includes('light');
+const shot = params.get('shot');
+
+const S = {
+  appearance: startLight ? 'light' : 'dark', resolved: startLight ? 'light' : 'dark',
+  lang:'system', theme:'steelshell', font:'JetBrains Mono', size:14, zmin:'10', zmax:'20',
+  cursor:'block', scrollback:'10k', timeout:'2',
+  tog:{smooth:true,statusbar:true,suggest:true,hoststatus:true,tray:true,agents:true,notif:true,visible:false,bell:true,updates:true,haptics:true,redact:true,showwin:true}
+};
+
+function build() {
+  $$('[data-phone]').forEach(slot => {
+    const node = $('#tpl-phone').content.firstElementChild.cloneNode(true);
+    if (slot.dataset.phone === 'opened') node.classList.add('opened', 'xo');
+    slot.replaceWith(node);
+  });
+  $$('[data-titlebar]').forEach(el => el.innerHTML =
+    '<span>Steelshell</span><span class="tb-sp"></span>' +
+    '<span class="tb-btn"><svg viewBox="0 0 10 10"><path d="M0 5h10" stroke="currentColor"/></svg></span>' +
+    '<span class="tb-btn"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9" fill="none" stroke="currentColor"/></svg></span>' +
+    '<span class="tb-btn"><svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0 0 10" stroke="currentColor"/></svg></span>');
+  $$('[data-nav]').forEach(el => el.innerHTML =
+    '<a class="nv"><i data-i="server"></i><span>Hosts</span></a><a class="nv"><i data-i="key"></i><span>Keychain</span></a>' +
+    '<a class="nv"><i data-i="sftp"></i><span>SFTP</span></a><a class="nv"><i data-i="braces"></i><span>Snippets</span></a>' +
+    '<span class="nv-sp"></span><a class="nv on"><i data-i="gear"></i><span>Settings</span></a>');
+  const sizes = []; for (let n = 8; n <= 24; n++) sizes.push(`<option value="${n}">${n} pt</option>`);
+  $$('select[data-sel=zmin],select[data-sel=zmax]').forEach(s => s.innerHTML = sizes.join(''));
+  $$('[data-swatches]').forEach(el => {
+    const named = el.dataset.swatches === 'row';
+    el.innerHTML = THEMES.map(t => {
+      const a = t.a, f = `background:${t.fg};opacity:.75`;
+      return `<button class="sw-b" data-theme="${t.id}" title="${t.name}" aria-label="${t.name}"><span class="sw" data-id="${t.id}" style="--sbg:${t.bg}">` +
+        `<span class="l"><b style="width:10px;background:${a[2]}"></b><b style="width:20px;${f}"></b></span>` +
+        `<span class="l"><b style="width:6px;${f}"></b><b style="width:12px;background:${a[4]}"></b><b style="width:9px;background:${a[6]}"></b></span>` +
+        `<span class="l"><b style="width:8px;background:${a[3]}"></b><b style="width:6px;background:${a[1]}"></b><b style="width:12px;background:${a[5]}"></b></span>` +
+        `<span class="l"><b style="width:10px;background:${a[2]}"></b></span><i class="sc" style="background:${t.cur}"></i></span>` +
+        (named ? `<span class="sw-n">${t.name}</span>` : '') + '</button>';
+    }).join('');
+  });
+  $$('[data-term]').forEach(el => el.innerHTML = '<div class="ti">' + (el.dataset.term === 'phone' ? LINES_PHONE : LINES).map(l => `<div class="ln">${l}</div>`).join('') + '</div>');
+  $$('[data-hosts]').forEach(el => el.innerHTML = PV_HOSTS.map(h =>
+    `<div class="hrow"><span class="os">${h.os}</span><span class="lb"><span class="t">${h.name}</span><span class="h mono">${h.addr}</span></span>` +
+    `<span class="hs ${h.ok ? '' : 'bad'}"><span class="dot ${h.ok ? 'ok' : 'bad'}"></span>${h.st}</span></div>`).join(''));
+  $$('[data-agent-rows]').forEach(el => el.innerHTML = AGH.map(h =>
+    `<div class="row ag-row" data-row="${h.id}"><span class="os">${h.os}</span><span class="lb"><span class="t">${h.name}${h.grant ? '<span class="tag" data-grant-tag>18 min</span>' : ''}</span><span class="h mono">${h.addr}</span></span>` +
+    `<span class="selw"><select data-host="${h.id}" aria-label="Access for ${h.name}">${LEVELS.map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select><i data-i="chevd"></i></span></div>`).join('') +
+    '<a class="row link"><i data-i="server" class="ic"></i><span class="lb"><span class="t">Show all 34 servers</span></span><i data-i="chev" class="chev"></i></a>');
+  $$('i[data-i]').forEach(el => { if (!el.firstChild) el.innerHTML = svg(ICONS[el.dataset.i] || ''); });
+}
+
+const out = (k, v, html) => $$(`[data-out="${k}"]`).forEach(el => html ? el.innerHTML = v : el.textContent = v);
+
+function render() {
+  if (S.appearance !== 'system') S.resolved = S.appearance;
+  ss.classList.toggle('light', S.resolved === 'light');
+  ss.classList.toggle('dark', S.resolved !== 'light');
+  $('#themeBtn span').textContent = S.resolved === 'light' ? 'Dark theme' : 'Light theme';
+
+  $$('[data-seg]').forEach(seg => $$('button', seg).forEach(b => b.classList.toggle('on', b.dataset.v === S[seg.dataset.seg])));
+  $$('[data-tog]').forEach(t => t.setAttribute('aria-checked', String(!!S.tog[t.dataset.tog])));
+  $$('select[data-sel]').forEach(s => s.value = S[s.dataset.sel]);
+
+  const th = THEMES.find(t => t.id === S.theme);
+  const st = ss.style;
+  st.setProperty('--t-bg', th.bg); st.setProperty('--t-fg', th.fg); st.setProperty('--t-cur', th.cur);
+  th.a.forEach((c, i) => i && st.setProperty('--k' + i, c));
+  const lh = Math.round(S.size * 1.43);
+  st.setProperty('--t-size', S.size + 'px'); st.setProperty('--t-lh', lh + 'px');
+  st.setProperty('--t-font', FONTS[S.font]);
+  ['block', 'underline', 'bar'].forEach(c => ss.classList.toggle('cur-' + c, S.cursor === c));
+  ss.classList.toggle('smooth', S.tog.smooth);
+  ss.classList.toggle('no-statusbar', !S.tog.statusbar);
+  ss.classList.toggle('no-suggest', !S.tog.suggest);
+  ss.classList.toggle('no-hoststatus', !S.tog.hoststatus);
+  ss.classList.toggle('agents-off', !S.tog.agents);
+  $$('.cur').forEach(c => c.textContent = S.tog.suggest ? c.dataset.ch : ' ');
+  $$('.sw').forEach(s => s.classList.toggle('on', s.dataset.id === S.theme));
+  $$('.sw-b').forEach(s => s.classList.toggle('on', s.dataset.theme === S.theme));
+
+  const cols = Math.floor(412 / (S.size * 0.6)), rows = Math.floor((S.tog.statusbar ? 300 : 328) / lh);
+  out('size', S.size + ' pt');
+  out('themeName', th.name);
+  out('caption', `${th.name} · ${S.font} ${S.size} pt · ${CURSOR_NAMES[S.cursor]}`);
+  out('capShort', `${th.name} · ${S.size} pt · ${CURSOR_NAMES[S.cursor]}`);
+  out('grid', `${cols}×${rows}`);
+  out('scrollHint', `${SCROLL[S.scrollback]} lines, for new sessions`);
+  out('redactHint', S.tog.redact ? 'Removed before agents get it, best effort' : 'Sent as is: Hide secrets in output is off');
+
+  const listening = S.tog.agents;
+  out('agentState', listening ? '<span class="dot ok"></span>Listening on 127.0.0.1:47213' : 'Off', true);
+  out('agentState2', listening ? '<span class="dot ok"></span>Listening' : 'Off', true);
+  renderAgents(listening);
+}
+
+function renderAgents(on) {
+  const c = {...REST};
+  AGH.forEach(h => c[h.lvl]++);
+  const shared = c.full + c.read + c.ask, total = shared + c.off;
+  out('sharedCount', `${shared} of ${total} shared`);
+  out('sharedOf', `${shared} of ${total}`);
+  out('sharedN', String(shared));
+  out('visN', on ? String(shared) : '0');
+  out('visL', on ? 'servers visible to Claude Code and Codex' : 'agent access is off, nothing is visible');
+  out('nFull', String(c.full)); out('nRead', String(c.read)); out('nAsk', String(c.ask));
+  ['full', 'read', 'ask'].forEach(k => $$(`[data-bar="${k}"]`).forEach(b => b.style.flexGrow = c[k]));
+  $$('select[data-host]').forEach(s => {
+    const h = AGH.find(x => x.id === s.dataset.host);
+    s.value = h.lvl;
+    s.closest('.ag-row').classList.toggle('off', h.lvl === 'off');
+  });
+  const vis = AGH.filter(h => h.lvl !== 'off');
+  const label = h => (h.grant && h.lvl !== 'full') ? ['full', 'full · 18 min'] : [h.lvl, h.lvl === 'ask' ? 'asks you' : h.lvl];
+  $$('[data-ws-tbl]').forEach(el => el.innerHTML =
+    '<div class="wr wh"><span>id</span><span>name</span><span class="ac">access</span></div>' +
+    vis.map(h => { const [cls, txt] = label(h); return `<div class="wr"><span class="id">${h.id}</span><span>${h.name}</span><span class="ac ${cls}">${txt}</span></div>`; }).join('') +
+    `<div class="wr more">+ ${shared - vis.length} more</div>`);
+  const hidden = AGH.filter(h => h.lvl === 'off').map(h => h.name).concat(REST_HIDDEN);
+  out('hidden', `Hidden: ${hidden.join(', ')}`);
+  $$('[data-grant-sec]').forEach(s => s.style.display = AGH.some(h => h.grant) ? '' : 'none');
+  $$('[data-grant-tag]').forEach(t => t.style.display = AGH.some(h => h.grant) ? '' : 'none');
+}
+
+function scroller(el) { return el.closest('[data-lp], .p-scroll'); }
+function headOf(sc) { return sc.matches('[data-lp]') ? $('.lp-head', sc) : $('.p-pin', sc); }
+function jump(chip, smooth) {
+  const sc = scroller(chip), sec = $(`[data-sec="${chip.dataset.to}"]`, sc);
+  if (!sec) return;
+  sc.scrollTo({top: sec.offsetTop - headOf(sc).offsetHeight - 4, behavior: smooth ? 'smooth' : 'auto'});
+}
+function spy(sc) {
+  const head = headOf(sc), chips = $$('[data-to]', head), y = sc.scrollTop + head.offsetHeight + 24;
+  let cur = chips[0];
+  chips.forEach(ch => { const s = $(`[data-sec="${ch.dataset.to}"]`, sc); if (s && s.offsetTop <= y) cur = ch; });
+  if (sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 2) cur = chips[chips.length - 1];
+  chips.forEach(ch => ch.classList.toggle('on', ch === cur));
+  if (sc.matches('[data-lp]')) head.classList.toggle('scrolled', sc.scrollTop > 0);
+  const strip = cur.closest('.p-chips');
+  if (strip && cur.offsetLeft + cur.offsetWidth > strip.scrollLeft + strip.clientWidth) strip.scrollLeft = cur.offsetLeft - 16;
+}
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  let el;
+  if ((el = t.closest('#themeBtn'))) { S.appearance = S.resolved === 'light' ? 'dark' : 'light'; render(); return; }
+  if ((el = t.closest('[data-theme]'))) { S.theme = el.dataset.theme; render(); return; }
+  if ((el = t.closest('[data-seg] button'))) { S[el.parentElement.dataset.seg] = el.dataset.v; render(); return; }
+  if ((el = t.closest('[data-tog]'))) { const k = el.dataset.tog; S.tog[k] = !S.tog[k]; render(); return; }
+  if ((el = t.closest('[data-step] button'))) { S.size = Math.max(8, Math.min(24, S.size + Number(el.dataset.d))); render(); return; }
+  if ((el = t.closest('[data-act=revoke]'))) { AGH.forEach(h => h.grant = false); render(); return; }
+  if ((el = t.closest('[data-to]'))) { jump(el, true); return; }
+  if ((el = t.closest('.strip'))) { el.closest('.phone').classList.toggle('xo'); return; }
+});
+document.addEventListener('change', e => {
+  const s = e.target;
+  if (s.matches('select[data-sel]')) { S[s.dataset.sel] = s.value; render(); }
+  if (s.matches('select[data-host]')) { AGH.find(h => h.id === s.dataset.host).lvl = s.value; render(); }
+});
+
+build();
+if (shot) ss.classList.add('shot', 'shot-' + shot);
+render();
+const scrollers = $$('[data-lp], .p-scroll');
+scrollers.forEach(sc => sc.addEventListener('scroll', () => spy(sc), {passive: true}));
+function settle() {
+  const opened = $('.phone.opened .p-scroll');
+  if (opened) { const chip = $('[data-to="terminal"]', opened); jump(chip, false); }
+  scrollers.forEach(spy);
+}
+settle();
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(settle);
+</script>
+</body>
+</html>
